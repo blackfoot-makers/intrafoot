@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 
 import { addTodo } from './todo/todoActions';
 import Todos from './todo/Todos';
+import AccountsWrapper from './account/AccountsWrapper';
 
 // App component - represents the whole app
 class App extends Component {
@@ -40,6 +41,8 @@ class App extends Component {
       <div className="container">
         <header>
           <h1>Todo List</h1>
+
+          <AccountsWrapper />
 
           <form className="new-task" onSubmit={this._handleSubmit.bind(this)} >
             <input
