@@ -21,8 +21,10 @@ export function pageSkip(state = 0, action = {}){
 export function setTodo(state = [], action) {
   switch (action.type) {
     case 'SET_TODO':
-      // take the currentPageNumber from the payload
-      return action.todos;
+      return {
+        todos: action.todos,
+        incompleteCount: action.incompleteCount
+      }
     default:
       return state;
   }
