@@ -2,12 +2,37 @@
   "name": "intrafoot",
   "private": true,
   "scripts": {
-    "start": "meteor run"
-  },
+    "start": "meteor run",
+    "lint": "eslint .",
+     "pretest": "npm run lint --silent"
+   },
+   "eslintConfig": {
+     "parser": "babel-eslint",
+     "parserOptions": {
+       "allowImportExportEverywhere": true
+     },
+     "plugins": [
+       "meteor"
+     ],
+     "extends": [
+       "airbnb",
+       "plugin:meteor/recommended"
+     ],
+     "settings": {
+       "import/resolver": "meteor"
+     },
+     "rules": {
+       "react/forbid-prop-types": [0],
+       "no-underscore-dangle": [0],
+       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+       "linebreak-style": [0]
+     }
+   },
   "dependencies": {
     "babel-runtime": "^6.18.0",
     "classnames": "^2.2.5",
     "meteor-node-stubs": "~0.2.3",
+    "mongodb": "^2.2.16",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-redux": "^4.4.6",
@@ -16,5 +41,15 @@
     "redux-form": "^6.3.2",
     "redux-logger": "^2.7.4",
     "redux-thunk": "^2.1.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-import-resolver-meteor": "^0.3.4",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-meteor": "^4.0.1",
+    "eslint-plugin-react": "^6.8.0"
   }
 }

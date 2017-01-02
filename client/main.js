@@ -4,7 +4,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, Route, browserHistory } from 'react-router';
-import { Accounts } from 'meteor/accounts-base';
+import { Accounts } from 'meteor/std:accounts-ui';
 
 import createStore from '../src/createStore';
 import App from '../src/App';

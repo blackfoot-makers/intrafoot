@@ -7,5 +7,5 @@ export default combineReducers({
   visibilityFilter,
   pageSkip,
   todos: setTodo,
-  form: formReducer
-})
+  form: formReducer,
+});

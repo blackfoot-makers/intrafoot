@@ -6,17 +6,17 @@ const todoPubFields = {
   createdAt: 1,
   owner: 1,
   username: 1,
-  private: 1
+  private: 1,
 };
 
-const getTodoPublication = function (filter, pageSkip = 0) {
-  return Todos.find({
+const getTodoPublication = (filter, pageSkip = 0) =>
+  Todos.find({
     $or: [
-      {private: {$ne: true}},
-      {owner: this.userId}
-    ]
-  }, {fields: todoPubFields, skip: pageSkip});
-};
+      { private: { $ne: true } },
+      { owner: this.userId },
+    ],
+  }, { fields: todoPubFields, skip: pageSkip });
+
 
 if (Meteor.isServer) {
   Meteor.publish('getTodos', getTodoPublication);

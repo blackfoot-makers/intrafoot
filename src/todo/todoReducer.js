@@ -5,10 +5,10 @@ export function visibilityFilter(state = 'SHOW_ALL', action) {
     default:
       return state;
   }
-};
+}
 
-const PER_PAGE_SKIP = 10
-export function pageSkip(state = 0, action = {}){
+const PER_PAGE_SKIP = 10;
+export function pageSkip(state = 0, action = {}) {
   switch (action.type) {
     case 'MODERATION_CHANGE_PAGE':
       // take the currentPageNumber from the payload
@@ -16,15 +16,15 @@ export function pageSkip(state = 0, action = {}){
     default:
       return state;
   }
-};
+}
 
 export function setTodo(state = [], action) {
   switch (action.type) {
     case 'SET_TODO':
       return {
         todos: action.todos,
-        incompleteCount: action.incompleteCount
-      }
+        incompleteCount: action.incompleteCount,
+      };
     default:
       return state;
   }

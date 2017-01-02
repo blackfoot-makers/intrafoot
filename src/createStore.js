@@ -11,11 +11,10 @@ const middleware = [thunk, logger];
 export default () => {
   const store = createStore(reducers, applyMiddleware(...middleware));
 
-  //Register todo to be load every time
+  // Register todo to be load every time
   if (!Meteor.isServer) {
-    console.log('dispatching loadTodo');
     store.dispatch(loadTodo());
   }
 
   return store;
-}
+};

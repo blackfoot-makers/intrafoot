@@ -6,9 +6,6 @@ import { toggleTodo, deleteTodo, tooglePrivate } from './todoActions';
 
 // Task component - represents a single todo item
 class Todos extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   toggleChecked() {
     // Set the checked property to the opposite of its current value
@@ -31,27 +28,27 @@ class Todos extends Component {
 
     return (
       <li className={taskClassName}>
-       <button className="delete" onClick={this.deleteThisTask.bind(this)}>
+        <button className="delete" onClick={() => this.deleteThisTask}>
          &times;
-       </button>
+        </button>
 
-       <input
-         type="checkbox"
-         readOnly
-         checked={this.props.todo.completed}
-         onClick={this.toggleChecked.bind(this)}
-       />
+        <input
+          type="checkbox"
+          readOnly
+          checked={this.props.todo.completed}
+          onClick={() => this.toggleChecked}
+        />
 
-       {
+        {
          this.props.showPrivateButton &&
-         <button className="toggle-private" onClick={this.togglePrivate.bind(this)}>
+         <button className="toggle-private" onClick={() => this.togglePrivate}>
            { this.props.todo.private ? 'Private' : 'Public' }
          </button>
-       }
-      <span className="text">
-        <strong>{this.props.todo.username}</strong>: {this.props.todo.text}
-      </span>
-     </li>
+        }
+        <span className="text">
+          <strong>{this.props.todo.username}</strong>: {this.props.todo.text}
+        </span>
+      </li>
     );
   }
 }
@@ -60,7 +57,10 @@ Todos.propTypes = {
   // This component gets the task to display through a React prop.
   // We can use propTypes to indicate it is required
   todo: PropTypes.object.isRequired,
-  showPrivateButton: PropTypes.bool.isRequired
+  showPrivateButton: PropTypes.bool.isRequired,
+  toggleTodo: PropTypes.func,
+  deleteTodo: PropTypes.func,
+  tooglePrivate: PropTypes.func,
 };
 
 function mapDispatchToProps(dispatch) {
@@ -73,8 +73,8 @@ function mapDispatchToProps(dispatch) {
     },
     tooglePrivate: (id) => {
       dispatch(tooglePrivate(id));
-    }
-  }
+    },
+  };
 }
 
 export default connect(null, mapDispatchToProps)(Todos);
