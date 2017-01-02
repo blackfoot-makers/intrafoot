@@ -5,6 +5,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, Route, browserHistory } from 'react-router';
 import { Accounts } from 'meteor/std:accounts-ui';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import createStore from '../src/createStore';
 import App from '../src/App';
@@ -14,6 +15,8 @@ Accounts.ui.config({
 });
 
 Meteor.startup(() => {
+  injectTapEventPlugin();
+
   render((
     <Provider store={createStore()}>
       <Router history={browserHistory}>

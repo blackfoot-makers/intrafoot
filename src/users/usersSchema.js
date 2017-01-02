@@ -1,4 +1,4 @@
-const Users = new Mongo.Collection('todos');
+const Users = new Mongo.Collection('user');
 
 Users.schema = new SimpleSchema({
   id: { type: String, regEx: SimpleSchema.RegEx.Id },

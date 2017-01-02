@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Accounts, STATES } from 'meteor/std:accounts-ui';
+import { Accounts } from 'meteor/std:accounts-ui';
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 import SubscribeComponent from './SubscribeComponent';
 import { addTodo } from './todo/todoActions';
@@ -14,6 +15,13 @@ class App extends Component {
       hideCompleted: false,
     };
   }
+
+     getChildContext()
+     {
+         return {
+             muiTheme: getMuiTheme()
+         }
+     }
 
   componentWillMount() {
     this.props.subscribe('getTodos');
@@ -65,9 +73,8 @@ class App extends Component {
             />
             Hide Completed Tasks
           </label>
-          <Accounts.ui.LoginForm
-            state={STATES.SIGN_IN}
-          />
+          <Accounts.ui.LoginForm />
+
           {
             this.props.currentUser &&
             <form className="new-task" onSubmit={() => this._handleSubmit} >
@@ -95,6 +102,11 @@ App.propTypes = {
   subscribe: PropTypes.func,
   addTodo: PropTypes.func,
 };
+
+App.childContextTypes =
+{
+   muiTheme: React.PropTypes.object
+}
 
 function mapStateToProps(state) {
   return {
