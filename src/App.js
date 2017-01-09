@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Accounts } from 'meteor/std:accounts-ui';
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import SubscribeComponent from './SubscribeComponent';
 import { addTodo } from './todo/todoActions';
 import Todos from './todo/Todos';
+// import AccountsWrapper from './account/AccountsWrapper';
 
 // App component - represents the whole app
 class App extends Component {
@@ -16,12 +17,11 @@ class App extends Component {
     };
   }
 
-     getChildContext()
-     {
-         return {
-             muiTheme: getMuiTheme()
-         }
-     }
+  getChildContext() {
+    return {
+      muiTheme: getMuiTheme(),
+    };
+  }
 
   componentWillMount() {
     this.props.subscribe('getTodos');
@@ -103,10 +103,9 @@ App.propTypes = {
   addTodo: PropTypes.func,
 };
 
-App.childContextTypes =
-{
-   muiTheme: React.PropTypes.object
-}
+App.childContextTypes = {
+  muiTheme: React.PropTypes.object,
+};
 
 function mapStateToProps(state) {
   return {
