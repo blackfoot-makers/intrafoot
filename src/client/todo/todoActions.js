@@ -1,5 +1,5 @@
 import { Tracker } from 'meteor/tracker';
-import Todos from './todoSchema';
+import Todos from '../../common/todo/todoSchema';
 
 export function addTodo(text) {
   return () => {

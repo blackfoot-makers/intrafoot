@@ -1,3 +1,5 @@
+import { Accounts } from 'meteor/accounts-base';
+
 const Users = new Mongo.Collection('user');
 
 Users.schema = new SimpleSchema({
@@ -18,4 +20,13 @@ Users.schema = new SimpleSchema({
 });
 
 Users.attachSchema(Users.schema);
+
+if (Meteor.isServer) {
+  Accounts.onCreateUser((options, user) => {
+    user.profile = options.profile || {};
+    user.roles = {};
+    console.log('PROFILE CREATE USER ');
+    return user;
+  });
+}
 export default Users;
