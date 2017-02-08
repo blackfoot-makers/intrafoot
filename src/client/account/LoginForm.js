@@ -11,23 +11,29 @@ class LoginFormAccount extends Accounts.ui.LoginForm {
       const oldFields = super.fields();
       const newFileds = {
         ...oldFields,
-        firstname: {
-          id: 'firstname',
+        firstName: {
+          id: 'firstName',
           hint: 'Prénom',
           label: 'Prénom',
-          // required: true,
-          // defaultValue: '',
-          onChange: this.handleChange.bind(this, 'firstname'),
-          // message: super.getMessageForField('username'),
+          onChange: this.handleChange.bind(this, 'firstName'),
         },
-        lastname: {
-          id: 'lastname',
+        lastName: {
+          id: 'lastName',
           hint: 'Nom',
           label: 'Nom',
-          // required: true,
-          // defaultValue: '',
-          onChange: this.handleChange.bind(this, 'lastname'),
-          // message: super.getMessageForField('username'),
+          onChange: this.handleChange.bind(this, 'lastName'),
+        },
+        title: {
+          id: 'title',
+          hint: 'Titre',
+          label: 'Titre',
+          onChange: this.handleChange.bind(this, 'title'),
+        },
+        company: {
+          id: 'company',
+          hint: 'Entreprise',
+          label: 'Entreprise',
+          onChange: this.handleChange.bind(this, 'company'),
         },
       };
 
@@ -37,12 +43,15 @@ class LoginFormAccount extends Accounts.ui.LoginForm {
   }
 
   signUp(options = {}) {
-    const { firstname = '', lastname = '' } = this.state;
+    const { firstName = '', lastName = '', email = '', title = '', company = '' } = this.state;
     const opt = options;
 
     opt.profile = Object.assign(opt.profile || {}, {
-      firstname,
-      lastname,
+      firstName,
+      lastName,
+      email,
+      title,
+      company
     });
     super.signUp(options);
   }

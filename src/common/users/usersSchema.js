@@ -14,7 +14,7 @@ Users.schema = new SimpleSchema({
   description: { type: String, optional: true },
   accessLevel: { type: Number, min: 0, max: 5, optional: true },
   lastContact: { type: Date, optional: true },
-  history: { type: [String], regEx: SimpleSchema.RegEx.Id },
+  history: { type: [String], regEx: SimpleSchema.RegEx.Id, optional: true },
   title: { type: String },
   company: { type: String },
 });
@@ -25,7 +25,11 @@ if (Meteor.isServer) {
   Accounts.onCreateUser((options, user) => {
     user.profile = options.profile || {};
     user.roles = {};
-    console.log('PROFILE CREATE USER ');
+
+    Users.insert({
+      ...user.profile,
+      id: user._id
+    });
     return user;
   });
 }
