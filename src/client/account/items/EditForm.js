@@ -34,8 +34,12 @@ class EditForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log('SUBMITTING == ', this.state);
     this.props.onSubmit(this.state);
+    const notification = document.getElementById('snackbarIntraFoot');
+    const data = {
+      message: 'Profile changé'
+    };
+    notification.MaterialSnackbar.showSnackbar(data);
   }
 
   render() {
@@ -53,6 +57,7 @@ class EditForm extends React.Component {
               onChange={this.handleChange}
             />
             <label className="mdl-textfield__label" htmlFor="email">Email</label>
+            <span className="mdl-textfield__error">Email non valide</span>
           </div>
           <br />
 

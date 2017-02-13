@@ -20,7 +20,11 @@ export function editUser(newUser) {
 
   currentUser.profile = {
     ...currentUser.profile,
-    ...newUser
+    email: newUser.email,
+    firstName: newUser.firstName,
+    lastName: newUser.lastName,
+    company: newUser.company,
+    title: newUser.title
   };
 
   console.log('CURRENT USER PROFILE IS ', currentUser);
