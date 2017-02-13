@@ -32,6 +32,7 @@ class EditForm extends React.Component {
     });
   }
 
+  // @todo: Handle error
   handleSubmit(event) {
     event.preventDefault();
     this.props.onSubmit(this.state);

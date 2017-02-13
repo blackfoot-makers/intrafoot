@@ -1,47 +1,10 @@
-
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-// import { Popover, RaisedButton } from 'material-ui';
-// import { Accounts } from 'meteor/std:accounts-ui';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { Link, IndexLink } from 'react-router';
 
 import SubscribeComponent from '../SubscribeComponent';
-import LoginForm from '../account/LoginForm';
 
-// import AccountsWrapper from './account/AccountsWrapper';
-
-// const Login = ({ handleTouchTap, open, anchorEl, handleRequestClose }) =>
-//   <div>
-//     <RaisedButton
-//       onTouchTap={handleTouchTap}
-//       label="Login"
-//     />
-//     <Popover
-//       label="login"
-//       open={open}
-//       anchorEl={anchorEl}
-//       anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-//       targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-//       onRequestClose={handleRequestClose}
-//     >
-//       <LoginForm />
-//     </Popover>
-//   </div>;
-
-// Login.propTypes = {
-//   open: PropTypes.bool.isRequired,
-//   anchorEl: PropTypes.object,
-//   handleTouchTap: PropTypes.func.isRequired,
-//   handleRequestClose: PropTypes.func.isRequired,
-// };
-
-// Login.contextTypes = {
-//   muiTheme: PropTypes.object.isRequired,
-// };
-
-// Login.muiName = 'RaisedButton';
-
-// App component - represents the whole app
 class DefaultPage extends Component {
   constructor(props) {
     super(props);
@@ -59,9 +22,96 @@ class DefaultPage extends Component {
 
   render() {
     return (
-      <div>
-        <div className="mdl-grid">
-          DefaultPage
+      <div className="mdl-grid">
+        <div className="mdl-cell mdl-cell--6-col mdl-card mdl-shadow--2dp">
+          <div className="mdl-card__title">
+            <h2 className="mdl-card__title-text">Projets</h2>
+          </div>
+          <div className="mdl-card__supporting-text">
+            <table className="mdl-data-table mdl-js-data-table">
+              <thead>
+                <tr>
+                  <th className="mdl-data-table__cell--non-numeric">Type</th>
+                  <th>Hors taxes</th>
+                  <th>TVA</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="mdl-data-table__cell--non-numeric">Acceptés</td>
+                  <td>189800</td>
+                  <td>37960</td>
+                  <td>227760</td>
+                </tr>
+                <tr>
+                  <td className="mdl-data-table__cell--non-numeric">Signés</td>
+                  <td>189800</td>
+                  <td>37960</td>
+                  <td>227760</td>
+                </tr>
+                <tr>
+                  <td className="mdl-data-table__cell--non-numeric">Stand by</td>
+                  <td>189800</td>
+                  <td>37960</td>
+                  <td>227760</td>
+                </tr>
+                <tr>
+                  <td className="mdl-data-table__cell--non-numeric">Terminé</td>
+                  <td>189800</td>
+                  <td>37960</td>
+                  <td>227760</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="mdl-card__actions mdl-card--border">
+            <IndexLink className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Voir les projets
+            </IndexLink>
+          </div>
+          <div className="mdl-card__menu">
+            <span className="mdl-badge" data-badge="4" />
+          </div>
+        </div>
+        <div className="mdl-cell mdl-cell--6-col mdl-card mdl-shadow--2dp">
+          <div className="mdl-card__title">
+            <h2 className="mdl-card__title-text">Factures</h2>
+          </div>
+          <div className="mdl-card__supporting-text">
+              Résumé des factures
+          </div>
+          <div className="mdl-card__actions mdl-card--border">
+            <IndexLink className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Voir les factures
+            </IndexLink>
+          </div>
+        </div>
+        <div className="mdl-cell mdl-cell--6-col mdl-card mdl-shadow--2dp">
+          <div className="mdl-card__title">
+            <h2 className="mdl-card__title-text">Devis</h2>
+          </div>
+          <div className="mdl-card__supporting-text">
+              Résumé des devis
+          </div>
+          <div className="mdl-card__actions mdl-card--border">
+            <IndexLink className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Voir les devis
+            </IndexLink>
+          </div>
+        </div>
+        <div className="mdl-cell mdl-cell--6-col mdl-card mdl-shadow--2dp">
+          <div className="mdl-card__title">
+            <h2 className="mdl-card__title-text">Contacts</h2>
+          </div>
+          <div className="mdl-card__supporting-text">
+            Résumé des contacts
+          </div>
+          <div className="mdl-card__actions mdl-card--border">
+            <IndexLink className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Voir les contacts
+            </IndexLink>
+          </div>
         </div>
       </div>
     );
@@ -76,7 +126,7 @@ DefaultPage.childContextTypes = {
   muiTheme: React.PropTypes.object,
 };
 
-function mapStateToProps(state) {
+function mapStateToProps() {
   return {
     currentUser: Meteor.user(),
   };
