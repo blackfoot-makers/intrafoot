@@ -1,0 +1,32 @@
+export function setUser(user) {
+  return (dispatch) => {
+    dispatch({
+      type: 'SET_USER',
+      user
+    });
+  };
+}
+
+export function getUser() {
+  return (dispatch) => {
+    dispatch(setUser(Meteor.user()));
+  };
+}
+
+export function editUser(newUser) {
+  const currentUser = Meteor.user();
+
+  console.log('NEWUSER IS ', newUser);
+
+  currentUser.profile = {
+    ...currentUser.profile,
+    ...newUser
+  };
+
+  console.log('CURRENT USER PROFILE IS ', currentUser);
+
+  Meteor.users.update({ _id: currentUser._id }, { $set: { profile: currentUser.profile } });
+  return (dispatch) => {
+    dispatch(setUser(currentUser));
+  };
+}

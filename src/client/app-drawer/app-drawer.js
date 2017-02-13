@@ -16,13 +16,13 @@ const AppDrawer = ({ currentUser }) => (
       {
         currentUser &&
         <button
-          className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+          className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
           onClick={() => Meteor.logout(() => {
             console.log('LOGOUT OF STUFF');
             browserHistory.push('/logout');
           })}
         >
-          Logout
+          Se déconnecter
         </button>
       }
 
