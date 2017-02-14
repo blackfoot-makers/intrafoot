@@ -16,8 +16,6 @@ export function getUser() {
 export function editUser(newUser) {
   const currentUser = Meteor.user();
 
-  console.log('NEWUSER IS ', newUser);
-
   currentUser.profile = {
     ...currentUser.profile,
     email: newUser.email,
@@ -26,8 +24,6 @@ export function editUser(newUser) {
     company: newUser.company,
     title: newUser.title
   };
-
-  console.log('CURRENT USER PROFILE IS ', currentUser);
 
   Meteor.users.update({ _id: currentUser._id }, { $set: { profile: currentUser.profile } });
   return (dispatch) => {

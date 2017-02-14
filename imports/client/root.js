@@ -26,6 +26,15 @@ Accounts.ui.config({
   passwordSignupFields: 'USERNAME_AND_EMAIL',
 });
 
+function requireAuth(nextState, replace) {
+  if (!Meteor.user()) {
+    replace({
+      pathname: '/user',
+      state: { nextPathname: nextState.location.pathname }
+    });
+  }
+}
+
 const Root = (props) => {
   const history = syncHistoryWithStore(browserHistory, props.store);
 
@@ -34,7 +43,7 @@ const Root = (props) => {
       <Router history={history}>
         <Route path="/" component={App}>
           <Route path="/user" component={LoginForm} />
-          <IndexRoute component={DefaultPage} />
+          <IndexRoute component={DefaultPage} onEnter={requireAuth} />
         </Route>
       </Router>
     </Provider>
