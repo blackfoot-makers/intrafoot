@@ -1,6 +1,7 @@
 import React from 'react';
-
 import { Textfield, Button } from 'react-mdl';
+
+import { SubmitButton } from '../../common/InputButton';
 
 class EditForm extends React.Component {
   constructor(props) {
@@ -54,8 +55,6 @@ class EditForm extends React.Component {
           pattern="^[a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4}$"
         />
 
-        <br />
-
         <Textfield
           onChange={this.handleChange}
           required
@@ -64,8 +63,6 @@ class EditForm extends React.Component {
           floatingLabel
           value={this.state.company}
         />
-
-        <br />
 
         <Textfield
           onChange={this.handleChange}
@@ -76,8 +73,6 @@ class EditForm extends React.Component {
           value={this.state.firstName}
         />
 
-        <br />
-
         <Textfield
           onChange={this.handleChange}
           required
@@ -86,8 +81,6 @@ class EditForm extends React.Component {
           floatingLabel
           value={this.state.lastName}
         />
-
-        <br />
 
         <Textfield
           onChange={this.handleChange}
@@ -98,12 +91,10 @@ class EditForm extends React.Component {
           value={this.state.title}
         />
 
-        <br />
-
         <Button
           raised
           colored
-          component={<input type="submit" value="Submit" />}
+          component={SubmitButton}
         />
 
       </form>

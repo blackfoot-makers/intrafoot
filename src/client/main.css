@@ -1,4 +1,6 @@
 /* CSS declarations go here */
+
+/* Extends mdl classes */
 .mdl-card__supporting-text {
   overflow: auto !important;
 }
@@ -6,6 +8,12 @@
 .mdl-card {
   height: fit-content;
 }
+
+.mdl-textfield {
+  display: block !important;
+}
+
+/* Other classes */
 
 #login-buttons {
   display: block;
