@@ -1,21 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { Header, Navigation, Badge } from 'react-mdl';
 
 export default () => (
-  <header className="mdl-layout__header">
-    <div className="mdl-layout__header-row">
-      <span className="mdl-layout-title">Intrafoot</span>
-      <div className="mdl-layout-spacer" />
-      {
-        Meteor.user() &&
-        <nav className="mdl-navigation">
-          <Link className="mdl-navigation__link" to="/user" >
-            <span className="mdl-badge" data-badge={Meteor.user().profile.notifications}>
-              { Meteor.user().username }
-            </span>
-          </Link>
-        </nav>
-      }
-    </div>
-  </header>
+  <Header title="Intrafoot">
+    {
+      Meteor.user() &&
+      <Navigation>
+        <Link to="/user" >
+          <Badge text="4">
+            { Meteor.user().username }
+          </Badge>
+        </Link>
+      </Navigation>
+    }
+  </Header>
 );

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Link, IndexLink } from 'react-router';
+import { Grid, Cell, Card, CardTitle, CardText, CardActions, CardMenu, DataTable, TableHeader, Badge, Button } from 'react-mdl';
 
 import SubscribeComponent from '../SubscribeComponent';
 
@@ -21,99 +22,86 @@ class DefaultPage extends Component {
   }
 
   render() {
+    const facturesRows = [
+      { type: 'Envoyées', ht: 141550, tva: 28310, total: 169860 },
+      { type: 'Réglées', ht: 141550, tva: 28310, total: 169860 },
+      { type: 'Différence', ht: 141550, tva: 28310, total: 169860 }
+    ];
+    const devisRows = [
+      { type: 'Acceptés', ht: 189800, tva: 37960, total: 227760 },
+      { type: 'Signés', ht: 189800, tva: 37960, total: 227760 },
+      { type: 'Stand by', ht: 189800, tva: 37960, total: 227760 },
+      { type: 'Terminé', ht: 189800, tva: 37960, total: 227760 }
+    ];
+
     return (
-      <div className="mdl-grid">
-        <div className="mdl-cell mdl-cell--6-col mdl-card mdl-shadow--2dp">
-          <div className="mdl-card__title">
-            <h2 className="mdl-card__title-text">Projets</h2>
-          </div>
-          <div className="mdl-card__supporting-text">
-            <table className="mdl-data-table mdl-js-data-table">
-              <thead>
-                <tr>
-                  <th className="mdl-data-table__cell--non-numeric">Type</th>
-                  <th>Hors taxes</th>
-                  <th>TVA</th>
-                  <th>Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="mdl-data-table__cell--non-numeric">Acceptés</td>
-                  <td>189800</td>
-                  <td>37960</td>
-                  <td>227760</td>
-                </tr>
-                <tr>
-                  <td className="mdl-data-table__cell--non-numeric">Signés</td>
-                  <td>189800</td>
-                  <td>37960</td>
-                  <td>227760</td>
-                </tr>
-                <tr>
-                  <td className="mdl-data-table__cell--non-numeric">Stand by</td>
-                  <td>189800</td>
-                  <td>37960</td>
-                  <td>227760</td>
-                </tr>
-                <tr>
-                  <td className="mdl-data-table__cell--non-numeric">Terminé</td>
-                  <td>189800</td>
-                  <td>37960</td>
-                  <td>227760</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div className="mdl-card__actions mdl-card--border">
-            <IndexLink className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-              Voir les projets
-            </IndexLink>
-          </div>
-          <div className="mdl-card__menu">
-            <span className="mdl-badge" data-badge="4" />
-          </div>
-        </div>
-        <div className="mdl-cell mdl-cell--6-col mdl-card mdl-shadow--2dp">
-          <div className="mdl-card__title">
-            <h2 className="mdl-card__title-text">Factures</h2>
-          </div>
-          <div className="mdl-card__supporting-text">
-              Résumé des factures
-          </div>
-          <div className="mdl-card__actions mdl-card--border">
-            <IndexLink className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+      <Grid>
+        <Cell col={6} component={Card} shadow={0}>
+          <CardTitle>
+            Factures
+          </CardTitle>
+          <CardText>
+            <DataTable rows={facturesRows}>
+              <TableHeader name="type" tooltip="Le type de facture">Type</TableHeader>
+              <TableHeader name="ht" tooltip="Le prix total hors taxe des factures">Hors taxes</TableHeader>
+              <TableHeader name="tva" tooltip="La tva des factures">TVA</TableHeader>
+              <TableHeader name="total" tooltip="Le total tout compris des factures">Total</TableHeader>
+            </DataTable>
+          </CardText>
+          <CardActions border>
+            <Button colored ripple component={IndexLink}>
               Voir les factures
-            </IndexLink>
-          </div>
-        </div>
-        <div className="mdl-cell mdl-cell--6-col mdl-card mdl-shadow--2dp">
-          <div className="mdl-card__title">
-            <h2 className="mdl-card__title-text">Devis</h2>
-          </div>
-          <div className="mdl-card__supporting-text">
-              Résumé des devis
-          </div>
-          <div className="mdl-card__actions mdl-card--border">
-            <IndexLink className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            </Button>
+          </CardActions>
+        </Cell>
+        <Cell col={6} component={Card} shadow={0}>
+          <CardTitle>
+            Projets
+          </CardTitle>
+          <CardText>
+            Résumé des projets
+          </CardText>
+          <CardActions border>
+            <Button colored ripple component={IndexLink}>
+              Voir les projets
+            </Button>
+          </CardActions>
+          <CardMenu>
+            <Badge text="4" />
+          </CardMenu>
+        </Cell>
+        <Cell col={6} component={Card} shadow={0}>
+          <CardTitle>
+            Devis
+          </CardTitle>
+          <CardText>
+            <DataTable rows={devisRows}>
+              <TableHeader name="type" tooltip="Le type de devis">Type</TableHeader>
+              <TableHeader name="ht" tooltip="Le prix total hors taxe des devis">Hors taxes</TableHeader>
+              <TableHeader name="tva" tooltip="La tva des devis">TVA</TableHeader>
+              <TableHeader name="total" tooltip="Le total tout compris des devis">Total</TableHeader>
+            </DataTable>
+          </CardText>
+          <CardActions border>
+            <Button colored ripple component={IndexLink}>
               Voir les devis
-            </IndexLink>
-          </div>
-        </div>
-        <div className="mdl-cell mdl-cell--6-col mdl-card mdl-shadow--2dp">
-          <div className="mdl-card__title">
-            <h2 className="mdl-card__title-text">Contacts</h2>
-          </div>
-          <div className="mdl-card__supporting-text">
+            </Button>
+          </CardActions>
+        </Cell>
+        <Cell col={6} component={Card} shadow={0}>
+          <CardTitle>
+            Contacts
+          </CardTitle>
+          <CardText>
             Résumé des contacts
-          </div>
-          <div className="mdl-card__actions mdl-card--border">
-            <IndexLink className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          </CardText>
+          <CardActions border>
+            <Button colored ripple component={IndexLink}>
               Voir les contacts
-            </IndexLink>
-          </div>
-        </div>
-      </div>
+            </Button>
+          </CardActions>
+        </Cell>
+      </Grid>
     );
   }
 }

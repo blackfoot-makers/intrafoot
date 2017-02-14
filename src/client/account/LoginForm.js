@@ -25,12 +25,7 @@ class LoginForm extends React.Component {
     };
   }
 
-  componentDidMount() {
-    console.log('MOUNTING WITH USER', Meteor.user());
-  }
-
   _onEditClick() {
-    console.log('ONEDIT CLICK ');
     this.setState({
       editMode: true
     });
@@ -39,7 +34,6 @@ class LoginForm extends React.Component {
   render() {
     // const className = this.props.user ? 6 : 12;
 
-    console.log('LOGGIN USER IS ', Meteor.user());
     if (this.state.editMode) {
       return (
         <EditForm currentUser={Meteor.user().profile} onSubmit={this.props.editUser} />

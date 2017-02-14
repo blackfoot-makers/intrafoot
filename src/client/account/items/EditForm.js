@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Textfield, Button } from 'react-mdl';
+
 class EditForm extends React.Component {
   constructor(props) {
     super(props);
@@ -14,18 +16,11 @@ class EditForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    window.componentHandler.upgradeDom(this.root);
-  }
-
-  componentWillUnmount() {
-    window.componentHandler.downgradeElements(this.root);
-  }
-
   handleChange(event) {
     const target = event.target;
     const value = target.value;
     const name = target.name;
+
 
     this.setState({
       [name]: value
@@ -45,79 +40,73 @@ class EditForm extends React.Component {
 
   render() {
     return (
-      <div className="mdl-grid">
-        <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit}>
 
-          <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input
-              className="mdl-textfield__input"
-              type="email"
-              name="email"
-              id="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-            <label className="mdl-textfield__label" htmlFor="email">Email</label>
-            <span className="mdl-textfield__error">Email non valide</span>
-          </div>
-          <br />
+        <Textfield
+          onChange={this.handleChange}
+          required
+          label="Email"
+          name="email"
+          floatingLabel
+          value={this.state.email}
+          type="email"
+          error="Email non valide"
+          pattern="^[a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4}$"
+        />
 
-          <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input
-              className="mdl-textfield__input"
-              type="text"
-              name="company"
-              id="company"
-              value={this.state.company}
-              onChange={this.handleChange}
-            />
-            <label className="mdl-textfield__label" htmlFor="company">Entreprise</label>
-          </div>
-          <br />
+        <br />
 
-          <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input
-              className="mdl-textfield__input"
-              type="text"
-              name="firstName"
-              id="firstName"
-              value={this.state.firstName}
-              onChange={this.handleChange}
-            />
-            <label className="mdl-textfield__label" htmlFor="firstName">Prénom</label>
-          </div>
-          <br />
+        <Textfield
+          onChange={this.handleChange}
+          required
+          label="Entreprise"
+          name="company"
+          floatingLabel
+          value={this.state.company}
+        />
 
-          <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input
-              className="mdl-textfield__input"
-              type="text"
-              name="lastName"
-              id="lastName"
-              value={this.state.lastName}
-              onChange={this.handleChange}
-            />
-            <label className="mdl-textfield__label" htmlFor="lastName">Nom</label>
-          </div>
-          <br />
+        <br />
 
-          <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input
-              className="mdl-textfield__input"
-              type="text"
-              name="title"
-              id="title"
-              value={this.state.title}
-              onChange={this.handleChange}
-            />
-            <label className="mdl-textfield__label" htmlFor="title">Titre</label>
-          </div>
-          <br />
+        <Textfield
+          onChange={this.handleChange}
+          required
+          label="Prénom"
+          name="firstName"
+          floatingLabel
+          value={this.state.firstName}
+        />
 
-          <input type="submit" value="Submit" className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" />
+        <br />
 
-        </form>
-      </div>
+        <Textfield
+          onChange={this.handleChange}
+          required
+          label="Nom"
+          name="lastName"
+          floatingLabel
+          value={this.state.lastName}
+        />
+
+        <br />
+
+        <Textfield
+          onChange={this.handleChange}
+          required
+          label="Titre"
+          name="title"
+          floatingLabel
+          value={this.state.title}
+        />
+
+        <br />
+
+        <Button
+          raised
+          colored
+          component={<input type="submit" value="Submit" />}
+        />
+
+      </form>
     );
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Accounts, STATES } from 'meteor/std:accounts-ui';
+import { Button, Grid } from 'react-mdl';
 
 class LoginFormAccount extends Accounts.ui.LoginForm {
 
@@ -59,21 +60,21 @@ class LoginFormAccount extends Accounts.ui.LoginForm {
     const { formState } = this.state;
 
     return (
-      <div className="mdl-grid">
+      <Grid>
         {
           super.render()
         }
         {
           formState === STATES.PROFILE &&
-          <button
-            className="mdl-button mdl-js-button mdl-js-ripple-effect"
+          <Button
+            ripple
             style={{ marginTop: 10 }}
             onClick={this.props.onEditClick}
           >
               EDITION DE PROFILE
-          </button>
+          </Button>
         }
-      </div>
+      </Grid>
     );
   }
 }

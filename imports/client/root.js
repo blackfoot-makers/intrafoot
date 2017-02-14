@@ -9,6 +9,10 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import { Accounts } from 'meteor/std:accounts-ui';
 import { T9n } from 'meteor/softwarerero:accounts-t9n';
 
+// React-mdl classes
+import 'react-mdl/extra/material.css';
+import 'react-mdl/extra/material.js';
+
 // import config from '../../config.json';
 
 import createStore from '../../src/client/createStore';
