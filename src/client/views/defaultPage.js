@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Link, IndexLink } from 'react-router';
-import { Grid, Cell, Card, CardTitle, CardText, CardActions, CardMenu, DataTable, TableHeader, Badge, Button } from 'react-mdl';
+import { Grid, Cell, Card, CardTitle, CardText, CardActions, CardMenu, DataTable, TableHeader, Badge, Button, Icon } from 'react-mdl';
 
 import SubscribeComponent from '../SubscribeComponent';
 
@@ -53,6 +53,11 @@ class DefaultPage extends Component {
               Voir les factures
             </Button>
           </CardActions>
+          <CardMenu>
+            <Badge text="4" overlap>
+              <Icon name="notifications" />
+            </Badge>
+          </CardMenu>
         </Cell>
         <Cell col={6} component={Card} shadow={0}>
           <CardTitle>
@@ -66,9 +71,6 @@ class DefaultPage extends Component {
               Voir les projets
             </Button>
           </CardActions>
-          <CardMenu>
-            <Badge text="4" />
-          </CardMenu>
         </Cell>
         <Cell col={6} component={Card} shadow={0}>
           <CardTitle>
