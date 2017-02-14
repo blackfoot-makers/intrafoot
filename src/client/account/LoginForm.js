@@ -32,8 +32,6 @@ class LoginForm extends React.Component {
   }
 
   render() {
-    // const className = this.props.user ? 6 : 12;
-
     if (this.state.editMode) {
       return (
         <EditForm currentUser={Meteor.user().profile} onSubmit={this.props.editUser} />

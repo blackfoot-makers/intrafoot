@@ -6,6 +6,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
+import R, { Roles } from 'meteor/alanning:roles';
 import { Accounts } from 'meteor/std:accounts-ui';
 import { T9n } from 'meteor/softwarerero:accounts-t9n';
 
@@ -27,7 +28,9 @@ Accounts.ui.config({
 });
 
 function requireAuth(nextState, replace) {
-  if (!Meteor.user()) {
+  const currentUser = Meteor.user();
+
+  if (!currentUser || !Roles.userIsInRole(currentUser, 'admin')) {
     replace({
       pathname: '/user',
       state: { nextPathname: nextState.location.pathname }

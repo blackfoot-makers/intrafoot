@@ -24,7 +24,12 @@ Users.attachSchema(Users.schema);
 if (Meteor.isServer) {
   Accounts.onCreateUser((options, user) => {
     user.profile = options.profile || {};
-    user.roles = {};
+
+    if (user.profile &&
+      user.profile.email.includes('@blackfoot.io', user.profile.email.indexOf('@'))) {
+      Roles.setRolesOnUserObj(user, 'admin', Roles.GLOBAL_GROUP);
+      console.log('ADDING ROLE TO USER');
+    }
 
     Users.insert({
       ...user.profile,
