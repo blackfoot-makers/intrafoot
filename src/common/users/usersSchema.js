@@ -1,4 +1,6 @@
 import { Accounts } from 'meteor/accounts-base';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { Roles } from 'meteor/alanning:roles';
 
 const Users = new Mongo.Collection('user');
 
@@ -38,4 +40,5 @@ if (Meteor.isServer) {
     return user;
   });
 }
+
 export default Users;
