@@ -20,6 +20,7 @@ import createStore from '../../src/client/createStore';
 import App from '../../src/client/containers/App';
 import DefaultPage from '../../src/client/views/defaultPage';
 import LoginForm from '../../src/client/account/LoginForm';
+import Project from '../../src/client/project/Project';
 
 T9n.setLanguage('fr');
 
@@ -46,6 +47,7 @@ const Root = (props) => {
       <Router history={history}>
         <Route path="/" component={App}>
           <Route path="/user" component={LoginForm} />
+          <Route path="/project" component={Project} onEnter={requireAuth} />
           <IndexRoute component={DefaultPage} onEnter={requireAuth} />
         </Route>
       </Router>

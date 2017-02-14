@@ -1,17 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router';
 import { Header, Navigation, Badge } from 'react-mdl';
+
+import { LinkToUser } from '../common/Links';
 
 export default () => (
   <Header title="Intrafoot">
     {
       Meteor.user() &&
       <Navigation>
-        <Link to="/user" >
+        <LinkToUser>
           <Badge text="4">
             { Meteor.user().username }
           </Badge>
-        </Link>
+        </LinkToUser>
       </Navigation>
     }
   </Header>

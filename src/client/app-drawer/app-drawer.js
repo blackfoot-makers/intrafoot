@@ -1,13 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link, IndexLink, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import { Drawer, Navigation, Button } from 'react-mdl';
+
+import { LinkToUser, LinkToIndex, LinkToProject } from '../common/Links';
 
 const AppDrawer = ({ currentUser }) => (
   <Drawer title="IntraFoot">
     <Navigation>
-      <IndexLink to="/">Dashboard</IndexLink>
-      <Link to="/user">Utilisateur</Link>
+      <LinkToIndex>Dashboard</LinkToIndex>
+      <LinkToUser>Utilisateur</LinkToUser>
+      <LinkToProject>Les projets</LinkToProject>
       {
         currentUser &&
         <Button

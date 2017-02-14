@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { Link, IndexLink } from 'react-router';
 import { Grid, Cell, Card, CardTitle, CardText, CardActions, CardMenu, DataTable, TableHeader, Badge, Button, Icon } from 'react-mdl';
 
-import SubscribeComponent from '../SubscribeComponent';
+import { LinkToProject, LinkToIndex } from '../common/Links';
 
 class DefaultPage extends Component {
   constructor(props) {
@@ -49,7 +48,7 @@ class DefaultPage extends Component {
             </DataTable>
           </CardText>
           <CardActions border>
-            <Button colored ripple component={IndexLink}>
+            <Button colored ripple component={LinkToIndex}>
               Voir les factures
             </Button>
           </CardActions>
@@ -67,7 +66,7 @@ class DefaultPage extends Component {
             Résumé des projets
           </CardText>
           <CardActions border>
-            <Button colored ripple component={IndexLink}>
+            <Button colored ripple component={LinkToProject}>
               Voir les projets
             </Button>
           </CardActions>
@@ -85,7 +84,7 @@ class DefaultPage extends Component {
             </DataTable>
           </CardText>
           <CardActions border>
-            <Button colored ripple component={IndexLink}>
+            <Button colored ripple component={LinkToIndex}>
               Voir les devis
             </Button>
           </CardActions>
@@ -98,7 +97,7 @@ class DefaultPage extends Component {
             Résumé des contacts
           </CardText>
           <CardActions border>
-            <Button colored ripple component={IndexLink}>
+            <Button colored ripple component={LinkToIndex}>
               Voir les contacts
             </Button>
           </CardActions>
@@ -122,4 +121,4 @@ function mapStateToProps() {
   };
 }
 
-export default connect(mapStateToProps)(SubscribeComponent(DefaultPage));
+export default connect(mapStateToProps)(DefaultPage);

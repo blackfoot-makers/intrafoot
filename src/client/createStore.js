@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 // import { persistStore, autoRehydrate } from 'redux-persist';
 
 import reducers from './reducers';
-// import { loadTodo } from './todo/todoActions';
+import { loadProject } from './project/projectActions';
 
 export default () => {
   const logger = createLogger();
@@ -19,7 +19,8 @@ export default () => {
 
   const store = compose(...storeEnhancers)(createStore)(reducers);
 
-  // Register todo to be load every time
+  // Register projects to be load every time
+  store.dispatch(loadProject());
   // if (Meteor.isClient) {
     // store.dispatch(loadTodo());
     // persistStore(store, {

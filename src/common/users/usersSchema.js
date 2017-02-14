@@ -35,6 +35,7 @@ if (Meteor.isServer) {
 
     Users.insert({
       ...user.profile,
+      createdAt: new Date(),
       id: user._id
     });
     return user;
