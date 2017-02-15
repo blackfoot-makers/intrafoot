@@ -24,8 +24,14 @@ import Project from '../../src/client/project/Project';
 
 T9n.setLanguage('fr');
 
+Accounts.config({
+  sendVerificationEmail: true,
+  forbidClientAccountCreation: false
+});
+
 Accounts.ui.config({
   passwordSignupFields: 'USERNAME_AND_EMAIL',
+  requireEmailVerification: true
 });
 
 function requireAuth(nextState, replace) {
@@ -36,6 +42,15 @@ function requireAuth(nextState, replace) {
       pathname: '/user',
       state: { nextPathname: nextState.location.pathname }
     });
+  } else if (currentUser && !currentUser.emails[0].verified) {
+    const message = 'You must verify your email address before you can log in';
+    const notification = document.getElementById('snackbarIntraFoot');
+    const data = {
+      message
+    };
+
+    notification.MaterialSnackbar.showSnackbar(data);
+    throw new Meteor.Error(403, message);
   }
 }
 

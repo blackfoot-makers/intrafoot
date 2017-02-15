@@ -38,6 +38,11 @@ if (Meteor.isServer) {
       createdAt: new Date(),
       id: user._id
     });
+
+    Meteor.setTimeout(() => {
+      Accounts.sendVerificationEmail(user._id);
+    }, 2 * 1000);
+
     return user;
   });
 }

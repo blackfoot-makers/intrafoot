@@ -53,7 +53,7 @@ class LoginFormAccount extends Accounts.ui.LoginForm {
       title,
       company
     });
-    super.signUp(options);
+    super.signUp(opt);
   }
 
   render() {
