@@ -2,6 +2,11 @@ import { Accounts } from 'meteor/accounts-base';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Roles } from 'meteor/alanning:roles';
 
+Accounts.config({
+  sendVerificationEmail: true,
+  forbidClientAccountCreation: false
+});
+
 const Users = new Mongo.Collection('user');
 
 Users.schema = new SimpleSchema({
@@ -30,7 +35,6 @@ if (Meteor.isServer) {
     if (user.profile &&
       user.profile.email.includes('@blackfoot.io', user.profile.email.indexOf('@'))) {
       Roles.setRolesOnUserObj(user, 'admin', Roles.GLOBAL_GROUP);
-      console.log('ADDING ROLE TO USER');
     }
 
     Users.insert({
@@ -38,10 +42,6 @@ if (Meteor.isServer) {
       createdAt: new Date(),
       id: user._id
     });
-
-    Meteor.setTimeout(() => {
-      Accounts.sendVerificationEmail(user._id);
-    }, 2 * 1000);
 
     return user;
   });

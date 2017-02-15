@@ -24,33 +24,29 @@ import Project from '../../src/client/project/Project';
 
 T9n.setLanguage('fr');
 
-Accounts.config({
-  sendVerificationEmail: true,
-  forbidClientAccountCreation: false
-});
-
 Accounts.ui.config({
   passwordSignupFields: 'USERNAME_AND_EMAIL',
   requireEmailVerification: true
 });
 
+function redirectToLogin(message, replace, nextState) {
+  const notification = document.getElementById('snackbarIntraFoot');
+
+  notification.MaterialSnackbar.showSnackbar({
+    message
+  });
+  replace({
+    pathname: '/user',
+    state: { nextPathname: nextState.location.pathname }
+  });
+}
 function requireAuth(nextState, replace) {
   const currentUser = Meteor.user();
 
   if (!currentUser || !Roles.userIsInRole(currentUser, 'admin')) {
-    replace({
-      pathname: '/user',
-      state: { nextPathname: nextState.location.pathname }
-    });
+    redirectToLogin('You must be a Blackfoot employee to access this page', replace, nextState);
   } else if (currentUser && !currentUser.emails[0].verified) {
-    const message = 'You must verify your email address before you can log in';
-    const notification = document.getElementById('snackbarIntraFoot');
-    const data = {
-      message
-    };
-
-    notification.MaterialSnackbar.showSnackbar(data);
-    throw new Meteor.Error(403, message);
+    redirectToLogin('You must verify your email address before you can log in', replace, nextState);
   }
 }
 
