@@ -9,20 +9,21 @@ import moment from 'moment';
 
 import { SubmitButton } from '../../common/InputButton';
 
-import { addProject } from '../projectActions';
+import { addProject, editProject } from '../projectActions';
 
 class ProjectAdd extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: '',
-      company: '',
-      name: '',
-      description: '',
-      signature: moment(),
-      status: 'en cours',
-      remarque: '',
-      nda: 'false'
+      id: props.id,
+      company: props.company,
+      name: props.name,
+      description: props.description,
+      signature: moment(props.signature),
+      status: props.status || 'en cours',
+      remarque: props.remarque,
+      nda: props.nda ? 'true' : 'false',
+      _id: props._id
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -60,14 +61,19 @@ class ProjectAdd extends React.Component {
       signature: this.state.signature._d,
       nda: this.state.nda === 'true'
     };
-
-    this.props.addProject(projectData);
-
     const notification = document.getElementById('snackbarIntraFoot');
-    const data = {
-      message: 'Projet ajouté'
-    };
-    notification.MaterialSnackbar.showSnackbar(data);
+    let msg = 'Projet ajouté';
+
+    if (this.props.editMode) {
+      this.props.editProject(projectData);
+      msg = 'Projet édité';
+    } else {
+      this.props.addProject(projectData);
+    }
+
+    notification.MaterialSnackbar.showSnackbar({
+      message: msg
+    });
     browserHistory.push('/project');
   }
 
@@ -159,11 +165,25 @@ class ProjectAdd extends React.Component {
 const mapDispatchToProps = dispatch => ({
   addProject: (data) => {
     dispatch(addProject(data));
+  },
+  editProject: (data) => {
+    dispatch(editProject(data));
   }
 });
 
 ProjectAdd.propTypes = {
-  addProject: React.PropTypes.func.isRequired
+  addProject: React.PropTypes.func.isRequired,
+  editProject: React.PropTypes.func.isRequired,
+  id: React.PropTypes.string,
+  company: React.PropTypes.string,
+  name: React.PropTypes.string,
+  description: React.PropTypes.string,
+  signature: React.PropTypes.object,
+  status: React.PropTypes.string,
+  remarque: React.PropTypes.string,
+  nda: React.PropTypes.bool,
+  editMode: React.PropTypes.bool,
+  _id: React.PropTypes.string
 };
 
 export default connect(null, mapDispatchToProps)(ProjectAdd);

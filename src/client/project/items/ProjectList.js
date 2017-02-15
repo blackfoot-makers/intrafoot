@@ -1,16 +1,9 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
-import { Table, TableHeader, IconButton, Cell, Card, CardTitle, CardText, CardActions, Button } from 'react-mdl';
+import { Table, TableHeader, Cell, Card, CardTitle, CardText, CardActions, Button } from 'react-mdl';
 import moment from 'moment';
 
-const renderAction = data => (
-  <div>
-    <IconButton name="edit" icon="edit" onClick={() => console.log('EDIT', data.itemId)} />
-    <IconButton name="delete" icon="delete" onClick={() => console.log('DELETE', data.itemId)} />
-  </div>
-);
-
-const ProjectList = ({ projects, ...otherProps }) => (
+const ProjectList = ({ projects, renderAction, ...otherProps }) => (
   <Cell col={12} component={Card} shadow={0}>
     <CardTitle>
       Projets
@@ -39,7 +32,6 @@ const ProjectList = ({ projects, ...otherProps }) => (
           name="signature"
           tooltip="Date de signature du projet"
           cellFormatter={(date) => {
-            console.log('date is == ', date);
             return moment(date).format('LL');
           }}
         >
@@ -80,7 +72,8 @@ const ProjectList = ({ projects, ...otherProps }) => (
 );
 
 ProjectList.propTypes = {
-  projects: React.PropTypes.array.isRequired
+  projects: React.PropTypes.array.isRequired,
+  renderAction: React.PropTypes.func.isRequired
 };
 
 export default ProjectList;

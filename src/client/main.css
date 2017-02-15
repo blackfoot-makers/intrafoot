@@ -3,6 +3,7 @@
 /* Extends mdl classes */
 .mdl-card__supporting-text {
   overflow: auto !important;
+  width: 100% !important;
 }
 
 .mdl-card__actions {
