@@ -1,5 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Grid, Cell } from 'react-mdl';
+
+import SubscribeComponent from '../SubscribeComponent';
+import ProjectList from './items/ProjectList';
 
 import { addProject, deleteProject, editProject } from './projectActions';
 
@@ -11,8 +15,7 @@ class Projects extends Component {
     this.deleteAProject = this.deleteAProject.bind(this);
     this.editAProject = this.editAProject.bind(this);
     this.addAProject = this.addAProject.bind(this);
-
-    console.log('List of projects are == ', this.props.projects);
+    this.props.subscribe('projects');
   }
 
   editAProject(data) {
@@ -28,10 +31,15 @@ class Projects extends Component {
   }
 
   render() {
+    const projects = this.props.projects.map(data => ({
+      action: { itemId: data._id },
+      ...data
+    }));
+
     return (
-      <div>
-        Liste des projets!
-      </div>
+      <Grid>
+        <ProjectList projects={projects} />
+      </Grid>
     );
   }
 }
@@ -41,6 +49,7 @@ Projects.propTypes = {
   editProject: PropTypes.func.isRequired,
   deleteProject: PropTypes.func.isRequired,
   addProject: PropTypes.func.isRequired,
+  subscribe: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -63,4 +72,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Projects);
+export default connect(mapStateToProps, mapDispatchToProps)(SubscribeComponent(Projects));

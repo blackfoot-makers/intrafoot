@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { Drawer, Navigation, Button } from 'react-mdl';
 
-import { LinkToUser, LinkToIndex, LinkToProject } from '../common/Links';
+import { LinkToUser, LinkToIndex, LinkToProject } from '../../common/Links';
 
 const AppDrawer = ({ currentUser }) => (
   <Drawer title="IntraFoot">

@@ -3,7 +3,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 const Projects = new Mongo.Collection('project');
 
 Projects.schema = new SimpleSchema({
-  id: { type: String, regEx: SimpleSchema.RegEx.Id },
+  id: { type: String },
   name: { type: String },
   description: { type: String },
   company: { type: String },

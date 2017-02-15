@@ -1,16 +1,18 @@
 import React from 'react';
 import { Layout, Content, Grid } from 'react-mdl';
 
-import AppBar from '../app-bar/app-bar';
-import AppDrawer from '../app-drawer/app-drawer';
+import AppBar from './items/app-bar';
+import AppDrawer from './items/app-drawer';
+import AppFooter from './items/app-footer';
 
-const App = props => (
+const App = ({ children, location }) => (
   <Layout fixedHeader>
     <AppBar />
     <AppDrawer />
     <Content component={Grid}>
-      { props.children }
+      { children }
     </Content>
+    <AppFooter location={location} />
     <div
       aria-live="assertive"
       aria-atomic="true"
@@ -25,7 +27,8 @@ const App = props => (
 );
 
 App.propTypes = {
-  children: React.PropTypes.node.isRequired
+  children: React.PropTypes.node.isRequired,
+  location: React.PropTypes.object
 };
 
 export default App;

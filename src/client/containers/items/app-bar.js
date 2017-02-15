@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header, Navigation, Badge } from 'react-mdl';
 
-import { LinkToUser } from '../common/Links';
+import { LinkToUser } from '../../common/Links';
 
 export default () => (
   <Header title="Intrafoot">
