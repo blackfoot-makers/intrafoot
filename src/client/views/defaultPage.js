@@ -42,9 +42,30 @@ class DefaultPage extends Component {
           <CardText>
             <DataTable rows={facturesRows}>
               <TableHeader name="type" tooltip="Le type de facture">Type</TableHeader>
-              <TableHeader name="ht" tooltip="Le prix total hors taxe des factures">Hors taxes</TableHeader>
-              <TableHeader name="tva" tooltip="La tva des factures">TVA</TableHeader>
-              <TableHeader name="total" tooltip="Le total tout compris des factures">Total</TableHeader>
+              <TableHeader
+                numeric
+                cellFormatter={price => `${price.toFixed(2)}€`}
+                name="ht"
+                tooltip="Le prix total hors taxe des factures"
+              >
+                Hors taxes
+              </TableHeader>
+              <TableHeader
+                numeric
+                cellFormatter={price => `${price.toFixed(2)}€`}
+                name="tva"
+                tooltip="La tva des factures"
+              >
+                TVA
+              </TableHeader>
+              <TableHeader
+                numeric
+                cellFormatter={price => `${price.toFixed(2)}€`}
+                name="total"
+                tooltip="Le total tout compris des factures"
+              >
+                Total
+              </TableHeader>
             </DataTable>
           </CardText>
           <CardActions border>
@@ -78,9 +99,30 @@ class DefaultPage extends Component {
           <CardText>
             <DataTable rows={devisRows}>
               <TableHeader name="type" tooltip="Le type de devis">Type</TableHeader>
-              <TableHeader name="ht" tooltip="Le prix total hors taxe des devis">Hors taxes</TableHeader>
-              <TableHeader name="tva" tooltip="La tva des devis">TVA</TableHeader>
-              <TableHeader name="total" tooltip="Le total tout compris des devis">Total</TableHeader>
+              <TableHeader
+                numeric
+                cellFormatter={price => `${price.toFixed(2)}€`}
+                name="ht"
+                tooltip="Le prix total hors taxe des devis"
+              >
+                Hors taxes
+              </TableHeader>
+              <TableHeader
+                numeric
+                cellFormatter={price => `${price.toFixed(2)}€`}
+                name="tva"
+                tooltip="La tva des devis"
+              >
+                TVA
+              </TableHeader>
+              <TableHeader
+                numeric
+                cellFormatter={price => `${price.toFixed(2)}€`}
+                name="total"
+                tooltip="Le total tout compris des devis"
+              >
+                Total
+              </TableHeader>
             </DataTable>
           </CardText>
           <CardActions border>
