@@ -1,5 +1,5 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import { Table, TableHeader, Cell, Card, CardTitle, CardText, CardActions, Button } from 'react-mdl';
 import moment from 'moment';
 
@@ -25,10 +25,8 @@ const DevisList = ({ devis, renderAction, ...otherProps }) => (
           name="idProject"
           tooltip="Projet lié au devis"
           cellFormatter={(id) => {
-            console.log('id is ', id);
             const project = Projects.findOne(id);
-            console.log('project is ', project);
-            return project.name;
+            return <Link to={`/project/${id}`}>{project.name}</Link>;
           }}
         >
           Projet

@@ -25,8 +25,10 @@ import DefaultPage from '../../src/client/views/defaultPage';
 import LoginForm from '../../src/client/account/LoginForm';
 import Project from '../../src/client/project/Project';
 import ProjectAdd from '../../src/client/project/items/ProjectAdd';
+import ProjectShow from '../../src/client/project/items/ProjectShow';
 import Devis from '../../src/client/devis/Devis';
 import DevisAdd from '../../src/client/devis/items/DevisAdd';
+
 
 moment.locale('fr', {
   months: 'janvier_février_mars_avril_mai_juin_juillet_août_septembre_octobre_novembre_décembre'.split('_'),
@@ -127,6 +129,7 @@ const Root = (props) => {
         <Route path="/" component={App}>
           <Route path="/user" component={LoginForm} />
           <Route path="/project" component={Project} onEnter={requireAuth} />
+          <Route path="/project/:projectId" component={ProjectShow} onEnter={requireAuth} />
           <Route path="/project/add" component={ProjectAdd} onEnter={requireAuth} />
           <Route path="/project/edit/:projectId" component={ProjectAdd} onEnter={requireAuth} />
           <Route path="/devis" component={Devis} onEnter={requireAuth} />

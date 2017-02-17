@@ -43,12 +43,11 @@ class Projects extends Component {
   renderAction(data) {
     return (
       <div>
-        <IconButton name="edit" icon="edit" onClick={() => browserHistory.push(`/project/edit/${data._id}`)} />
+        <IconButton name="fullscreen" onClick={() => browserHistory.push(`/project/${data._id}`)} />
+        <IconButton name="edit" onClick={() => browserHistory.push(`/project/edit/${data._id}`)} />
         <IconButton
           name="delete"
-          icon="delete"
           onClick={() => {
-            console.log('DELETE', data._id);
             this.props.deleteProject(data._id);
           }}
         />
