@@ -3,17 +3,16 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { Grid, IconButton } from 'react-mdl';
 
-import ProjectList from './items/ProjectList';
-import ProjectAdd from './items/ProjectAdd';
+import DevisList from './items/DevisList';
+import DevisAdd from './items/DevisAdd';
 
-import { deleteProject } from './projectActions';
+import { deleteDevis } from './devisActions';
 
-// Projects component - represents the projects lists
-class Projects extends Component {
+class Devis extends Component {
 
   constructor(props) {
     super(props);
-    this.deleteAProject = this.deleteAProject.bind(this);
+    this.deleteADevis = this.deleteADevis.bind(this);
     this.renderAction = this.renderAction.bind(this);
 
     this.state = {
@@ -36,20 +35,19 @@ class Projects extends Component {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
 
-  deleteAProject(id) {
-    this.props.deleteProject(id);
+  deleteADevis(id) {
+    this.props.deleteDevis(id);
   }
 
   renderAction(data) {
     return (
       <div>
-        <IconButton name="edit" icon="edit" onClick={() => browserHistory.push(`/project/edit/${data._id}`)} />
+        <IconButton name="edit" icon="edit" onClick={() => browserHistory.push(`/devis/edit/${data._id}`)} />
         <IconButton
           name="delete"
           icon="delete"
           onClick={() => {
-            console.log('DELETE', data._id);
-            this.props.deleteProject(data._id);
+            this.props.deleteDevis(data._id);
           }}
         />
       </div>
@@ -57,7 +55,7 @@ class Projects extends Component {
   }
 
   render() {
-    const projects = this.props.projects.map(data => ({
+    const devis = this.props.devis.map(data => ({
       action: data,
       ...data
     }));
@@ -65,40 +63,37 @@ class Projects extends Component {
     if (this.state.editMode) {
       return (
         <Grid>
-          <ProjectAdd {...this.state.editMode} editMode />
+          <DevisAdd {...this.state.editMode} editMode />
         </Grid>
       );
     }
 
     return (
       <Grid style={{ width: this.state.width - (16 + 16) }}>
-        <ProjectList
-          projects={projects}
-          renderAction={this.renderAction}
-          width={this.state.width}
-        />
+        <DevisList devis={devis} renderAction={this.renderAction} width={this.state.width} />
       </Grid>
     );
   }
 }
 
-Projects.propTypes = {
-  projects: PropTypes.array.isRequired,
-  deleteProject: PropTypes.func.isRequired
+Devis.propTypes = {
+  devis: PropTypes.array.isRequired,
+  deleteDevis: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    projects: state.projects
+    projects: state.projects,
+    devis: state.devis
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    deleteProject: (id) => {
-      dispatch(deleteProject(id));
+    deleteDevis: (id) => {
+      dispatch(deleteDevis(id));
     }
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Projects);
+export default connect(mapStateToProps, mapDispatchToProps)(Devis);

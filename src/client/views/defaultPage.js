@@ -1,11 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Grid, Cell, Card, CardTitle, CardText, CardActions, CardMenu, DataTable, TableHeader, Badge, Button, Icon } from 'react-mdl';
 
-import { LinkToProject, LinkToIndex } from '../common/Links';
+import { LinkToProject, LinkToIndex, LinkToDevis } from '../common/Links';
 
-class DefaultPage extends Component {
+class DefaultPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -17,7 +17,42 @@ class DefaultPage extends Component {
     };
   }
 
-  componentWillMount() {
+  _getDevis() {
+    const devis = [
+      { type: 'Acceptés', ht: 0, tva: 0, total: 0 },
+      { type: 'Signés', ht: 0, tva: 0, total: 0 },
+      { type: 'Stand by', ht: 0, tva: 0, total: 0 },
+      { type: 'Terminé', ht: 0, tva: 0, total: 0 }
+    ];
+
+    this.props.devis.map((data) => {
+      console.log('DATA IS ', data);
+      let index = 0;
+
+      switch (data.status) {
+        case 'stand by':
+          index = 2;
+          break;
+        case 'terminé':
+          index = 3;
+          break;
+        case 'accepté':
+        default:
+          index = 0;
+      }
+      devis[index].ht += data.price;
+      devis[index].tva += (data.price * 0.2);
+      devis[index].total = devis[index].ht + devis[index].tva;
+      if (data.signed) {
+        devis[1].ht += data.price;
+        devis[1].tva += (data.price * 0.2);
+        devis[1].total = devis[1].ht + devis[1].tva;
+      }
+      return data;
+    });
+
+    console.log('devis is == ', devis);
+    return (devis);
   }
 
   render() {
@@ -26,12 +61,7 @@ class DefaultPage extends Component {
       { type: 'Réglées', ht: 141550, tva: 28310, total: 169860 },
       { type: 'Différence', ht: 141550, tva: 28310, total: 169860 }
     ];
-    const devisRows = [
-      { type: 'Acceptés', ht: 189800, tva: 37960, total: 227760 },
-      { type: 'Signés', ht: 189800, tva: 37960, total: 227760 },
-      { type: 'Stand by', ht: 189800, tva: 37960, total: 227760 },
-      { type: 'Terminé', ht: 189800, tva: 37960, total: 227760 }
-    ];
+    const devisRows = this._getDevis();
 
     return (
       <Grid>
@@ -84,7 +114,8 @@ class DefaultPage extends Component {
             Projets
           </CardTitle>
           <CardText>
-            Résumé des projets
+            Résumé des projets: <br />
+            Nous avons en ce moment { this.props.projects.length } projets.
           </CardText>
           <CardActions border>
             <Button colored ripple component={LinkToProject}>
@@ -126,7 +157,7 @@ class DefaultPage extends Component {
             </DataTable>
           </CardText>
           <CardActions border>
-            <Button colored ripple component={LinkToIndex}>
+            <Button colored ripple component={LinkToDevis}>
               Voir les devis
             </Button>
           </CardActions>
@@ -150,16 +181,19 @@ class DefaultPage extends Component {
 }
 
 DefaultPage.propTypes = {
-  currentUser: PropTypes.object,
+  projects: React.PropTypes.array.isRequired,
+  devis: React.PropTypes.array.isRequired
 };
 
 DefaultPage.childContextTypes = {
   muiTheme: React.PropTypes.object,
 };
 
-function mapStateToProps() {
+function mapStateToProps(state) {
   return {
     currentUser: Meteor.user(),
+    devis: state.devis,
+    projects: state.projects
   };
 }
 
