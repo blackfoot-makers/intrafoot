@@ -15,7 +15,7 @@ export function deleteProject(id) {
 
 export function editProject(data) {
   return () => {
-    Meteor.call('toggleProject', data);
+    Meteor.call('editProject', data);
   };
 }
 

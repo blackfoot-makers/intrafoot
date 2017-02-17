@@ -6,25 +6,44 @@ import { browserHistory } from 'react-router';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
-
 import { SubmitButton } from '../../common/InputButton';
 
 import { addProject, editProject } from '../projectActions';
+import Projects from '../../../common/project/projectSchema';
 
 class ProjectAdd extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      id: props.id,
-      company: props.company,
-      name: props.name,
-      description: props.description,
-      signature: moment(props.signature),
-      status: props.status || 'en cours',
-      remarque: props.remarque,
-      nda: props.nda ? 'true' : 'false',
-      _id: props._id
+    let state = {
+      id: '',
+      company: '',
+      name: '',
+      description: '',
+      signature: moment(),
+      status: 'en cours',
+      remarque: '',
+      nda: false,
+      editMode: false
     };
+
+    if (props.params.projectId) {
+      const project = Projects.findOne(props.params.projectId);
+      console.log('PARAMS ELEMENT IS ', props.params, project);
+      state = {
+        id: project.id,
+        company: project.company,
+        name: project.name,
+        description: project.description,
+        signature: moment(project.signature),
+        status: project.status || 'en cours',
+        remarque: project.remarque,
+        nda: project.nda ? 'true' : 'false',
+        _id: project._id,
+        editMode: true
+      };
+    }
+
+    this.state = state;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
@@ -64,7 +83,7 @@ class ProjectAdd extends React.Component {
     const notification = document.getElementById('snackbarIntraFoot');
     let msg = 'Projet ajouté';
 
-    if (this.props.editMode) {
+    if (this.state.editMode) {
       this.props.editProject(projectData);
       msg = 'Projet édité';
     } else {
@@ -174,16 +193,7 @@ const mapDispatchToProps = dispatch => ({
 ProjectAdd.propTypes = {
   addProject: React.PropTypes.func.isRequired,
   editProject: React.PropTypes.func.isRequired,
-  id: React.PropTypes.string,
-  company: React.PropTypes.string,
-  name: React.PropTypes.string,
-  description: React.PropTypes.string,
-  signature: React.PropTypes.object,
-  status: React.PropTypes.string,
-  remarque: React.PropTypes.string,
-  nda: React.PropTypes.bool,
-  editMode: React.PropTypes.bool,
-  _id: React.PropTypes.string
+  params: React.PropTypes.object
 };
 
 export default connect(null, mapDispatchToProps)(ProjectAdd);

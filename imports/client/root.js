@@ -126,6 +126,7 @@ const Root = (props) => {
           <Route path="/user" component={LoginForm} />
           <Route path="/project" component={Project} onEnter={requireAuth} />
           <Route path="/project/add" component={ProjectAdd} onEnter={requireAuth} />
+          <Route path="/project/edit/:projectId" component={ProjectAdd} onEnter={requireAuth} />
           <IndexRoute component={DefaultPage} onEnter={requireAuth} />
         </Route>
       </Router>

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import { Grid, IconButton } from 'react-mdl';
 
 import SubscribeComponent from '../SubscribeComponent';
@@ -18,8 +19,23 @@ class Projects extends Component {
     this.props.subscribe('projects');
 
     this.state = {
-      editMode: false
+      editMode: false,
+      width: 0
     };
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions.bind(this));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions.bind(this));
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
 
   deleteAProject(id) {
@@ -29,7 +45,7 @@ class Projects extends Component {
   renderAction(data) {
     return (
       <div>
-        <IconButton name="edit" icon="edit" onClick={() => this.setState({ editMode: data })} />
+        <IconButton name="edit" icon="edit" onClick={() => browserHistory.push(`/project/edit/${data._id}`)} />
         <IconButton
           name="delete"
           icon="delete"
@@ -57,8 +73,8 @@ class Projects extends Component {
     }
 
     return (
-      <Grid>
-        <ProjectList projects={projects} renderAction={this.renderAction} />
+      <Grid style={{ width: this.state.width - (16 + 16) }}>
+        <ProjectList projects={projects} renderAction={this.renderAction} width={this.state.width} />
       </Grid>
     );
   }

@@ -31,9 +31,7 @@ const ProjectList = ({ projects, renderAction, ...otherProps }) => (
         <TableHeader
           name="signature"
           tooltip="Date de signature du projet"
-          cellFormatter={(date) => {
-            return moment(date).format('LL');
-          }}
+          cellFormatter={date => moment(date).format('LL')}
         >
           Signature
         </TableHeader>
