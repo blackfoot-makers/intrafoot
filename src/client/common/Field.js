@@ -24,7 +24,7 @@ const Field = ({
         >
           {
             options.map((data, index) =>
-              (<Option key={index} value={data._id}>{data.name}</Option>)
+              (<Option key={index} value={data._id}>{data.name || data.id}</Option>)
             )
           }
         </SelectField>

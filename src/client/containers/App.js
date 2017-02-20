@@ -12,6 +12,7 @@ class App extends React.Component {
 
     props.subscribe('devis');
     props.subscribe('projects');
+    props.subscribe('factures');
   }
   render() {
     const { children } = this.props;

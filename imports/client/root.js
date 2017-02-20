@@ -28,6 +28,9 @@ import ProjectShow from '../../src/client/project/items/ProjectShow';
 import Devis from '../../src/client/devis/Devis';
 import DevisAdd from '../../src/client/devis/items/DevisAdd';
 import DevisShow from '../../src/client/devis/items/DevisShow';
+import Facture from '../../src/client/facture/Facture';
+import FactureAdd from '../../src/client/facture/items/FactureAdd';
+import FactureShow from '../../src/client/facture/items/FactureShow';
 
 T9n.setLanguage('fr');
 
@@ -76,6 +79,10 @@ const Root = (props) => {
           <Route path="/devis/add" component={DevisAdd} onEnter={requireAuth} />
           <Route path="/devis/edit/:devisId" component={DevisAdd} onEnter={requireAuth} />
           <Route path="/devis/:devisId" component={DevisShow} onEnter={requireAuth} />
+          <Route path="/facture" component={Facture} onEnter={requireAuth} />
+          <Route path="/facture/add" component={FactureAdd} onEnter={requireAuth} />
+          <Route path="/facture/edit/:factureId" component={FactureAdd} onEnter={requireAuth} />
+          <Route path="/facture/:factureId" component={FactureShow} onEnter={requireAuth} />
           <IndexRoute component={DefaultPage} onEnter={requireAuth} />
         </Route>
       </Router>

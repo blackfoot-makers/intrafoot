@@ -21,6 +21,16 @@ LinkToDevis.propTypes = {
   children: React.PropTypes.node.isRequired
 };
 
+const LinkToFacture = ({ children, ...otherProps }) => (
+  <Link to="/facture" {...otherProps}>
+    { children }
+  </Link>
+);
+
+LinkToFacture.propTypes = {
+  children: React.PropTypes.node.isRequired
+};
+
 const LinkToUser = ({ children, ...otherProps }) => (
   <Link to="/user" {...otherProps}>
     { children }
@@ -45,5 +55,6 @@ export {
   LinkToProject,
   LinkToIndex,
   LinkToUser,
-  LinkToDevis
+  LinkToDevis,
+  LinkToFacture
 };

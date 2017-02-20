@@ -37,7 +37,7 @@ const checkAllParams =
 
 Meteor.methods({
 
-  addDevis(params) {
+  addFacture(params) {
     if (!this.userId || !Roles.userIsInRole(this.userId, 'admin')) {
       throw new Meteor.Error('not-authorized');
     }
@@ -56,7 +56,7 @@ Meteor.methods({
     return deviss;
   },
 
-  deleteDevis(id) {
+  deleteFacture(id) {
     if (!this.userId || !Roles.userIsInRole(this.userId, 'admin')) {
       throw new Meteor.Error('not-authorized');
     }
@@ -66,7 +66,7 @@ Meteor.methods({
     Factures.remove(id);
   },
 
-  editDevis(params) {
+  editFacture(params) {
     if (!this.userId || !Roles.userIsInRole(this.userId, 'admin')) {
       throw new Meteor.Error('not-authorized');
     }

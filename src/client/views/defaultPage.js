@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Grid, Cell, Card, CardTitle, CardText, CardActions, CardMenu, DataTable, TableHeader, Badge, Button, Icon } from 'react-mdl';
 
-import { LinkToProject, LinkToIndex, LinkToDevis } from '../common/Links';
+import { LinkToProject, LinkToIndex, LinkToDevis, LinkToFacture } from '../common/Links';
 
 class DefaultPage extends React.Component {
   constructor(props) {
@@ -26,7 +26,6 @@ class DefaultPage extends React.Component {
     ];
 
     this.props.devis.map((data) => {
-      console.log('DATA IS ', data);
       let index = 0;
 
       switch (data.status) {
@@ -51,16 +50,37 @@ class DefaultPage extends React.Component {
       return data;
     });
 
-    console.log('devis is == ', devis);
     return (devis);
   }
 
-  render() {
-    const facturesRows = [
-      { type: 'Envoyées', ht: 141550, tva: 28310, total: 169860 },
-      { type: 'Réglées', ht: 141550, tva: 28310, total: 169860 },
-      { type: 'Différence', ht: 141550, tva: 28310, total: 169860 }
+  _getFactures() {
+    const factures = [
+      { type: 'Envoyées', ht: 0, tva: 0, total: 0 },
+      { type: 'Réglées', ht: 0, tva: 0, total: 0 },
+      { type: 'Différence', ht: 0, tva: 0, total: 0 }
     ];
+
+    this.props.factures.map((data) => {
+      factures[0].ht += data.price;
+      factures[0].tva += (data.price * 0.2);
+      factures[0].total = factures[0].ht + factures[0].tva;
+      if (data.payed === 'true') {
+        factures[1].ht += data.price;
+        factures[1].tva += (data.price * 0.2);
+        factures[1].total = factures[1].ht + factures[1].tva;
+      } else {
+        factures[2].ht += data.price;
+        factures[2].tva += (data.price * 0.2);
+        factures[2].total = factures[2].ht + factures[2].tva;
+      }
+      return data;
+    });
+
+    return (factures);
+  }
+
+  render() {
+    const facturesRows = this._getFactures();
     const devisRows = this._getDevis();
 
     return (
@@ -99,7 +119,7 @@ class DefaultPage extends React.Component {
             </DataTable>
           </CardText>
           <CardActions border>
-            <Button colored ripple component={LinkToIndex}>
+            <Button colored ripple component={LinkToFacture}>
               Voir les factures
             </Button>
           </CardActions>
@@ -182,7 +202,8 @@ class DefaultPage extends React.Component {
 
 DefaultPage.propTypes = {
   projects: React.PropTypes.array.isRequired,
-  devis: React.PropTypes.array.isRequired
+  devis: React.PropTypes.array.isRequired,
+  factures: React.PropTypes.array.isRequired
 };
 
 DefaultPage.childContextTypes = {
@@ -193,7 +214,8 @@ function mapStateToProps(state) {
   return {
     currentUser: Meteor.user(),
     devis: state.devis,
-    projects: state.projects
+    projects: state.projects,
+    factures: state.factures
   };
 }
 
