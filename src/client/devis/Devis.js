@@ -42,6 +42,7 @@ class Devis extends Component {
   renderAction(data) {
     return (
       <div>
+        <IconButton name="fullscreen" onClick={() => browserHistory.push(`/devis/${data._id}`)} />
         <IconButton name="edit" icon="edit" onClick={() => browserHistory.push(`/devis/edit/${data._id}`)} />
         <IconButton
           name="delete"

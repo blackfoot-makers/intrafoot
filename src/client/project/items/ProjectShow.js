@@ -14,7 +14,7 @@ const ProjectShow = ({ params }) => {
       </Cell>
     );
   }
-  console.log('PROJECT IS ', project);
+
   return (
     <List>
       <ListItem>Identifiant: {project.id}</ListItem>
