@@ -129,9 +129,9 @@ const Root = (props) => {
         <Route path="/" component={App}>
           <Route path="/user" component={LoginForm} />
           <Route path="/project" component={Project} onEnter={requireAuth} />
-          <Route path="/project/:projectId" component={ProjectShow} onEnter={requireAuth} />
           <Route path="/project/add" component={ProjectAdd} onEnter={requireAuth} />
           <Route path="/project/edit/:projectId" component={ProjectAdd} onEnter={requireAuth} />
+          <Route path="/project/:projectId" component={ProjectShow} onEnter={requireAuth} />
           <Route path="/devis" component={Devis} onEnter={requireAuth} />
           <Route path="/devis/add" component={DevisAdd} onEnter={requireAuth} />
           <Route path="/devis/edit/:devisId" component={DevisAdd} onEnter={requireAuth} />
