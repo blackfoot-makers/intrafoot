@@ -4,7 +4,8 @@ export default function userReducer(state = [], action) {
       return {
         ...state,
         allUsers: action.users,
-        blackfootUsers: action.blackfootUsers
+        blackfootUsers: action.blackfootUsers,
+        companies: action.companies
       };
     default:
       return state;

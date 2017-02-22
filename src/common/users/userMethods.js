@@ -2,6 +2,7 @@ import { check } from 'meteor/check';
 import { Roles } from 'meteor/alanning:roles';
 
 import Users from './usersSchema';
+import Companies from './companySchema';
 
 const checkAllParams =
 ({
@@ -55,6 +56,11 @@ Meteor.methods({
 
     const users = Users.insert(newUsers);
 
+    if (!Companies.findOne({ name: newUsers.company })) {
+      Companies.insert({
+        name: newUsers.company
+      });
+    }
     return users;
   },
 
@@ -93,6 +99,12 @@ Meteor.methods({
       title,
       company
     } = params;
+
+    if (!Companies.findOne({ name: company })) {
+      Companies.insert({
+        name: company
+      });
+    }
 
     return Users.update({ _id }, { $set: {
       id,

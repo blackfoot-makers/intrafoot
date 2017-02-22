@@ -119,7 +119,10 @@ const UserAdd = (props) => {
         {
           fieldKey: 'company',
           label: 'Entreprise',
-          type: 'text',
+          type: 'autocomplete',
+          items: props.users.companies,
+          valueIndex: 'name',
+          dataIndex: 'name',
           required: true,
           floatingLabel: true,
           defaultValue: defaultValue.company,

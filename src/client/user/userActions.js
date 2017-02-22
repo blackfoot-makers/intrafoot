@@ -1,6 +1,7 @@
 import { Tracker } from 'meteor/tracker';
 import { Roles } from 'meteor/alanning:roles';
 import Users from '../../common/users/usersSchema';
+import Companies from '../../common/users/companySchema';
 
 export function addUser(data) {
   return () => {
@@ -35,7 +36,8 @@ export function loadUser() {
       dispatch({
         type: 'SET_USERS',
         users,
-        blackfootUsers
+        blackfootUsers,
+        companies: Companies.find().fetch() || []
       });
     });
   };

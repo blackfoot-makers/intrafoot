@@ -1,6 +1,7 @@
 import { Accounts } from 'meteor/accounts-base';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Roles } from 'meteor/alanning:roles';
+import Companies from './companySchema.js';
 
 Accounts.config({
   sendVerificationEmail: true,
@@ -42,6 +43,12 @@ if (Meteor.isServer) {
       createdAt: new Date(),
       id: user._id
     });
+
+    if (!Companies.findOne({ name: user.profile.company })) {
+      Companies.insert({
+        name: user.profile.company
+      });
+    }
 
     return user;
   });
