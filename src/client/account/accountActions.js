@@ -1,7 +1,7 @@
 export function setUser(user) {
   return (dispatch) => {
     dispatch({
-      type: 'SET_USER',
+      type: 'SET_CURRENT_USER',
       user
     });
   };

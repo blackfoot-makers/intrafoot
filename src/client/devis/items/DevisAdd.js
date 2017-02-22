@@ -38,7 +38,10 @@ const DevisAdd = (props) => {
   return (
     <Form
       redirectAfterSubmit={() => { browserHistory.push('/devis'); }}
-      editAction={props.editDevis}
+      editAction={data => props.editDevis({
+        ...data,
+        _id: defaultValue._id
+      })}
       addAction={props.addDevis}
       editMode={defaultValue.devisId}
       name="Devis"

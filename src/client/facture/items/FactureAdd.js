@@ -44,7 +44,10 @@ const FactureAdd = (props) => {
   return (
     <Form
       redirectAfterSubmit={() => { browserHistory.push('/facture'); }}
-      editAction={props.editFacture}
+      editAction={data => props.editFacture({
+        ...data,
+        _id: defaultValue._id
+      })}
       addAction={props.addFacture}
       editMode={defaultValue.editMode}
       name="Facture"

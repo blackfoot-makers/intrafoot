@@ -4,8 +4,10 @@ import { routerReducer as routing } from 'react-router-redux';
 
 import projectReducer from './project/projectReducer';
 import accountReducer from './account/accountReducer';
+import userReducer from './user/userReducer';
 import devisReducer from './devis/devisReducer';
 import factureReducer from './facture/factureReducer';
+
 
 export default combineReducers({
   routing,
@@ -13,5 +15,6 @@ export default combineReducers({
   projects: projectReducer,
   factures: factureReducer,
   form: formReducer,
-  user: accountReducer
+  currentUser: accountReducer,
+  users: userReducer
 });

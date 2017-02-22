@@ -40,7 +40,10 @@ const ProjectAdd = (props) => {
   return (
     <Form
       redirectAfterSubmit={() => { browserHistory.push('/project'); }}
-      editAction={props.editProject}
+      editAction={data => props.editProject({
+        ...data,
+        _id: defaultValue._id
+      })}
       addAction={props.addProject}
       editMode={defaultValue.editMode}
       name="Projet"
@@ -98,7 +101,7 @@ const ProjectAdd = (props) => {
           defaultValue: defaultValue.status,
           options: [
             { _id: 'abandon', name: 'Abandon' },
-            { _id: 'accepté', name: 'Accepté' },
+            { _id: 'en cours', name: 'En cours' },
             { _id: 'stand by', name: 'Stand by' },
             { _id: 'terminé', name: 'Terminé' }
           ]

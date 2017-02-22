@@ -22,6 +22,9 @@ import createStore from '../../src/client/createStore';
 import App from '../../src/client/containers/App';
 import DefaultPage from '../../src/client/views/defaultPage';
 import LoginForm from '../../src/client/account/LoginForm';
+import User from '../../src/client/user/User';
+import UserAdd from '../../src/client/user/items/UserAdd';
+import UserShow from '../../src/client/user/items/UserShow';
 import Project from '../../src/client/project/Project';
 import ProjectAdd from '../../src/client/project/items/ProjectAdd';
 import ProjectShow from '../../src/client/project/items/ProjectShow';
@@ -71,6 +74,10 @@ const Root = (props) => {
       <Router history={history}>
         <Route path="/" component={App}>
           <Route path="/user" component={LoginForm} />
+          <Route path="/contact" component={User} onEnter={requireAuth} />
+          <Route path="/contact/add" component={UserAdd} onEnter={requireAuth} />
+          <Route path="/contact/edit/:contactId" component={UserAdd} onEnter={requireAuth} />
+          <Route path="/contact/:contactId" component={UserShow} onEnter={requireAuth} />
           <Route path="/project" component={Project} onEnter={requireAuth} />
           <Route path="/project/add" component={ProjectAdd} onEnter={requireAuth} />
           <Route path="/project/edit/:projectId" component={ProjectAdd} onEnter={requireAuth} />

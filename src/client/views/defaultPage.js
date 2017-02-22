@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Grid, Cell, Card, CardTitle, CardText, CardActions, CardMenu, DataTable, TableHeader, Badge, Button, Icon } from 'react-mdl';
 
-import { LinkToProject, LinkToIndex, LinkToDevis, LinkToFacture } from '../common/Links';
+import {
+  LinkToProject,
+  LinkToDevis,
+  LinkToFacture,
+  LinkToContact } from '../common/Links';
 
 class DefaultPage extends React.Component {
   constructor(props) {
@@ -190,7 +194,7 @@ class DefaultPage extends React.Component {
             Résumé des contacts
           </CardText>
           <CardActions border>
-            <Button colored ripple component={LinkToIndex}>
+            <Button colored ripple component={LinkToContact}>
               Voir les contacts
             </Button>
           </CardActions>
