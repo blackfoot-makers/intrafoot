@@ -4,7 +4,6 @@ import { browserHistory } from 'react-router';
 
 import { SubmitButton } from './InputButton';
 import Field from './Field';
-import Devis from '../../common/devis/devisSchema';
 
 class Form extends React.Component {
   constructor(props) {
@@ -22,14 +21,21 @@ class Form extends React.Component {
     this.handleOtherChange = this.handleOtherChange.bind(this);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.idDevis && prevState.idDevis !== this.state.idDevis) {
-      const devis = Devis.findOne(this.state.idDevis);
-      if (devis) {
-        this.setState({
-          price: devis.price
-        });
+  componentWillReceiveProps(nextProps) {
+    const state = this.state;
+    let changed = false;
+
+    nextProps.fields.map(({ fieldKey, defaultValue }, index) => {
+      if (state[fieldKey] !== defaultValue &&
+        this.props.fields[index].defaultValue === state[fieldKey]) {
+        state[fieldKey] = defaultValue;
+        changed = true;
       }
+      return true;
+    });
+
+    if (changed) {
+      this.setState(state);
     }
   }
 
@@ -41,12 +47,14 @@ class Form extends React.Component {
     this.setState({
       [name]: value
     });
+    this.props.onChange({ [name]: value });
   }
 
   handleOtherChange(data, key) {
     this.setState({
       [key]: data
     });
+    this.props.onChange({ [key]: data });
   }
 
   // @todo: Handle error
@@ -126,12 +134,14 @@ Form.propTypes = {
   addAction: React.PropTypes.func.isRequired,
   redirectAfterSubmit: React.PropTypes.func.isRequired,
   name: React.PropTypes.string.isRequired,
-  fields: React.PropTypes.array.isRequired
+  fields: React.PropTypes.array.isRequired,
+  onChange: React.PropTypes.func.isRequired
 };
 
 Form.defaultProps = {
   fields: [],
-  redirectAfterSubmit: () => browserHistory.push('/')
+  redirectAfterSubmit: () => browserHistory.push('/'),
+  onChange: data => console.log('Field change is ', data)
 };
 
 export default Form;

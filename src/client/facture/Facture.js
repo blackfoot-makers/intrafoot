@@ -17,7 +17,6 @@ class Factures extends Component {
     this.renderAction = this.renderAction.bind(this);
 
     this.state = {
-      editMode: false,
       width: 0
     };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
@@ -64,7 +63,7 @@ class Factures extends Component {
     if (this.state.editMode) {
       return (
         <Grid>
-          <FactureAdd {...this.state.editMode} editMode />
+          <FactureAdd />
         </Grid>
       );
     }
