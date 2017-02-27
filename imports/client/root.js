@@ -73,23 +73,23 @@ const Root = (props) => {
     <Provider store={props.store}>
       <Router history={history}>
         <Route path="/" component={App}>
-          <Route path="/user" component={LoginForm} />
-          <Route path="/contact" component={User} onEnter={requireAuth} />
-          <Route path="/contact/add" component={UserAdd} onEnter={requireAuth} />
-          <Route path="/contact/edit/:contactId" component={UserAdd} onEnter={requireAuth} />
-          <Route path="/contact/:contactId" component={UserShow} onEnter={requireAuth} />
-          <Route path="/project" component={Project} onEnter={requireAuth} />
-          <Route path="/project/add" component={ProjectAdd} onEnter={requireAuth} />
-          <Route path="/project/edit/:projectId" component={ProjectAdd} onEnter={requireAuth} />
-          <Route path="/project/:projectId" component={ProjectShow} onEnter={requireAuth} />
-          <Route path="/devis" component={Devis} onEnter={requireAuth} />
-          <Route path="/devis/add" component={DevisAdd} onEnter={requireAuth} />
-          <Route path="/devis/edit/:devisId" component={DevisAdd} onEnter={requireAuth} />
-          <Route path="/devis/:devisId" component={DevisShow} onEnter={requireAuth} />
-          <Route path="/facture" component={Facture} onEnter={requireAuth} />
-          <Route path="/facture/add" component={FactureAdd} onEnter={requireAuth} />
-          <Route path="/facture/edit/:factureId" component={FactureAdd} onEnter={requireAuth} />
-          <Route path="/facture/:factureId" component={FactureShow} onEnter={requireAuth} />
+          <Route path="user" component={LoginForm} />
+          <Route path="contact" component={User} onEnter={requireAuth} />
+          <Route path="contact/add" component={UserAdd} onEnter={requireAuth} />
+          <Route path="contact/edit/:contactId" component={UserAdd} onEnter={requireAuth} />
+          <Route path="contact/:contactId" component={UserShow} onEnter={requireAuth} />
+          <Route path="project" component={Project} onEnter={requireAuth} />
+          <Route path="project/add" component={ProjectAdd} onEnter={requireAuth} />
+          <Route path="project/edit/:projectId" component={ProjectAdd} onEnter={requireAuth} />
+          <Route path="project/:projectId" component={ProjectShow} onEnter={requireAuth} />
+          <Route path="devis" component={Devis} onEnter={requireAuth} />
+          <Route path="devis/add" component={DevisAdd} onEnter={requireAuth} />
+          <Route path="devis/edit/:devisId" component={DevisAdd} onEnter={requireAuth} />
+          <Route path="devis/:devisId" component={DevisShow} onEnter={requireAuth} />
+          <Route path="facture" component={Facture} onEnter={requireAuth} />
+          <Route path="facture/add" component={FactureAdd} onEnter={requireAuth} />
+          <Route path="facture/edit/:factureId" component={FactureAdd} onEnter={requireAuth} />
+          <Route path="facture/:factureId" component={FactureShow} onEnter={requireAuth} />
           <IndexRoute component={DefaultPage} onEnter={requireAuth} />
         </Route>
       </Router>

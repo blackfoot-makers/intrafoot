@@ -25,13 +25,14 @@ const FactureAddComponent = ({
     onChange,
     projects,
     devis,
+    _id,
     ...funcProps
   }) => (
     <Form
       redirectAfterSubmit={() => { browserHistory.push('/facture'); }}
       editAction={data => funcProps.editFacture({
         ...data,
-        _id: id
+        _id
       })}
       addAction={funcProps.addFacture}
       editMode={editMode}
@@ -92,6 +93,7 @@ const FactureAddComponent = ({
           label: 'Versement',
           type: 'number',
           defaultValue: pricePayed,
+          floatingLabel: true
         },
         {
           fieldKey: 'delayTillPayed',
@@ -126,12 +128,13 @@ FactureAddComponent.propTypes = {
   editFacture: React.PropTypes.func.isRequired,
   onChange: React.PropTypes.func.isRequired,
   price: React.PropTypes.number.isRequired,
+  _id: React.PropTypes.string,
   id: React.PropTypes.string.isRequired,
   idProject: React.PropTypes.string.isRequired,
   idDevis: React.PropTypes.string.isRequired,
   sentDate: React.PropTypes.instanceOf(moment).isRequired,
   payed: React.PropTypes.string.isRequired,
-  pricePayed: React.PropTypes.string.isRequired,
+  pricePayed: React.PropTypes.number.isRequired,
   delayTillPayed: React.PropTypes.number.isRequired,
   remarque: React.PropTypes.string.isRequired,
   payedDate: React.PropTypes.instanceOf(moment).isRequired,
@@ -148,7 +151,7 @@ class FactureAdd extends React.Component {
       idDevis: '',
       sentDate: moment(),
       payed: '',
-      pricePayed: '',
+      pricePayed: 0,
       price: 0,
       delayTillPayed: 60,
       remarque: '',
@@ -165,10 +168,10 @@ class FactureAdd extends React.Component {
         sentDate: moment(facture.sentDate),
         payed: facture.payed,
         price: facture.price,
-        pricePayed: facture.pricePayed,
+        pricePayed: facture.pricePayed || 0,
         delayTillPayed: facture.delayTillPayed,
-        remarque: facture.remarque,
-        payedDate: facture.payedDate,
+        remarque: facture.remarque || '',
+        payedDate: moment(facture.payedDate),
         _id: facture._id,
         editMode: true
       };

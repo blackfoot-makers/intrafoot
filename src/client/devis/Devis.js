@@ -16,7 +16,6 @@ class Devis extends Component {
     this.renderAction = this.renderAction.bind(this);
 
     this.state = {
-      editMode: false,
       width: 0
     };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
@@ -64,7 +63,7 @@ class Devis extends Component {
     if (this.state.editMode) {
       return (
         <Grid>
-          <DevisAdd {...this.state.editMode} editMode />
+          <DevisAdd />
         </Grid>
       );
     }

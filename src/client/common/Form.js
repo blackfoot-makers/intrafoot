@@ -102,16 +102,18 @@ class Form extends React.Component {
       <form onSubmit={this.handleSubmit}>
         {
           this.props.fields.map(({ defaultValue, ...props }, index) => {
-            if (props.display && this.state[props.display] === 'false') return <div key={index} />;
-            return (
-              <Field
-                key={index}
-                value={this.state[props.fieldKey] || defaultValue}
-                handleChange={this.handleChange}
-                handleOtherChange={this.handleOtherChange}
-                {...props}
-              />
-            );
+            if (!props.display || this.state[props.display] === 'true') {
+              return (
+                <Field
+                  key={index}
+                  value={this.state[props.fieldKey] || defaultValue}
+                  handleChange={this.handleChange}
+                  handleOtherChange={this.handleOtherChange}
+                  {...props}
+                />
+              );
+            }
+            return <div key={index} />;
           })
         }
 

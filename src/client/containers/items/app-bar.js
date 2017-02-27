@@ -4,8 +4,16 @@ import { Header, Navigation, Badge } from 'react-mdl';
 import { LinkToUser } from '../../common/Links';
 import SearchField from '../../common/SearchField';
 
-export default () => (
-  <Header title="Intrafoot">
+const AppBar = ({ subTitle }) => (
+  <Header
+    title={subTitle ?
+      <span>
+        <strong>Intrafoot</strong>
+        <span> / {subTitle}</span>
+      </span> :
+      <span>Intrafoot</span>
+    }
+  >
     {
       Meteor.user() &&
       <Navigation>
@@ -22,3 +30,9 @@ export default () => (
     }
   </Header>
 );
+
+AppBar.propTypes = {
+  subTitle: React.PropTypes.string
+};
+
+export default AppBar;

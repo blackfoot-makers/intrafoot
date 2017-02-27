@@ -17,10 +17,33 @@ class App extends React.Component {
     props.subscribe('companies');
   }
   render() {
-    const { children } = this.props;
+    const { children, location } = this.props;
+    const pathIndex = location.pathname.indexOf('/', 1);
+    const pathname = location.pathname.substr(1, pathIndex > 0 ? pathIndex - 1 : undefined);
+    let subTitle = '';
+
+    switch (pathname) {
+      case 'facture':
+        subTitle = 'Facture';
+        break;
+      case 'user':
+        subTitle = 'Profile';
+        break;
+      case 'contact':
+        subTitle = 'Networking';
+        break;
+      case 'project':
+        subTitle = 'Projets';
+        break;
+      case 'devis':
+        subTitle = 'Devis';
+        break;
+      default:
+        subTitle = 'Dashboard';
+    }
     return (
       <Layout fixedHeader>
-        <AppBar />
+        <AppBar subTitle={subTitle} />
         <AppDrawer />
         <Content component={Grid}>
           { children }
@@ -41,6 +64,7 @@ class App extends React.Component {
 }
 App.propTypes = {
   children: React.PropTypes.node.isRequired,
+  location: React.PropTypes.object.isRequired,
   subscribe: React.PropTypes.func.isRequired
 };
 

@@ -43,7 +43,7 @@ const DevisAdd = (props) => {
         _id: defaultValue._id
       })}
       addAction={props.addDevis}
-      editMode={defaultValue.devisId}
+      editMode={defaultValue.editMode}
       name="Devis"
       fields={[
         {

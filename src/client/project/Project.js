@@ -17,7 +17,6 @@ class Projects extends Component {
     this.renderAction = this.renderAction.bind(this);
 
     this.state = {
-      editMode: false,
       width: 0
     };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
@@ -64,7 +63,7 @@ class Projects extends Component {
     if (this.state.editMode) {
       return (
         <Grid>
-          <ProjectAdd {...this.state.editMode} editMode />
+          <ProjectAdd />
         </Grid>
       );
     }

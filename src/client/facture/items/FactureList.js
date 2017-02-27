@@ -53,7 +53,21 @@ const FactureList = ({ factures, renderAction, ...otherProps }) => (
         >
           Envoyé le
         </TableHeader>
-        <TableHeader name="payed" tooltip="Est-ce que la facture est réglée?">
+        <TableHeader
+          name="payed"
+          tooltip="Est-ce que la facture est réglée?"
+          cellFormatter={(payed) => {
+            switch (payed) {
+              case 'annulé':
+                return 'Annulé';
+              case 'true':
+                return 'Oui';
+              default:
+              case 'false':
+                return 'Non';
+            }
+          }}
+        >
           Réglée?
         </TableHeader>
         <TableHeader name="pricePayed" tooltip="La somme qui a été reçu pour cette facture">
