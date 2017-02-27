@@ -1,4 +1,4 @@
-export default function projectReducer(state = [], action) {
+export default function factureReducer(state = [], action) {
   switch (action.type) {
     case 'SET_FACTURE':
       return action.factures;

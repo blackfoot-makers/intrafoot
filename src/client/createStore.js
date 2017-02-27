@@ -10,6 +10,7 @@ import { loadProject } from './project/projectActions';
 import { loadDevis } from './devis/devisActions';
 import { loadFacture } from './facture/factureActions';
 import { loadUser } from './user/userActions';
+import { loadHistory } from './history/historyActions';
 
 export default () => {
   const logger = createLogger();
@@ -27,6 +28,7 @@ export default () => {
   store.dispatch(loadDevis());
   store.dispatch(loadFacture());
   store.dispatch(loadUser());
+  store.dispatch(loadHistory());
   // if (Meteor.isClient) {
     // store.dispatch(loadTodo());
     // persistStore(store, {

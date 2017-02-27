@@ -12,7 +12,10 @@ Meteor.methods({
     check(action, String);
     check(date, Date);
 
-    const history = History.insert(params);
+    const history = History.insert({
+      ...params,
+      createdAt: new Date()
+    });
 
     return history;
   }
