@@ -2,18 +2,21 @@ import { check } from 'meteor/check';
 import { Roles } from 'meteor/alanning:roles';
 
 import Projects from './projectSchema';
+import Companies from '../users/companySchema';
 
 const checkAllParams =
-({ id, name, description, company, signature, status, remarque = '', participants = [], nda }) => {
+({ id, name, description, signature = null, company, status, remarque = '', participants = [], nda }) => {
   check(id, String);
   check(name, String);
   check(description, String);
   check(company, String);
-  check(signature, Date);
   check(status, String);
   check(remarque, String);
   check(participants, Array);
   check(nda, Boolean);
+  if (signature) {
+    check(signature, Date);
+  }
 };
 
 Meteor.methods({
@@ -35,6 +38,12 @@ Meteor.methods({
     };
 
     const projects = Projects.insert(newProjects);
+
+    if (!Companies.findOne({ name: newProjects.company })) {
+      Companies.insert({
+        name: newProjects.company
+      });
+    }
 
     return projects;
   },

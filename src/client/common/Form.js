@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router';
 
 import { SubmitButton } from './InputButton';
 import Field from './Field';
+import Devis from '../../common/devis/devisSchema';
 
 class Form extends React.Component {
   constructor(props) {
@@ -19,6 +20,17 @@ class Form extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOtherChange = this.handleOtherChange.bind(this);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.idDevis && prevState.idDevis !== this.state.idDevis) {
+      const devis = Devis.findOne(this.state.idDevis);
+      if (devis) {
+        this.setState({
+          price: devis.price
+        });
+      }
+    }
   }
 
   handleChange(event) {

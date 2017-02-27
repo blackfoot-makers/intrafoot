@@ -14,7 +14,6 @@ const ProjectAdd = (props) => {
     company: '',
     name: '',
     description: '',
-    signature: moment(),
     status: 'en cours',
     remarque: '',
     nda: 'false',
@@ -28,7 +27,6 @@ const ProjectAdd = (props) => {
       company: project.company,
       name: project.name,
       description: project.description,
-      signature: moment(project.signature),
       status: project.status || 'en cours',
       remarque: project.remarque,
       nda: project.nda ? 'true' : 'false',
@@ -59,9 +57,12 @@ const ProjectAdd = (props) => {
         {
           fieldKey: 'company',
           label: 'Entreprise',
+          type: 'autocomplete',
+          items: props.users.companies,
+          valueIndex: 'name',
+          dataIndex: 'name',
           required: true,
           floatingLabel: true,
-          type: 'text',
           defaultValue: defaultValue.company
         },
         {
@@ -105,18 +106,15 @@ const ProjectAdd = (props) => {
             { _id: 'stand by', name: 'Stand by' },
             { _id: 'terminé', name: 'Terminé' }
           ]
-        },
-        {
-          fieldKey: 'signature',
-          label: 'Date de signature: ',
-          display: 'signed',
-          type: 'date',
-          defaultValue: defaultValue.signature,
         }
       ]}
     />
   );
 };
+
+const mapStateToProps = state => ({
+  users: state.users
+});
 
 const mapDispatchToProps = dispatch => ({
   addProject: (data) => {
@@ -130,7 +128,8 @@ const mapDispatchToProps = dispatch => ({
 ProjectAdd.propTypes = {
   addProject: React.PropTypes.func.isRequired,
   editProject: React.PropTypes.func.isRequired,
-  params: React.PropTypes.object
+  params: React.PropTypes.object,
+  users: React.PropTypes.object.isRequired
 };
 
-export default connect(null, mapDispatchToProps)(ProjectAdd);
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectAdd);

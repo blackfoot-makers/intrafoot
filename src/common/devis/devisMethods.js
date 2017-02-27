@@ -43,7 +43,13 @@ Meteor.methods({
     const devis = Devis.insert(newDevis);
     const project = Projects.findOne(params.idProject);
     if (project) {
-      Projects.update({ _id: project._id }, { $addToSet: { devis } });
+      Projects.update(
+        { _id: project._id },
+        {
+          $addToSet: { devis },
+          $set: { signature: newDevis.signature }
+        }
+      );
     }
     return devis;
   },
@@ -85,6 +91,14 @@ Meteor.methods({
       remarque,
       signed
     } = params;
+
+    const project = Projects.findOne(idProject);
+    if (project && signature) {
+      Projects.update(
+        { _id: project._id },
+        { $set: { signature } }
+      );
+    }
 
     return Devis.update({ _id }, { $set: {
       id,
