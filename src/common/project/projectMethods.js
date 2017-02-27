@@ -29,6 +29,8 @@ Meteor.methods({
     const newProjects = {
       ...params,
       createdAt: new Date(),
+      devis: [],
+      factures: [],
       creator: this.userId
     };
 

@@ -9,7 +9,7 @@ import Devis from '../../../common/devis/devisSchema';
 const FactureList = ({ factures, renderAction, ...otherProps }) => (
   <Cell col={12} component={Card} shadow={0}>
     <CardTitle>
-      Projets
+      Factures
     </CardTitle>
     <CardText>
       <Table

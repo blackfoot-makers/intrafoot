@@ -16,7 +16,6 @@ class SearchField extends React.Component {
 
   handleKeyPress(target) {
     if (target.charCode === 13) {
-      console.log(`ENTER PRESSED [${this.state.search}]`);
       this.props.findProject(this.state.search);
     }
   }
@@ -28,7 +27,6 @@ class SearchField extends React.Component {
         onKeyPress={this.handleKeyPress}
         onChange={(event) => {
           const target = event.target;
-          console.log('TEXT OF SEARCH CHANGE ', target.value);
           this.setState({
             search: target.value
           });

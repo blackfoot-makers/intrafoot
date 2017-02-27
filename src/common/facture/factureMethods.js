@@ -2,6 +2,7 @@ import { check } from 'meteor/check';
 import { Roles } from 'meteor/alanning:roles';
 
 import Factures from './factureSchema';
+import Projects from '../project/projectSchema';
 
 const checkAllParams =
 ({
@@ -45,15 +46,19 @@ Meteor.methods({
     check(params, Object);
     checkAllParams(params);
 
-    const newDevis = {
+    const newFacture = {
       ...params,
       createdAt: new Date(),
       creator: this.userId
     };
 
-    const deviss = Factures.insert(newDevis);
+    const factures = Factures.insert(newFacture);
+    const project = Projects.findOne(params.idProject);
+    if (project) {
+      Projects.update({ _id: project._id }, { $addToSet: { factures } });
+    }
 
-    return deviss;
+    return factures;
   },
 
   deleteFacture(id) {
@@ -62,6 +67,15 @@ Meteor.methods({
     }
 
     check(id, String);
+
+    const factures = Factures.findOne(id);
+    if (!factures) {
+      throw new Meteor.Error('No factures found to delete');
+    }
+    const project = Projects.findOne(factures.idProject);
+    if (project) {
+      Projects.update({ _id: project._id }, { $pull: { devis: id } });
+    }
 
     Factures.remove(id);
   },

@@ -2,6 +2,7 @@ import { check } from 'meteor/check';
 import { Roles } from 'meteor/alanning:roles';
 
 import Devis from './devisSchema';
+import Projects from '../project/projectSchema';
 
 const checkAllParams =
 ({
@@ -39,9 +40,12 @@ Meteor.methods({
       creator: this.userId
     };
 
-    const deviss = Devis.insert(newDevis);
-
-    return deviss;
+    const devis = Devis.insert(newDevis);
+    const project = Projects.findOne(params.idProject);
+    if (project) {
+      Projects.update({ _id: project._id }, { $addToSet: { devis } });
+    }
+    return devis;
   },
 
   deleteDevis(id) {
@@ -50,6 +54,15 @@ Meteor.methods({
     }
 
     check(id, String);
+
+    const devis = Devis.findOne(id);
+    if (!devis) {
+      throw new Meteor.Error('No devis found to delete');
+    }
+    const project = Projects.findOne(devis.idProject);
+    if (project) {
+      Projects.update({ _id: project._id }, { $pull: { devis: id } });
+    }
 
     Devis.remove(id);
   },
