@@ -191,7 +191,8 @@ class DefaultPage extends React.Component {
             Contacts
           </CardTitle>
           <CardText>
-            Résumé des contacts
+            Résumé des contacts: <br />
+            Nous avons en ce moment { this.props.users.allUsers.length } contacts dont { this.props.users.blackfootUsers.length } administrateurs.
           </CardText>
           <CardActions border>
             <Button colored ripple component={LinkToContact}>
@@ -207,7 +208,8 @@ class DefaultPage extends React.Component {
 DefaultPage.propTypes = {
   projects: React.PropTypes.array.isRequired,
   devis: React.PropTypes.array.isRequired,
-  factures: React.PropTypes.array.isRequired
+  factures: React.PropTypes.array.isRequired,
+  users: React.PropTypes.object.isRequired
 };
 
 DefaultPage.childContextTypes = {
@@ -219,7 +221,8 @@ function mapStateToProps(state) {
     currentUser: Meteor.user(),
     devis: state.devis,
     projects: state.projects,
-    factures: state.factures
+    factures: state.factures,
+    users: state.users
   };
 }
 
