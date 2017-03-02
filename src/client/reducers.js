@@ -7,6 +7,7 @@ import accountReducer from './account/accountReducer';
 import userReducer from './user/userReducer';
 import devisReducer from './devis/devisReducer';
 import factureReducer from './facture/factureReducer';
+import historyReducer from './history/historyReducer';
 
 
 export default combineReducers({
@@ -16,5 +17,6 @@ export default combineReducers({
   factures: factureReducer,
   form: formReducer,
   currentUser: accountReducer,
-  users: userReducer
+  users: userReducer,
+  history: historyReducer
 });

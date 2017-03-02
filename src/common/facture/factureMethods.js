@@ -3,6 +3,7 @@ import { Roles } from 'meteor/alanning:roles';
 
 import Factures from './factureSchema';
 import Projects from '../project/projectSchema';
+import History from '../history/historySchema';
 
 const checkAllParams =
 ({
@@ -58,6 +59,14 @@ Meteor.methods({
       Projects.update({ _id: project._id }, { $addToSet: { factures } });
     }
 
+    if (factures) {
+      History.insert({
+        user: this.userId,
+        doc: 'facture',
+        action: 'create',
+        date: new Date()
+      });
+    }
     return factures;
   },
 
@@ -78,6 +87,13 @@ Meteor.methods({
     }
 
     Factures.remove(id);
+
+    History.insert({
+      user: this.userId,
+      doc: 'facture',
+      action: 'delete',
+      date: new Date()
+    });
   },
 
   editFacture(params) {
@@ -102,7 +118,7 @@ Meteor.methods({
       payedDate
     } = params;
 
-    return Factures.update({ _id }, { $set: {
+    const facture = Factures.update({ _id }, { $set: {
       id,
       idProject,
       idDevis,
@@ -114,5 +130,15 @@ Meteor.methods({
       remarque,
       payedDate
     } });
+
+    if (facture) {
+      History.insert({
+        user: this.userId,
+        doc: 'facture',
+        action: 'edit',
+        date: new Date()
+      });
+    }
+    return facture;
   }
 });

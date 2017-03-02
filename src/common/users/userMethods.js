@@ -3,6 +3,7 @@ import { Roles } from 'meteor/alanning:roles';
 
 import Users from './usersSchema';
 import Companies from './companySchema';
+import History from '../history/historySchema';
 
 const checkAllParams =
 ({
@@ -20,7 +21,7 @@ const checkAllParams =
   history = [],
   title,
   company
- }) => {
+}) => {
   check(id, String);
   check(firstName, String);
   check(description, String);
@@ -35,6 +36,23 @@ const checkAllParams =
   check(lastContact, Date);
   check(history, Array);
   check(title, String);
+
+  return {
+    id,
+    firstName,
+    lastName,
+    phone,
+    linkedin,
+    sites,
+    email,
+    interlocuteur,
+    description,
+    accessLevel,
+    lastContact,
+    history,
+    title,
+    company
+  };
 };
 
 Meteor.methods({
@@ -45,10 +63,10 @@ Meteor.methods({
     }
 
     check(params, Object);
-    checkAllParams(params);
-    const sites = params.sites.split(';');
-    const newUsers = {
-      ...params,
+    let newUsers = checkAllParams(params);
+    const sites = newUsers.sites.split(';');
+    newUsers = {
+      ...newUsers,
       sites,
       createdAt: new Date(),
       creator: this.userId
@@ -59,6 +77,22 @@ Meteor.methods({
     if (!Companies.findOne({ name: newUsers.company })) {
       Companies.insert({
         name: newUsers.company
+      });
+
+      History.insert({
+        user: this.userId,
+        doc: 'company',
+        action: 'create',
+        date: new Date()
+      });
+    }
+
+    if (users) {
+      History.insert({
+        user: this.userId,
+        doc: 'contact',
+        action: 'create',
+        date: new Date()
       });
     }
     return users;
@@ -72,6 +106,12 @@ Meteor.methods({
     check(id, String);
 
     Users.remove(id);
+    History.insert({
+      user: this.userId,
+      doc: 'contact',
+      action: 'delete',
+      date: new Date()
+    });
   },
 
   editUser(params) {
@@ -104,9 +144,15 @@ Meteor.methods({
       Companies.insert({
         name: company
       });
+      History.insert({
+        user: this.userId,
+        doc: 'company',
+        action: 'create',
+        date: new Date()
+      });
     }
 
-    return Users.update({ _id }, { $set: {
+    const user = Users.update({ _id }, { $set: {
       id,
       firstName,
       lastName,
@@ -122,5 +168,14 @@ Meteor.methods({
       title,
       company
     } });
+
+    History.insert({
+      user: this.userId,
+      doc: 'contact',
+      action: 'edit',
+      date: new Date()
+    });
+
+    return user;
   }
 });

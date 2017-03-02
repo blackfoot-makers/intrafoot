@@ -3,6 +3,7 @@ import { Roles } from 'meteor/alanning:roles';
 
 import Devis from './devisSchema';
 import Projects from '../project/projectSchema';
+import History from '../history/historySchema';
 
 const checkAllParams =
 ({
@@ -41,6 +42,15 @@ Meteor.methods({
     };
 
     const devis = Devis.insert(newDevis);
+    if (devis) {
+      History.insert({
+        user: this.userId,
+        doc: 'devis',
+        action: 'create',
+        date: new Date()
+      });
+    }
+
     const project = Projects.findOne(params.idProject);
     if (project) {
       Projects.update(
@@ -51,6 +61,7 @@ Meteor.methods({
         }
       );
     }
+
     return devis;
   },
 
@@ -71,6 +82,12 @@ Meteor.methods({
     }
 
     Devis.remove(id);
+    History.insert({
+      user: this.userId,
+      doc: 'devis',
+      action: 'delete',
+      date: new Date()
+    });
   },
 
   editDevis(params) {
@@ -100,7 +117,7 @@ Meteor.methods({
       );
     }
 
-    return Devis.update({ _id }, { $set: {
+    const devis = Devis.update({ _id }, { $set: {
       id,
       idProject,
       price,
@@ -109,5 +126,14 @@ Meteor.methods({
       remarque,
       signed
     } });
+
+    History.insert({
+      user: this.userId,
+      doc: 'devis',
+      action: 'edit',
+      date: new Date()
+    });
+
+    return devis;
   }
 });

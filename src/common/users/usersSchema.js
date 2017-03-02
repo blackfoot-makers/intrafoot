@@ -11,7 +11,7 @@ Accounts.config({
 const Users = new Mongo.Collection('user');
 
 Users.schema = new SimpleSchema({
-  id: { type: String, regEx: SimpleSchema.RegEx.Id },
+  id: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
   firstName: { type: String },
   lastName: { type: String },
   phone: { type: String, regEx: /^(0|\+[1-9]{2})[1-9]([-. ]?[0-9]{2}){4}$/, optional: true },

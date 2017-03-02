@@ -9,7 +9,8 @@ import {
   LinkToProject,
   LinkToDevis,
   LinkToFacture,
-  LinkToContact
+  LinkToContact,
+  LinkToHistory
 } from '../../common/Links';
 
 const AppDrawer = ({ currentUser }) => (
@@ -21,6 +22,7 @@ const AppDrawer = ({ currentUser }) => (
       <LinkToDevis>Les devis</LinkToDevis>
       <LinkToFacture>Les factures</LinkToFacture>
       <LinkToContact>Networking</LinkToContact>
+      <LinkToHistory>Historique</LinkToHistory>
       {
         currentUser &&
         <Button

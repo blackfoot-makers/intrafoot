@@ -43,8 +43,22 @@ Meteor.methods({
       Companies.insert({
         name: newProjects.company
       });
+      History.insert({
+        user: this.userId,
+        doc: 'company',
+        action: 'create',
+        date: new Date()
+      });
     }
 
+    if (projects) {
+      History.insert({
+        user: this.userId,
+        doc: 'project',
+        action: 'create',
+        date: new Date()
+      });
+    }
     return projects;
   },
 
@@ -56,6 +70,13 @@ Meteor.methods({
     check(id, String);
 
     Projects.remove(id);
+
+    History.insert({
+      user: this.userId,
+      doc: 'project',
+      action: 'delete',
+      date: new Date()
+    });
   },
 
   editProject(params) {
@@ -79,7 +100,7 @@ Meteor.methods({
       nda
     } = params;
 
-    return Projects.update({ _id }, { $set: {
+    const project = Projects.update({ _id }, { $set: {
       id,
       name,
       description,
@@ -90,5 +111,15 @@ Meteor.methods({
       participants,
       nda
     } });
+
+    if (project) {
+      History.insert({
+        user: this.userId,
+        doc: 'project',
+        action: 'edit',
+        date: new Date()
+      });
+    }
+    return project;
   }
 });

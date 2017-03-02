@@ -38,7 +38,7 @@ const FactureList = ({ factures, renderAction, ...otherProps }) => (
           cellFormatter={(id) => {
             const devis = Devis.findOne(id);
             if (!devis) return '';
-            return <Link to={`/project/${id}`}>{devis.name}</Link>;
+            return <Link to={`/devis/${id}`}>{devis.id}</Link>;
           }}
         >
           Devis

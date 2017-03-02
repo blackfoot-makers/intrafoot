@@ -51,6 +51,16 @@ LinkToContact.propTypes = {
   children: React.PropTypes.node.isRequired
 };
 
+const LinkToHistory = ({ children, ...otherProps }) => (
+  <IndexLink to="/history" {...otherProps}>
+    { children }
+  </IndexLink>
+);
+
+LinkToHistory.propTypes = {
+  children: React.PropTypes.node.isRequired
+};
+
 const LinkToIndex = ({ children, ...otherProps }) => (
   <IndexLink to="/" {...otherProps}>
     { children }
@@ -67,5 +77,6 @@ export {
   LinkToIndex,
   LinkToUser,
   LinkToDevis,
-  LinkToFacture
+  LinkToFacture,
+  LinkToHistory
 };
