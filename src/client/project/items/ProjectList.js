@@ -1,7 +1,9 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
-import { Table, TableHeader, Cell, Card, CardTitle, CardText, CardActions, Button } from 'react-mdl';
+import { browserHistory, Link } from 'react-router';
+import { Table, TableHeader, Cell, Card, CardTitle, CardText, CardActions, Button, List, ListItem, ListItemContent } from 'react-mdl';
 import moment from 'moment';
+
+import Users from '../../../common/users/usersSchema';
 
 const ProjectList = ({ projects, renderAction, ...otherProps }) => (
   <Cell col={12} component={Card} shadow={0}>
@@ -41,7 +43,33 @@ const ProjectList = ({ projects, renderAction, ...otherProps }) => (
         <TableHeader name="remarque" tooltip="Remarque sur le projet">
           Remarque
         </TableHeader>
-        <TableHeader name="participants" tooltip="Participants au projet">
+        <TableHeader
+          name="participants"
+          tooltip="Participants au projet"
+          cellFormatter={(userIds) => {
+            if (!userIds) return '';
+            const users = userIds.map((elem, index) => {
+              const user = Users.findOne(elem);
+              if (user) {
+                return (
+                  <ListItem key={index}>
+                    <ListItemContent icon="person">
+                      <Link to={`/contact/${user._id}`}>
+                        {`${user.firstName} ${user.lastName}`}
+                      </Link>
+                    </ListItemContent>
+                  </ListItem>
+                );
+              }
+              return '';
+            });
+            return (
+              <List>
+                {users}
+              </List>
+            );
+          }}
+        >
           Participants
         </TableHeader>
         <TableHeader

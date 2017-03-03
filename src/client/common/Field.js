@@ -1,6 +1,6 @@
 import React from 'react';
 import { Textfield, RadioGroup, Radio } from 'react-mdl';
-import { SelectField, Option, AutoComplete } from 'react-mdl-extra';
+import { SelectField, Option, AutoComplete, MultiSelectField } from 'react-mdl-extra';
 import DatePicker from 'react-datepicker';
 
 const Field = ({
@@ -23,6 +23,24 @@ const Field = ({
           floatingLabel
           {...otherProps}
         />
+      );
+    case 'multiselect':
+      return (
+        <MultiSelectField
+          onChange={(data) => { handleOtherChange(data, fieldKey); }}
+          value={value}
+          label={label}
+          floatingLabel
+          {...otherProps}
+        >
+          {
+            options.map((data, index) => (
+              <Option key={index} value={data._id}>
+                {`${data.firstName} ${data.lastName}`}
+              </Option>
+            ))
+          }
+        </MultiSelectField>
       );
     case 'select':
       return (

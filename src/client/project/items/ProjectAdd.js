@@ -16,6 +16,7 @@ const ProjectAdd = (props) => {
     status: 'en cours',
     remarque: '',
     nda: 'false',
+    participants: [],
     editMode: false
   };
 
@@ -29,6 +30,7 @@ const ProjectAdd = (props) => {
       status: project.status || 'en cours',
       remarque: project.remarque,
       nda: project.nda ? 'true' : 'false',
+      participants: project.participants || [],
       _id: project._id,
       editMode: true
     };
@@ -105,6 +107,13 @@ const ProjectAdd = (props) => {
             { _id: 'stand by', name: 'Stand by' },
             { _id: 'terminé', name: 'Terminé' }
           ]
+        },
+        {
+          fieldKey: 'participants',
+          label: 'Participants',
+          type: 'multiselect',
+          defaultValue: defaultValue.participants,
+          options: props.users.allUsers
         }
       ]}
     />

@@ -6,6 +6,7 @@ import moment from 'moment';
 import Projects from '../../../common/project/projectSchema';
 import Devis from '../../../common/devis/devisSchema';
 import Factures from '../../../common/facture/factureSchema';
+import Users from '../../../common/users/usersSchema';
 
 const ProjectShow = ({ params }) => {
   const project = Projects.findOne(params.projectId);
@@ -34,6 +35,27 @@ const ProjectShow = ({ params }) => {
         <ListItem>Remarque: {project.remarque}</ListItem>
       }
       <ListItem>NDA ?: {(project.nda ? 'oui' : 'non')}</ListItem>
+      <ListItem>
+        Participants:
+        <List>
+          {
+            project.participants &&
+            project.participants.map((participantsId, index) => {
+              const participant = Users.findOne(participantsId);
+              if (!participant) return '';
+              return (
+                <ListItem key={index}>
+                  <ListItemContent icon="person">
+                    <Link to={`/contact/${participant._id}`}>
+                      {`${participant.firstName} ${participant.lastName}`}
+                    </Link>
+                  </ListItemContent>
+                </ListItem>
+              );
+            })
+          }
+        </List>
+      </ListItem>
       <ListItem>
         Devis:
         <List>
