@@ -7,11 +7,13 @@ import accountReducer from './account/accountReducer';
 import userReducer from './user/userReducer';
 import devisReducer from './devis/devisReducer';
 import factureReducer from './facture/factureReducer';
+import prestaReducer from './presta/prestaReducer';
 import historyReducer from './history/historyReducer';
 
 
 export default combineReducers({
   routing,
+  prestas: prestaReducer,
   devis: devisReducer,
   projects: projectReducer,
   factures: factureReducer,

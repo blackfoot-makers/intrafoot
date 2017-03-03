@@ -34,6 +34,9 @@ import DevisShow from '../../src/client/devis/items/DevisShow';
 import Facture from '../../src/client/facture/Facture';
 import FactureAdd from '../../src/client/facture/items/FactureAdd';
 import FactureShow from '../../src/client/facture/items/FactureShow';
+import Presta from '../../src/client/presta/Presta';
+import PrestaAdd from '../../src/client/presta/items/PrestaAdd';
+import PrestaShow from '../../src/client/presta/items/PrestaShow';
 import History from '../../src/client/history/History';
 
 T9n.setLanguage('fr');
@@ -91,6 +94,10 @@ const Root = (props) => {
           <Route path="facture/add" component={FactureAdd} onEnter={requireAuth} />
           <Route path="facture/edit/:factureId" component={FactureAdd} onEnter={requireAuth} />
           <Route path="facture/:factureId" component={FactureShow} onEnter={requireAuth} />
+          <Route path="presta" component={Presta} onEnter={requireAuth} />
+          <Route path="presta/add" component={PrestaAdd} onEnter={requireAuth} />
+          <Route path="presta/edit/:prestaId" component={PrestaAdd} onEnter={requireAuth} />
+          <Route path="presta/:prestaId" component={PrestaShow} onEnter={requireAuth} />
           <Route path="history" component={History} onEnter={requireAuth} />
           <IndexRoute component={DefaultPage} onEnter={requireAuth} />
         </Route>

@@ -11,6 +11,7 @@ import { loadDevis } from './devis/devisActions';
 import { loadFacture } from './facture/factureActions';
 import { loadUser } from './user/userActions';
 import { loadHistory } from './history/historyActions';
+import { loadPresta } from './presta/prestaActions';
 
 export default () => {
   const logger = createLogger();
@@ -29,6 +30,7 @@ export default () => {
   store.dispatch(loadFacture());
   store.dispatch(loadUser());
   store.dispatch(loadHistory());
+  store.dispatch(loadPresta());
   // if (Meteor.isClient) {
     // store.dispatch(loadTodo());
     // persistStore(store, {
