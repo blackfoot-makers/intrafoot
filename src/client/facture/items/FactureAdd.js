@@ -30,10 +30,10 @@ const FactureAddComponent = ({
   }) => (
     <Form
       redirectAfterSubmit={() => { browserHistory.push('/facture'); }}
-      editAction={data => funcProps.editFacture({
+      editAction={(data, callback) => funcProps.editFacture({
         ...data,
         _id
-      })}
+      }, callback)}
       addAction={funcProps.addFacture}
       editMode={editMode}
       onChange={onChange}
@@ -236,11 +236,11 @@ const mapStateToProps = ({ projects, devis }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addFacture: (data) => {
-    dispatch(addFacture(data));
+  addFacture: (data, callback) => {
+    dispatch(addFacture(data, callback));
   },
-  editFacture: (data) => {
-    dispatch(editFacture(data));
+  editFacture: (data, callback) => {
+    dispatch(editFacture(data, callback));
   }
 });
 

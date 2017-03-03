@@ -37,10 +37,10 @@ const ProjectAdd = (props) => {
   return (
     <Form
       redirectAfterSubmit={() => { browserHistory.push('/project'); }}
-      editAction={data => props.editProject({
+      editAction={(data, callback) => props.editProject({
         ...data,
         _id: defaultValue._id
-      })}
+      }, callback)}
       addAction={props.addProject}
       editMode={defaultValue.editMode}
       name="Projet"
@@ -116,11 +116,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addProject: (data) => {
-    dispatch(addProject(data));
+  addProject: (data, callback) => {
+    dispatch(addProject(data, callback));
   },
-  editProject: (data) => {
-    dispatch(editProject(data));
+  editProject: (data, callback) => {
+    dispatch(editProject(data, callback));
   }
 });
 

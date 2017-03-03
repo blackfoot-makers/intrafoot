@@ -3,9 +3,9 @@ import { Roles } from 'meteor/alanning:roles';
 import Users from '../../common/users/usersSchema';
 import Companies from '../../common/users/companySchema';
 
-export function addUser(data) {
+export function addUser(data, callback) {
   return () => {
-    Meteor.call('addUser', data);
+    Meteor.call('addUser', data, callback);
   };
 }
 
@@ -15,9 +15,9 @@ export function deleteUser(id) {
   };
 }
 
-export function editUser(data) {
+export function editUser(data, callback) {
   return () => {
-    Meteor.call('editUser', data);
+    Meteor.call('editUser', data, callback);
   };
 }
 

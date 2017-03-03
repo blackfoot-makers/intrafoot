@@ -57,7 +57,15 @@ class Form extends React.Component {
     this.props.onChange({ [key]: data });
   }
 
-  // @todo: Handle error
+  handleError(okMsg, errorMsg) {
+    const notification = document.getElementById('snackbarIntraFoot');
+
+    notification.MaterialSnackbar.showSnackbar({
+      message: errorMsg || okMsg
+    });
+    this.props.redirectAfterSubmit();
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     const devisData = {};
@@ -81,20 +89,15 @@ class Form extends React.Component {
       return true;
     });
 
-    const notification = document.getElementById('snackbarIntraFoot');
-    let msg = `${this.props.name} ajouté`;
-
     if (this.props.editMode) {
-      this.props.editAction(devisData);
-      msg = `${this.props.name} edité`;
+      this.props.editAction(devisData, (error) => {
+        this.handleError(`${this.props.name} edité`, error);
+      });
     } else {
-      this.props.addAction(devisData);
+      this.props.addAction(devisData, (error) => {
+        this.handleError(`${this.props.name} ajouté`, error);
+      });
     }
-
-    notification.MaterialSnackbar.showSnackbar({
-      message: msg
-    });
-    this.props.redirectAfterSubmit();
   }
 
   render() {

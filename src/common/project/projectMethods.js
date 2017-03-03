@@ -3,6 +3,7 @@ import { Roles } from 'meteor/alanning:roles';
 
 import Projects from './projectSchema';
 import Companies from '../users/companySchema';
+import History from '../history/historySchema';
 
 const checkAllParams =
 ({ id, name, description, signature = null, company, status, remarque = '', participants = [], nda }) => {

@@ -2,9 +2,9 @@ import { Tracker } from 'meteor/tracker';
 import { browserHistory } from 'react-router';
 import Projects from '../../common/project/projectSchema';
 
-export function addProject(data) {
+export function addProject(data, callback) {
   return () => {
-    Meteor.call('addProject', data);
+    Meteor.call('addProject', data, callback);
   };
 }
 
@@ -14,9 +14,9 @@ export function deleteProject(id) {
   };
 }
 
-export function editProject(data) {
+export function editProject(data, callback) {
   return () => {
-    Meteor.call('editProject', data);
+    Meteor.call('editProject', data, callback);
   };
 }
 

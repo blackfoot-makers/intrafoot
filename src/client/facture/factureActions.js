@@ -1,9 +1,9 @@
 import { Tracker } from 'meteor/tracker';
 import Factures from '../../common/facture/factureSchema';
 
-export function addFacture(data) {
+export function addFacture(data, callback) {
   return () => {
-    Meteor.call('addFacture', data);
+    Meteor.call('addFacture', data, callback);
   };
 }
 
@@ -13,9 +13,9 @@ export function deleteFacture(id) {
   };
 }
 
-export function editFacture(data) {
+export function editFacture(data, callback) {
   return () => {
-    Meteor.call('editFacture', data);
+    Meteor.call('editFacture', data, callback);
   };
 }
 

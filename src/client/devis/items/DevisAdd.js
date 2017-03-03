@@ -38,10 +38,10 @@ const DevisAdd = (props) => {
   return (
     <Form
       redirectAfterSubmit={() => { browserHistory.push('/devis'); }}
-      editAction={data => props.editDevis({
+      editAction={(data, callback) => props.editDevis({
         ...data,
         _id: defaultValue._id
-      })}
+      }, callback)}
       addAction={props.addDevis}
       editMode={defaultValue.editMode}
       name="Devis"
@@ -114,11 +114,11 @@ const mapStateToProps = ({ projects }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addDevis: (data) => {
-    dispatch(addDevis(data));
+  addDevis: (data, callback) => {
+    dispatch(addDevis(data, callback));
   },
-  editDevis: (data) => {
-    dispatch(editDevis(data));
+  editDevis: (data, callback) => {
+    dispatch(editDevis(data, callback));
   }
 });
 

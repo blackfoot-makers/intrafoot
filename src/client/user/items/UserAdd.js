@@ -37,13 +37,15 @@ const UserAdd = (props) => {
 
   return (
     <Form
-      redirectAfterSubmit={() => { browserHistory.push('/contact'); }}
-      editAction={data => props.editUser({
+      redirectAfterSubmit={() => {
+        browserHistory.push('/contact');
+      }}
+      editAction={(data, callback) => props.editUser({
         ...data,
         _id: defaultValue._id,
         id: defaultValue.id,
         history: defaultValue.history
-      })}
+      }, callback)}
       addAction={props.addUser}
       editMode={defaultValue.editMode}
       name="Contacts"
@@ -158,11 +160,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addUser: (data) => {
-    dispatch(addUser(data));
+  addUser: (data, callback) => {
+    dispatch(addUser(data, callback));
   },
-  editUser: (data) => {
-    dispatch(editUser(data));
+  editUser: (data, callback) => {
+    dispatch(editUser(data, callback));
   }
 });
 

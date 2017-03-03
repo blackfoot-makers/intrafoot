@@ -1,9 +1,9 @@
 import { Tracker } from 'meteor/tracker';
 import Devis from '../../common/devis/devisSchema';
 
-export function addDevis(data) {
+export function addDevis(data, callback) {
   return () => {
-    Meteor.call('addDevis', data);
+    Meteor.call('addDevis', data, callback);
   };
 }
 
@@ -13,9 +13,9 @@ export function deleteDevis(id) {
   };
 }
 
-export function editDevis(data) {
+export function editDevis(data, callback) {
   return () => {
-    Meteor.call('editDevis', data);
+    Meteor.call('editDevis', data, callback);
   };
 }
 
