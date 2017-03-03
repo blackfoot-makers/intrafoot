@@ -21,20 +21,20 @@ const ProjectShow = ({ params }) => {
 
   return (
     <List>
-      <ListItem>Identifiant: {project.id}</ListItem>
-      <ListItem>Entreprise: {project.company}</ListItem>
-      <ListItem>Nom: {project.name}</ListItem>
-      <ListItem>Description: {project.description}</ListItem>
+      <ListItem>Identifiant: <span>{project.id}</span></ListItem>
+      <ListItem>Entreprise: <span>{project.company}</span></ListItem>
+      <ListItem>Nom: <span>{project.name}</span></ListItem>
+      <ListItem>Description: <span>{project.description}</span></ListItem>
       {
         project.signature &&
-        <ListItem>Date de signature: {moment(project.signature).format('LL')}</ListItem>
+        <ListItem>Date de signature: <span>{moment(project.signature).format('LL')}</span></ListItem>
       }
-      <ListItem>Status: {project.status}</ListItem>
+      <ListItem>Status: <span>{project.status}</span></ListItem>
       {
         project.remarque &&
-        <ListItem>Remarque: {project.remarque}</ListItem>
+        <ListItem>Remarque: <span>{project.remarque}</span></ListItem>
       }
-      <ListItem>NDA ?: {(project.nda ? 'oui' : 'non')}</ListItem>
+      <ListItem>NDA ?: <span>{(project.nda ? 'oui' : 'non')}</span></ListItem>
       <ListItem>
         Participants:
         <List>

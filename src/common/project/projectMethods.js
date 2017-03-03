@@ -3,6 +3,7 @@ import { Roles } from 'meteor/alanning:roles';
 
 import Projects from './projectSchema';
 import Companies from '../users/companySchema';
+import Users from '../users/usersSchema';
 import History from '../history/historySchema';
 
 const checkAllParams =
@@ -40,6 +41,21 @@ Meteor.methods({
 
     const projects = Projects.insert(newProjects);
 
+    if (newProjects.participants) {
+      newProjects.participants.map((id) => {
+        const user = Users.findOne(id);
+        if (user) {
+          Users.update(
+            { _id: user._id },
+            {
+              $addToSet: projects
+            }
+          );
+        }
+        return true;
+      });
+    }
+
     if (!Companies.findOne({ name: newProjects.company })) {
       Companies.insert({
         name: newProjects.company
@@ -70,6 +86,23 @@ Meteor.methods({
 
     check(id, String);
 
+    const projects = Projects.findOne(id);
+    if (!projects) {
+      throw new Meteor.Error('No projects found to delete');
+    }
+
+    if (projects.participants) {
+      projects.participants.map((userId) => {
+        const user = Users.findOne(userId);
+        if (user) {
+          Users.update(
+            { _id: user._id },
+            { $pull: { projects: id } }
+          );
+        }
+        return true;
+      });
+    }
     Projects.remove(id);
 
     History.insert({
@@ -100,8 +133,36 @@ Meteor.methods({
       participants,
       nda
     } = params;
+    let project = Projects.findOne(_id);
 
-    const project = Projects.update({ _id }, { $set: {
+    // Update project participants
+    if (project && project.participants) {
+      project.participants.map((userId) => {
+        const user = Users.findOne(userId);
+        if (user) {
+          Users.update(
+            { _id: user._id },
+            { $pull: { projects: _id } }
+          );
+        }
+        return true;
+      });
+    }
+
+    participants.map((userId) => {
+      const user = Users.findOne(userId);
+      if (user) {
+        Users.update(
+          { _id: user._id },
+          {
+            $addToSet: { projects: _id }
+          }
+        );
+      }
+      return true;
+    });
+
+    project = Projects.update({ _id }, { $set: {
       id,
       name,
       description,

@@ -23,6 +23,7 @@ Users.schema = new SimpleSchema({
   accessLevel: { type: Number, min: 0, max: 5, optional: true },
   lastContact: { type: Date, optional: true },
   history: { type: [String], regEx: SimpleSchema.RegEx.Id, optional: true },
+  projects: { type: [String], regEx: SimpleSchema.RegEx.Id, optional: true },
   title: { type: String },
   company: { type: String },
 });

@@ -1,8 +1,9 @@
 import React from 'react';
 import { browserHistory, Link } from 'react-router';
-import { Table, TableHeader, Cell, Card, CardTitle, CardText, CardActions, Button } from 'react-mdl';
+import { Table, TableHeader, Cell, Card, CardTitle, CardText, CardActions, Button, List, ListItem, ListItemContent, Tooltip } from 'react-mdl';
 import moment from 'moment';
 
+import Projects from '../../../common/project/projectSchema';
 import Users from '../../../common/users/usersSchema';
 
 const UserList = ({ users, renderAction, ...otherProps }) => (
@@ -41,6 +42,50 @@ const UserList = ({ users, renderAction, ...otherProps }) => (
         </TableHeader>
         <TableHeader name="email" tooltip="Email principale">
           Email
+        </TableHeader>
+        <TableHeader
+          name="projects"
+          tooltip="Projet fait avec ce contact"
+          cellFormatter={(ids) => {
+            if (!ids) return '';
+            const projects = ids.map((id, index) => {
+              const project = Projects.findOne(id);
+              const image = {
+                abandon: {
+                  img: 'phonelink_erase',
+                  tooltip: 'Abandoné'
+                },
+                'en cours': {
+                  img: 'phonelink_setup',
+                  tooltip: 'En cours'
+                },
+                'stand by': {
+                  img: 'phonelink_lock',
+                  tooltip: 'Stand by'
+                },
+                terminé: {
+                  img: 'stay_current_portrait',
+                  tooltip: 'Terminé'
+                }
+              };
+              return (
+                <ListItem key={index}>
+                  <Tooltip label={image[project.status].tooltip}>
+                    <ListItemContent icon={image[project.status].img}>
+                      <Link to={`/project/${id}`}>{project.name}</Link>
+                    </ListItemContent>
+                  </Tooltip>
+                </ListItem>
+              );
+            });
+            return (
+              <List>
+                {projects}
+              </List>
+            );
+          }}
+        >
+          Projet
         </TableHeader>
         <TableHeader
           name="interlocuteur"

@@ -1,9 +1,10 @@
 import React from 'react';
-import { List, ListItem, Cell } from 'react-mdl';
+import { List, ListItem, Cell, ListItemContent, Icon, Tooltip } from 'react-mdl';
 import { Link } from 'react-router';
 import moment from 'moment';
 
 import Users from '../../../common/users/usersSchema';
+import Projects from '../../../common/project/projectSchema';
 
 const UserShow = ({ params }) => {
   const user = Users.findOne(params.contactId);
@@ -20,25 +21,70 @@ const UserShow = ({ params }) => {
 
   return (
     <List>
-      <ListItem>Poste/Entreprise: {user.title} de {user.company}</ListItem>
-      <ListItem>Nom: {user.firstName} {user.lastName}</ListItem>
+      <ListItem>Poste/Entreprise: <span>{user.title} de {user.company}</span></ListItem>
+      <ListItem>Nom: <span>{user.firstName} {user.lastName}</span></ListItem>
       {
         user.phone &&
-        <ListItem>Téléphone: {user.phone}</ListItem>
+        <ListItem>Téléphone: <span>{user.phone}</span></ListItem>
       }
-      <ListItem>Email: {user.email}</ListItem>
+      <ListItem>Email: <span>{user.email}</span></ListItem>
       {
         contact &&
         <ListItem>Interlocuteur: <Link to={`/contact/${user.interlocuteur}`}>{contact.firstName}</Link></ListItem>
       }
       {
         user.lastContact &&
-        <ListItem>Dernier contact: {moment(user.lastContact).format('LL')}</ListItem>
+        <ListItem>Dernier contact: <span>{moment(user.lastContact).format('LL')}</span></ListItem>
       }
       {
-        user.accessLevel &&
-        <ListItem>Level {"d'accès"}: {user.accessLevel}</ListItem>
+        user.projects &&
+        <ListItem>
+          Projets en commun:
+          <List>
+            {
+              user.projects.map((id, index) => {
+                const project = Projects.findOne(id);
+                const image = {
+                  abandon: {
+                    img: 'phonelink_erase',
+                    tooltip: 'Abandoné'
+                  },
+                  'en cours': {
+                    img: 'phonelink_setup',
+                    tooltip: 'En cours'
+                  },
+                  'stand by': {
+                    img: 'phonelink_lock',
+                    tooltip: 'Stand by'
+                  },
+                  terminé: {
+                    img: 'stay_current_portrait',
+                    tooltip: 'Terminé'
+                  }
+                };
+                return (
+                  <ListItem key={index}>
+                    <Tooltip label={image[project.status].tooltip}>
+                      <ListItemContent icon={image[project.status].img}>
+                        <Link to={`/project/${id}`}>{project.name}</Link>
+                      </ListItemContent>
+                    </Tooltip>
+                  </ListItem>
+                );
+              })
+            }
+          </List>
+        </ListItem>
       }
+      <ListItem>
+        {"Facilité d'accès: "}
+        {
+          Array.from({ length: user.accessLevel }, (elem, key) => <Icon name="star" key={key} />)
+        }
+        {
+          Array.from({ length: 5 - user.accessLevel }, (elem, key) => <Icon name="star_border" key={key} />)
+        }
+      </ListItem>
       <ListItem>Autre sites:
         <List>
           {
@@ -46,15 +92,15 @@ const UserShow = ({ params }) => {
             <ListItem>{user.linkedin}</ListItem>
           }
           {
-            user.sites && user.sites.map(site => (
-              <ListItem>{site}</ListItem>
+            user.sites && user.sites.map((site, index) => (
+              <ListItem key={index}>{site}</ListItem>
             ))
           }
         </List>
       </ListItem>
       {
         user.description &&
-        <ListItem>Description: {user.description}</ListItem>
+        <ListItem>Description: <span>{user.description}</span></ListItem>
       }
       <ListItem>Historique: Fonction non implémenté pour le moment</ListItem>
     </List>

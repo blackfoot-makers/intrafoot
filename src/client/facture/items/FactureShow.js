@@ -36,7 +36,7 @@ const FactureShow = ({ params }) => {
 
   return (
     <List>
-      <ListItem>Identifiant: {facture.id}</ListItem>
+      <ListItem>Identifiant: <span>{facture.id}</span></ListItem>
       {
         project &&
         <ListItem>Projet lié: <Link to={`/project/${facture.idProject}`}>{project.name}</Link></ListItem>
@@ -45,21 +45,21 @@ const FactureShow = ({ params }) => {
         devis &&
         <ListItem>Devis lié: <Link to={`/devis/${facture.idDevis}`}>{devis.id}</Link></ListItem>
       }
-      <ListItem>Prix: {facture.price}</ListItem>
+      <ListItem>Prix: <span>{facture.price}</span></ListItem>
       {
         facture.sentDate &&
-        <ListItem>Envoyé le: {moment(facture.sentDate).format('LL')}</ListItem>
+        <ListItem>Envoyé le: <span>{moment(facture.sentDate).format('LL')}</span></ListItem>
       }
-      <ListItem>Réglée?: {payed}</ListItem>
-      <ListItem>Versement: {facture.pricePayed || 0}</ListItem>
-      <ListItem>Délai de règlement : {facture.delayTillPayed}</ListItem>
+      <ListItem>Réglée?: <span>{payed}</span></ListItem>
+      <ListItem>Versement: <span>{facture.pricePayed || 0}</span></ListItem>
+      <ListItem>Délai de règlement: <span>{facture.delayTillPayed}</span></ListItem>
       {
         facture.remarque &&
-        <ListItem>Remarque: {facture.remarque}</ListItem>
+        <ListItem>Remarque: <span>{facture.remarque}</span></ListItem>
       }
       {
         facture.payedDate &&
-        <ListItem>Date de règlement: {moment(facture.payedDate).format('LL')}</ListItem>
+        <ListItem>Date de règlement: <span>{moment(facture.payedDate).format('LL')}</span></ListItem>
       }
     </List>
   );
