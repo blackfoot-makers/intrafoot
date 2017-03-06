@@ -3,8 +3,8 @@ import { browserHistory, Link } from 'react-router';
 import { Table, TableHeader, Cell, Card, CardTitle, CardText, CardActions, Button } from 'react-mdl';
 import moment from 'moment';
 
-import Projects from '../../../common/project/projectSchema';
-import Devis from '../../../common/devis/devisSchema';
+import Users from '../../../common/users/usersSchema';
+import Companies from '../../../common/users/companySchema';
 
 const PrestaList = ({ prestas, renderAction, ...otherProps }) => (
   <Cell col={12} component={Card} shadow={0}>
@@ -19,72 +19,64 @@ const PrestaList = ({ prestas, renderAction, ...otherProps }) => (
         rows={prestas}
         {...otherProps}
       >
-        <TableHeader name="id" tooltip="Identifiant de la presta">
-          Identifiant
-        </TableHeader>
         <TableHeader
-          name="idProject"
-          tooltip="Projet lié à la presta"
+          name="idContact"
+          tooltip="Nom du presta"
           cellFormatter={(id) => {
-            const project = Projects.findOne(id);
-            return <Link to={`/project/${id}`}>{project.name}</Link>;
+            const user = Users.findOne(id);
+            return <Link to={`/contact/${id}`}>{`${user.firstName} ${user.lastName}`}</Link>;
           }}
         >
-          Projet
+          Presta
         </TableHeader>
         <TableHeader
-          name="idDevis"
-          tooltip="Devis lié à la presta"
+          name="company"
+          tooltip="Entreprise du contact"
           cellFormatter={(id) => {
-            const devis = Devis.findOne(id);
-            if (!devis) return '';
-            return <Link to={`/devis/${id}`}>{devis.id}</Link>;
+            const company = Companies.findOne(id);
+            return company.name;
           }}
         >
-          Devis
+          Entreprise
         </TableHeader>
-        <TableHeader name="price" tooltip="Prix de la presta">
+        <TableHeader
+          name="prestation"
+          tooltip="Prestation"
+        >
+          Prestation
+        </TableHeader>
+        <TableHeader name="price" tooltip="Prix de la presta HT">
           Prix
         </TableHeader>
         <TableHeader
-          name="sentDate"
-          tooltip="Date d'envoi de la presta"
+          name="facturation"
+          tooltip="Date de facturation"
           cellFormatter={date => date && moment(date).format('LL')}
         >
-          Envoyé le
+          Date de facturation
+        </TableHeader>
+        <TableHeader
+          name="accompte"
+          tooltip="Accompte versé"
+        >
+          Accompte
         </TableHeader>
         <TableHeader
           name="payed"
-          tooltip="Est-ce que la presta est réglée?"
-          cellFormatter={(payed) => {
-            switch (payed) {
-              case 'annulé':
-                return 'Annulé';
-              case 'true':
-                return 'Oui';
-              default:
-              case 'false':
-                return 'Non';
-            }
-          }}
+          tooltip="La prestation est elle réglée"
+          cellFormatter={payed => (payed ? 'Oui' : 'Non')}
         >
           Réglée?
         </TableHeader>
-        <TableHeader name="pricePayed" tooltip="La somme qui a été reçu pour cette presta">
-          Versement
-        </TableHeader>
-        <TableHeader name="delayTillPayed" tooltip="Nombre de jour maximum avant le règlement">
-          Délai de règlement
-        </TableHeader>
-        <TableHeader name="remarque" tooltip="Remarque">
-          Remarque
-        </TableHeader>
         <TableHeader
           name="payedDate"
-          tooltip="Date de reçu du règlement de la presta"
+          tooltip="Date de réglement"
           cellFormatter={date => date && moment(date).format('LL')}
         >
           Date de règlement
+        </TableHeader>
+        <TableHeader name="remarque" tooltip="Remarque">
+          Remarque
         </TableHeader>
         <TableHeader name="action" cellFormatter={renderAction}>Actions</TableHeader>
       </Table>
@@ -98,7 +90,7 @@ const PrestaList = ({ prestas, renderAction, ...otherProps }) => (
           return false;
         }}
       >
-        Ajouter une presta
+        Ajouter un prestataire
       </Button>
     </CardActions>
   </Cell>

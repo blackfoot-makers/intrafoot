@@ -71,7 +71,7 @@ class Form extends React.Component {
     const devisData = {};
     this.props.fields.map((field) => {
       const value = this.state[field.fieldKey];
-      if (value) {
+      if (value !== undefined) {
         switch (field.type) {
           case 'date':
             devisData[field.fieldKey] = value._d;

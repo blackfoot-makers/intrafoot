@@ -4,8 +4,8 @@ import { Link } from 'react-router';
 import moment from 'moment';
 
 import Prestas from '../../../common/presta/prestaSchema';
-import Devis from '../../../common/devis/devisSchema';
-import Projects from '../../../common/project/projectSchema';
+import Users from '../../../common/users/usersSchema';
+import Companies from '../../../common/users/companySchema';
 
 const PrestaShow = ({ params }) => {
   const presta = Prestas.findOne(params.prestaId);
@@ -18,48 +18,26 @@ const PrestaShow = ({ params }) => {
     );
   }
 
-  const project = Projects.findOne(presta.idProject);
-  const devis = Devis.findOne(presta.idDevis);
-  let payed = 'Non';
-
-  switch (presta.payed) {
-    case 'true':
-      payed = 'Oui';
-      break;
-    case 'annulé':
-      payed = 'Annulé';
-      break;
-    case 'false':
-    default:
-      payed = 'Non';
-  }
+  const user = Users.findOne(presta.idContact);
+  const company = Companies.findOne(presta.company);
+  const payed = presta.payed ? 'Oui' : 'Non';
 
   return (
     <List>
-      <ListItem>Identifiant: <span>{presta.id}</span></ListItem>
-      {
-        project &&
-        <ListItem>Projet lié: <Link to={`/project/${presta.idProject}`}>{project.name}</Link></ListItem>
-      }
-      {
-        devis &&
-        <ListItem>Devis lié: <Link to={`/devis/${presta.idDevis}`}>{devis.id}</Link></ListItem>
-      }
+      <ListItem>Nom du prestataire: <Link to={`/contact/${presta.idContact}`}>{`${user.firstName} ${user.lastName}`}</Link></ListItem>
+      <ListItem>Entreprise: <span>{company.name}</span></ListItem>
+      <ListItem>Prestation: <span>{presta.prestation}</span></ListItem>
       <ListItem>Prix: <span>{presta.price}</span></ListItem>
-      {
-        presta.sentDate &&
-        <ListItem>Envoyé le: <span>{moment(presta.sentDate).format('LL')}</span></ListItem>
-      }
+      <ListItem>Date de facturation: <span>{moment(presta.facturation).format('LL')}</span></ListItem>
+      <ListItem>Accompte: <span>{presta.accompte}</span></ListItem>
       <ListItem>Réglée?: <span>{payed}</span></ListItem>
-      <ListItem>Versement: <span>{presta.pricePayed || 0}</span></ListItem>
-      <ListItem>Délai de règlement: <span>{presta.delayTillPayed}</span></ListItem>
-      {
-        presta.remarque &&
-        <ListItem>Remarque: <span>{presta.remarque}</span></ListItem>
-      }
       {
         presta.payedDate &&
         <ListItem>Date de règlement: <span>{moment(presta.payedDate).format('LL')}</span></ListItem>
+      }
+      {
+        presta.remarque &&
+        <ListItem>Remarque: <span>{presta.remarque}</span></ListItem>
       }
     </List>
   );

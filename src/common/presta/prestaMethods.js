@@ -11,7 +11,7 @@ const checkAllParams =
   prestation,
   price,
   facturation,
-  accompte,
+  accompte = 0,
   payedDate,
   remarque = '',
   payed }) => {
@@ -26,14 +26,13 @@ const checkAllParams =
     check(payedDate, Date);
   }
   check(accompte, Number);
-  check(status, String);
   check(remarque, String);
   check(payed, Boolean);
 };
 
 Meteor.methods({
 
-  addPrestas(params) {
+  addPresta(params) {
     if (!this.userId || !Roles.userIsInRole(this.userId, 'admin')) {
       throw new Meteor.Error('not-authorized');
     }
@@ -60,7 +59,7 @@ Meteor.methods({
     return prestas;
   },
 
-  deletePrestas(id) {
+  deletePresta(id) {
     if (!this.userId || !Roles.userIsInRole(this.userId, 'admin')) {
       throw new Meteor.Error('not-authorized');
     }
@@ -77,7 +76,7 @@ Meteor.methods({
     });
   },
 
-  editPrestas(params) {
+  editPresta(params) {
     if (!this.userId || !Roles.userIsInRole(this.userId, 'admin')) {
       throw new Meteor.Error('not-authorized');
     }

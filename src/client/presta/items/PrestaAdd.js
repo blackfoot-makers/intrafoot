@@ -4,7 +4,6 @@ import { browserHistory } from 'react-router';
 import moment from 'moment';
 
 import Form from '../../common/Form';
-
 import { addPresta, editPresta } from '../prestaActions';
 import Prestas from '../../../common/presta/prestaSchema';
 
@@ -78,12 +77,8 @@ const PrestaAddComponent = ({
         {
           fieldKey: 'payed',
           label: 'Réglée?',
-          type: 'select',
-          defaultValue: payed,
-          options: [
-            { _id: 'true', name: 'Oui' },
-            { _id: 'false', name: 'Non' }
-          ]
+          type: 'bool',
+          defaultValue: payed
         },
         {
           fieldKey: 'facturation',
@@ -139,7 +134,7 @@ class PrestaAdd extends React.Component {
       facturation: moment(),
       accompte: 0,
       payedDate: moment(),
-      remarqu: '',
+      remarque: '',
       payed: 'false',
       editMode: false
     };

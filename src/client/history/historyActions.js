@@ -12,7 +12,7 @@ export function loadHistory() {
     Tracker.autorun(() => {
       dispatch({
         type: 'SET_HISTORY',
-        history: History.find({}, { sort: { createdAt: -1 } }).fetch() || [],
+        history: History.find({}, { sort: { date: -1 } }).fetch() || [],
       });
     });
   };

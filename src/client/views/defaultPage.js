@@ -7,7 +7,8 @@ import {
   LinkToProject,
   LinkToDevis,
   LinkToFacture,
-  LinkToContact } from '../common/Links';
+  LinkToContact,
+  LinkToPresta } from '../common/Links';
 
 class DefaultPage extends React.Component {
   constructor(props) {
@@ -19,6 +20,27 @@ class DefaultPage extends React.Component {
     return {
       muiTheme: getMuiTheme(),
     };
+  }
+
+  _getPrestas() {
+    const prestas = [
+      { type: 'Réglés', ht: 0, tva: 0, total: 0 },
+      { type: 'Non-réglés', ht: 0, tva: 0, total: 0 }
+    ];
+
+    this.props.prestas.map((data) => {
+      let index = 0;
+
+      if (data.payed === false) {
+        index = 1;
+      }
+      prestas[index].ht += data.price;
+      prestas[index].tva += (data.price * 0.2);
+      prestas[index].total = prestas[index].ht + prestas[index].tva;
+      return data;
+    });
+
+    return (prestas);
   }
 
   _getDevis() {
@@ -86,10 +108,12 @@ class DefaultPage extends React.Component {
   render() {
     const facturesRows = this._getFactures();
     const devisRows = this._getDevis();
+    const prestaRows = this._getPrestas();
+    const colSize = 6;
 
     return (
       <Grid>
-        <Cell col={6} component={Card} shadow={0}>
+        <Cell col={colSize} component={Card} shadow={0}>
           <CardTitle>
             Factures
           </CardTitle>
@@ -133,7 +157,7 @@ class DefaultPage extends React.Component {
             </Badge>
           </CardMenu>
         </Cell>
-        <Cell col={6} component={Card} shadow={0}>
+        <Cell col={colSize} component={Card} shadow={0}>
           <CardTitle>
             Projets
           </CardTitle>
@@ -147,7 +171,7 @@ class DefaultPage extends React.Component {
             </Button>
           </CardActions>
         </Cell>
-        <Cell col={6} component={Card} shadow={0}>
+        <Cell col={colSize} component={Card} shadow={0}>
           <CardTitle>
             Devis
           </CardTitle>
@@ -186,7 +210,46 @@ class DefaultPage extends React.Component {
             </Button>
           </CardActions>
         </Cell>
-        <Cell col={6} component={Card} shadow={0}>
+        <Cell col={colSize} component={Card} shadow={0}>
+          <CardTitle>
+            Prestatires
+          </CardTitle>
+          <CardText>
+            <DataTable rows={prestaRows}>
+              <TableHeader name="type" tooltip="Réglé ou non?">Type</TableHeader>
+              <TableHeader
+                numeric
+                cellFormatter={price => `${price.toFixed(2)}€`}
+                name="ht"
+                tooltip="Le prix total hors taxe des devis"
+              >
+                Hors taxes
+              </TableHeader>
+              <TableHeader
+                numeric
+                cellFormatter={price => `${price.toFixed(2)}€`}
+                name="tva"
+                tooltip="La tva des devis"
+              >
+                TVA
+              </TableHeader>
+              <TableHeader
+                numeric
+                cellFormatter={price => `${price.toFixed(2)}€`}
+                name="total"
+                tooltip="Le total tout compris"
+              >
+                Total
+              </TableHeader>
+            </DataTable>
+          </CardText>
+          <CardActions border>
+            <Button colored ripple component={LinkToPresta}>
+              Voir les prestataires
+            </Button>
+          </CardActions>
+        </Cell>
+        <Cell col={colSize} component={Card} shadow={0}>
           <CardTitle>
             Contacts
           </CardTitle>
@@ -209,7 +272,8 @@ DefaultPage.propTypes = {
   projects: React.PropTypes.array.isRequired,
   devis: React.PropTypes.array.isRequired,
   factures: React.PropTypes.array.isRequired,
-  users: React.PropTypes.object.isRequired
+  users: React.PropTypes.object.isRequired,
+  prestas: React.PropTypes.array.isRequired
 };
 
 DefaultPage.childContextTypes = {
@@ -222,7 +286,8 @@ function mapStateToProps(state) {
     devis: state.devis,
     projects: state.projects,
     factures: state.factures,
-    users: state.users
+    users: state.users,
+    prestas: state.prestas
   };
 }
 

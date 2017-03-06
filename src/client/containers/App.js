@@ -13,7 +13,7 @@ class App extends React.Component {
     props.subscribe('devis');
     props.subscribe('projects');
     props.subscribe('factures');
-    props.subscribe('prestas');
+    props.subscribe('presta');
     props.subscribe('users');
     props.subscribe('companies');
     props.subscribe('history');
