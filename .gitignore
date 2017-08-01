@@ -1,3 +1,5 @@
 node_modules/
 .meteor/
 yarn.lock
+mup.json
+settings.json

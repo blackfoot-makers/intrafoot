@@ -1,3 +1,5 @@
+
+sudo: required
 language: node_js
 node_js:
 - '5.12'
@@ -7,13 +9,13 @@ before_install:
 - curl https://install.meteor.com | /bin/sh
 - npm install -g mupx
 - export PATH="$HOME/.meteor:$PATH"
-- tar xvf secrets.tar # Add this line to decompress secrets.tar
-
+- tar xvf secrets.tar
 script:
-- meteor build $HOME/build.tgz
+- meteor --test --release velocity:METEOR@1.1.0.2_3
 cache:
   directories:
   - node_modules
+services: mongodb
 before_script:
 - meteor npm install
 after_success:
