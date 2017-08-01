@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - "7"
+before_install:
+  - curl https://install.meteor.com | /bin/sh
+  - export PATH="$HOME/.meteor:$PATH"
+ 
+script:
+  - meteor build $HOME/build.tgz
+
+cache:
+  directories:
+    - node_modules
+ 
+before_script:
+  - meteor npm install
