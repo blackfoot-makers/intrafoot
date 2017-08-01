@@ -38,11 +38,11 @@ moment.locale('fr', {
     yy: '%d années'
   },
   ordinalParse: /\d{1,2}(er|ème)/,
-  ordinal: (number) => (
+  ordinal: number => (
      number + (number === 1 ? 'er' : 'ème')
   ),
   meridiemParse: /PD|MD/,
-  isPM: (input) => (
+  isPM: input => (
      input.charAt(0) === 'M'
   ),
   // in case the meridiem units are not separated around 12, then implement
@@ -50,7 +50,7 @@ moment.locale('fr', {
   // meridiemHour : function (hour, meridiem) {
   //     return /* 0-23 hour, given meridiem token and hour 1-12 */
   // },
-  meridiem: (hours, minutes, isLower) => (
+  meridiem: (hours) => (
       hours < 12 ? 'PD' : 'MD'
   ),
   week: {

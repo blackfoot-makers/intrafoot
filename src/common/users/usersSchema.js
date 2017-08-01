@@ -1,20 +1,24 @@
-import { Accounts } from 'meteor/accounts-base';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { Roles } from 'meteor/alanning:roles';
-import Companies from './companySchema.js';
+import { Accounts } from "meteor/accounts-base";
+import { SimpleSchema } from "meteor/aldeed:simple-schema";
+import { Roles } from "meteor/alanning:roles";
+import Companies from "./companySchema.js";
 
 Accounts.config({
   sendVerificationEmail: true,
   forbidClientAccountCreation: false
 });
 
-const Users = new Mongo.Collection('user');
+const Users = new Mongo.Collection("user");
 
 Users.schema = new SimpleSchema({
   id: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
   firstName: { type: String },
   lastName: { type: String },
-  phone: { type: String, regEx: /^(0|\+[1-9]{2})[1-9]([-. ]?[0-9]{2}){4}$/, optional: true },
+  phone: {
+    type: String,
+    regEx: /^(0|\+[1-9]{2})[1-9]([-. ]?[0-9]{2}){4}$/,
+    optional: true
+  },
   linkedin: { type: String, regEx: SimpleSchema.RegEx.Url, optional: true },
   sites: { type: [String], regEx: SimpleSchema.RegEx.Url, optional: true },
   email: { type: String, regEx: SimpleSchema.RegEx.Email },
@@ -25,18 +29,24 @@ Users.schema = new SimpleSchema({
   history: { type: [String], regEx: SimpleSchema.RegEx.Id, optional: true },
   projects: { type: [String], regEx: SimpleSchema.RegEx.Id, optional: true },
   title: { type: String },
-  company: { type: String },
+  company: { type: String }
 });
 
 Users.attachSchema(Users.schema);
 
 if (Meteor.isServer) {
-  Accounts.onCreateUser((options, user) => {
+  Accounts.onCreateUser((options, userParam) => {
+    const user = userParam;
     user.profile = options.profile || {};
 
-    if (user.profile &&
-      user.profile.email.includes('@blackfoot.io', user.profile.email.indexOf('@'))) {
-      Roles.setRolesOnUserObj(user, 'admin', Roles.GLOBAL_GROUP);
+    if (
+      user.profile &&
+      user.profile.email.includes(
+        "@blackfoot.io",
+        user.profile.email.indexOf("@")
+      )
+    ) {
+      Roles.setRolesOnUserObj(user, "admin", Roles.GLOBAL_GROUP);
     }
 
     Users.insert({

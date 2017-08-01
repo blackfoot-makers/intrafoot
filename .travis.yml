@@ -10,6 +10,7 @@ before_install:
 - npm install -g mupx
 - export PATH="$HOME/.meteor:$PATH"
 - tar xvf secrets.tar
+install:
 - meteor npm install
 cache:
   directories:
