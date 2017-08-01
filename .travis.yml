@@ -10,13 +10,10 @@ before_install:
 - npm install -g mupx
 - export PATH="$HOME/.meteor:$PATH"
 - tar xvf secrets.tar
-script:
-- meteor --test --release velocity:METEOR@1.1.0.2_3
+- meteor npm install
 cache:
   directories:
   - node_modules
 services: mongodb
-before_script:
-- meteor npm install
 after_success:
 - mupx deploy
