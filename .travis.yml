@@ -11,9 +11,10 @@ before_install:
 - tar xvf secrets.tar
 install:
 - meteor npm install
-cache:
-  directories:
-  - node_modules
+- npm install
+script:
+- npm test
+- meteor build $HOME/build
 services: mongodb
 after_success:
 - mupx deploy

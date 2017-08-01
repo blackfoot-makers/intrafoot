@@ -7,15 +7,23 @@
     "pretest": "npm run lint --silent"
   },
   "babel": {
-    "plugins": ["babel-plugin-transform-decorators-legacy"]
+    "plugins": [
+      "babel-plugin-transform-decorators-legacy"
+    ]
   },
   "eslintConfig": {
     "parser": "babel-eslint",
     "parserOptions": {
       "allowImportExportEverywhere": true
     },
-    "plugins": ["meteor"],
-    "extends": ["airbnb", "plugin:meteor/recommended", "prettier"],
+    "plugins": [
+      "meteor"
+    ],
+    "extends": [
+      "airbnb",
+      "plugin:meteor/recommended",
+      "prettier"
+    ],
     "settings": {
       "import/resolver": "meteor"
     },
@@ -23,21 +31,39 @@
       "import/no-unresolved": [
         2,
         {
-          "ignore": ["^meteor/"]
+          "ignore": [
+            "^meteor/"
+          ]
         }
       ],
-      "import/extensions": [0],
-      "import/no-extraneous-dependencies": [0],
-      "comma-dangle": ["error", "only-multiline"],
-      "react/forbid-prop-types": [0],
-      "no-underscore-dangle": [0],
+      "import/extensions": [
+        0
+      ],
+      "import/no-extraneous-dependencies": [
+        0
+      ],
+      "comma-dangle": [
+        "error",
+        "only-multiline"
+      ],
+      "react/forbid-prop-types": [
+        0
+      ],
+      "no-underscore-dangle": [
+        0
+      ],
       "react/jsx-filename-extension": [
         1,
         {
-          "extensions": [".js", ".jsx"]
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
         }
       ],
-      "linebreak-style": [0]
+      "linebreak-style": [
+        0
+      ]
     },
     "env": {
       "meteor": true,
