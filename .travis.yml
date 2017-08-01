@@ -1,16 +1,20 @@
 language: node_js
 node_js:
-  - "7"
+- '5.12'
 before_install:
-  - curl https://install.meteor.com | /bin/sh
-  - export PATH="$HOME/.meteor:$PATH"
- 
-script:
-  - meteor build $HOME/build.tgz
+- openssl aes-256-cbc -K $encrypted_be8fce54ed31_key -iv $encrypted_be8fce54ed31_iv
+  -in secrets.tar.enc -out secrets.tar -d
+- curl https://install.meteor.com | /bin/sh
+- npm install -g mupx
+- export PATH="$HOME/.meteor:$PATH"
+- tar xvf secrets.tar # Add this line to decompress secrets.tar
 
+script:
+- meteor build $HOME/build.tgz
 cache:
   directories:
-    - node_modules
- 
+  - node_modules
 before_script:
-  - meteor npm install
+- meteor npm install
+after_success:
+- mupx deploy
