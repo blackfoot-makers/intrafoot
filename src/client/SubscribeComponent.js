@@ -1,29 +1,29 @@
-import { Meteor } from "meteor/meteor";
-import React, { Component } from "react";
-import { bind } from "decko";
+import { Meteor } from 'meteor/meteor';
+import React, { PureComponent } from 'react';
 
 export default ComposedComponent =>
-  class extends Component {
+  class extends PureComponent {
     constructor() {
       super();
       this.subs = {};
+      // Can't use decko here: does not works
+      this.subscribe = this.subscribe.bind(this);
+      this.subscriptionReady = this.subscriptionReady.bind(this);
     }
 
-    @bind
     subscribe(name, ...args) {
       if (this.subs[name]) {
         this.subs[name].stop();
       }
-      console.log("subscriboing stuff == ", name, ...args);
+      console.log('subscriboing stuff == ', name, ...args);
       this.subs[name] = Meteor.subscribe(name, ...args);
     }
 
-    @bind
     subscriptionReady(name) {
       if (this.subs[name]) {
         return this.subs[name].ready();
       }
-      console.log("subscriptionReady is ", name);
+      console.log('subscriptionReady is ', name);
       return false;
     }
 

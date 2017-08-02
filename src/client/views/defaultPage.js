@@ -1,25 +1,40 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
+import { array, object, shape, func } from 'prop-types';
 import { connect } from 'react-redux';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { Grid, Cell, Card, CardTitle, CardText, CardActions, CardMenu, DataTable, TableHeader, Badge, Button, Icon } from 'react-mdl';
+import {
+  Grid,
+  Cell,
+  Card,
+  CardTitle,
+  CardText,
+  CardActions,
+  CardMenu,
+  DataTable,
+  TableHeader,
+  Badge,
+  Button,
+  Icon
+} from 'react-mdl';
 
+import { requireAuth } from '../utils';
 import {
   LinkToProject,
   LinkToDevis,
   LinkToFacture,
   LinkToContact,
-  LinkToPresta } from '../common/Links';
+  LinkToPresta
+} from '../common/Links';
 
-class DefaultPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
+class DefaultPage extends PureComponent {
   getChildContext() {
     return {
-      muiTheme: getMuiTheme(),
+      muiTheme: getMuiTheme()
     };
+  }
+
+  componentWillMount() {
+    requireAuth(this.props, this.props.history.replace);
   }
 
   _getPrestas() {
@@ -28,19 +43,19 @@ class DefaultPage extends React.Component {
       { type: 'Non-réglés', ht: 0, tva: 0, total: 0 }
     ];
 
-    this.props.prestas.map((data) => {
+    this.props.prestas.map(data => {
       let index = 0;
 
       if (data.payed === false) {
         index = 1;
       }
       prestas[index].ht += data.price;
-      prestas[index].tva += (data.price * 0.2);
+      prestas[index].tva += data.price * 0.2;
       prestas[index].total = prestas[index].ht + prestas[index].tva;
       return data;
     });
 
-    return (prestas);
+    return prestas;
   }
 
   _getDevis() {
@@ -51,7 +66,7 @@ class DefaultPage extends React.Component {
       { type: 'Terminé', ht: 0, tva: 0, total: 0 }
     ];
 
-    this.props.devis.map((data) => {
+    this.props.devis.map(data => {
       let index = 0;
 
       switch (data.status) {
@@ -66,17 +81,17 @@ class DefaultPage extends React.Component {
           index = 0;
       }
       devis[index].ht += data.price;
-      devis[index].tva += (data.price * 0.2);
+      devis[index].tva += data.price * 0.2;
       devis[index].total = devis[index].ht + devis[index].tva;
       if (data.signed) {
         devis[1].ht += data.price;
-        devis[1].tva += (data.price * 0.2);
+        devis[1].tva += data.price * 0.2;
         devis[1].total = devis[1].ht + devis[1].tva;
       }
       return data;
     });
 
-    return (devis);
+    return devis;
   }
 
   _getFactures() {
@@ -86,23 +101,23 @@ class DefaultPage extends React.Component {
       { type: 'Différence', ht: 0, tva: 0, total: 0 }
     ];
 
-    this.props.factures.map((data) => {
+    this.props.factures.map(data => {
       factures[0].ht += data.price;
-      factures[0].tva += (data.price * 0.2);
+      factures[0].tva += data.price * 0.2;
       factures[0].total = factures[0].ht + factures[0].tva;
       if (data.payed === 'true') {
         factures[1].ht += data.price;
-        factures[1].tva += (data.price * 0.2);
+        factures[1].tva += data.price * 0.2;
         factures[1].total = factures[1].ht + factures[1].tva;
       } else {
         factures[2].ht += data.price;
-        factures[2].tva += (data.price * 0.2);
+        factures[2].tva += data.price * 0.2;
         factures[2].total = factures[2].ht + factures[2].tva;
       }
       return data;
     });
 
-    return (factures);
+    return factures;
   }
 
   render() {
@@ -114,12 +129,12 @@ class DefaultPage extends React.Component {
     return (
       <Grid>
         <Cell col={colSize} component={Card} shadow={0}>
-          <CardTitle>
-            Factures
-          </CardTitle>
+          <CardTitle>Factures</CardTitle>
           <CardText>
             <DataTable rows={facturesRows}>
-              <TableHeader name="type" tooltip="Le type de facture">Type</TableHeader>
+              <TableHeader name="type" tooltip="Le type de facture">
+                Type
+              </TableHeader>
               <TableHeader
                 numeric
                 cellFormatter={price => `${price.toFixed(2)}€`}
@@ -158,12 +173,10 @@ class DefaultPage extends React.Component {
           </CardMenu>
         </Cell>
         <Cell col={colSize} component={Card} shadow={0}>
-          <CardTitle>
-            Projets
-          </CardTitle>
+          <CardTitle>Projets</CardTitle>
           <CardText>
             Résumé des projets: <br />
-            Nous avons en ce moment { this.props.projects.length } projets.
+            Nous avons en ce moment {this.props.projects.length} projets.
           </CardText>
           <CardActions border>
             <Button colored ripple component={LinkToProject}>
@@ -172,12 +185,12 @@ class DefaultPage extends React.Component {
           </CardActions>
         </Cell>
         <Cell col={colSize} component={Card} shadow={0}>
-          <CardTitle>
-            Devis
-          </CardTitle>
+          <CardTitle>Devis</CardTitle>
           <CardText>
             <DataTable rows={devisRows}>
-              <TableHeader name="type" tooltip="Le type de devis">Type</TableHeader>
+              <TableHeader name="type" tooltip="Le type de devis">
+                Type
+              </TableHeader>
               <TableHeader
                 numeric
                 cellFormatter={price => `${price.toFixed(2)}€`}
@@ -211,12 +224,12 @@ class DefaultPage extends React.Component {
           </CardActions>
         </Cell>
         <Cell col={colSize} component={Card} shadow={0}>
-          <CardTitle>
-            Prestatires
-          </CardTitle>
+          <CardTitle>Prestatires</CardTitle>
           <CardText>
             <DataTable rows={prestaRows}>
-              <TableHeader name="type" tooltip="Réglé ou non?">Type</TableHeader>
+              <TableHeader name="type" tooltip="Réglé ou non?">
+                Type
+              </TableHeader>
               <TableHeader
                 numeric
                 cellFormatter={price => `${price.toFixed(2)}€`}
@@ -250,12 +263,11 @@ class DefaultPage extends React.Component {
           </CardActions>
         </Cell>
         <Cell col={colSize} component={Card} shadow={0}>
-          <CardTitle>
-            Contacts
-          </CardTitle>
+          <CardTitle>Contacts</CardTitle>
           <CardText>
             Résumé des contacts: <br />
-            Nous avons en ce moment { this.props.users.allUsers.length } contacts dont { this.props.users.blackfootUsers.length } administrateurs.
+            Nous avons en ce moment {this.props.users.allUsers.length} contacts
+            dont {this.props.users.blackfootUsers.length} administrateurs.
           </CardText>
           <CardActions border>
             <Button colored ripple component={LinkToContact}>
@@ -269,15 +281,18 @@ class DefaultPage extends React.Component {
 }
 
 DefaultPage.propTypes = {
-  projects: React.PropTypes.array.isRequired,
-  devis: React.PropTypes.array.isRequired,
-  factures: React.PropTypes.array.isRequired,
-  users: React.PropTypes.object.isRequired,
-  prestas: React.PropTypes.array.isRequired
+  projects: array.isRequired,
+  devis: array.isRequired,
+  factures: array.isRequired,
+  users: object.isRequired,
+  prestas: array.isRequired,
+  history: shape({
+    replace: func.isRequired
+  }).isRequired
 };
 
 DefaultPage.childContextTypes = {
-  muiTheme: React.PropTypes.object,
+  muiTheme: object
 };
 
 function mapStateToProps(state) {

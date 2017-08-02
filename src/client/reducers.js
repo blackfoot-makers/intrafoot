@@ -10,7 +10,6 @@ import factureReducer from './facture/factureReducer';
 import prestaReducer from './presta/prestaReducer';
 import historyReducer from './history/historyReducer';
 
-
 export default combineReducers({
   routing,
   prestas: prestaReducer,

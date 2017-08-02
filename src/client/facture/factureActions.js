@@ -20,11 +20,11 @@ export function editFacture(data, callback) {
 }
 
 export function loadFacture() {
-  return (dispatch) => {
+  return dispatch => {
     Tracker.autorun(() => {
       dispatch({
         type: 'SET_FACTURE',
-        factures: Factures.find({}, { sort: { createdAt: -1 } }).fetch() || [],
+        factures: Factures.find({}, { sort: { createdAt: -1 } }).fetch() || []
       });
     });
   };

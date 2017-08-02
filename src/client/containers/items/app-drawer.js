@@ -1,4 +1,5 @@
 import React from 'react';
+import { object } from 'prop-types';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { Drawer, Navigation, Button } from 'react-mdl';
@@ -14,33 +15,33 @@ import {
   LinkToPresta
 } from '../../common/Links';
 
-const AppDrawer = ({ currentUser }) => (
+const AppDrawer = ({ currentUser }) =>
   <Drawer title="IntraFoot">
     <Navigation>
       <LinkToIndex>Dashboard</LinkToIndex>
-      <LinkToUser>{currentUser ? 'Mon profile' : 'Se connecter'}</LinkToUser>
+      <LinkToUser>
+        {currentUser ? 'Mon profile' : 'Se connecter'}
+      </LinkToUser>
       <LinkToProject>Les projets</LinkToProject>
       <LinkToDevis>Les devis</LinkToDevis>
       <LinkToFacture>Les factures</LinkToFacture>
       <LinkToPresta>Les prestataires</LinkToPresta>
       <LinkToContact>Networking</LinkToContact>
       <LinkToHistory>Historique</LinkToHistory>
-      {
-        currentUser &&
+      {currentUser &&
         <Button
-          onClick={() => Meteor.logout(() => {
-            browserHistory.push('/user');
-          })}
+          onClick={() =>
+            Meteor.logout(() => {
+              browserHistory.push('/user');
+            })}
         >
           Se déconnecter
-        </Button>
-      }
+        </Button>}
     </Navigation>
-  </Drawer>
-);
+  </Drawer>;
 
 AppDrawer.propTypes = {
-  currentUser: React.PropTypes.object
+  currentUser: object
 };
 
 const mapStateToProps = () => ({

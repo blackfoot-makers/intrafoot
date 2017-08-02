@@ -1,32 +1,38 @@
 import React from 'react';
+import { array, func } from 'prop-types';
 import { browserHistory, Link } from 'react-router';
-import { Table, TableHeader, Cell, Card, CardTitle, CardText, CardActions, Button } from 'react-mdl';
+import {
+  Table,
+  TableHeader,
+  Cell,
+  Card,
+  CardTitle,
+  CardText,
+  CardActions,
+  Button
+} from 'react-mdl';
 import moment from 'moment';
 
 import Projects from '../../../common/project/projectSchema';
 
-const DevisList = ({ devis, renderAction, ...otherProps }) => (
+const DevisList = ({ devis, renderAction, ...otherProps }) =>
   <Cell col={12} component={Card} shadow={0}>
-    <CardTitle>
-      Devis
-    </CardTitle>
+    <CardTitle>Devis</CardTitle>
     <CardText>
-      <Table
-        sortable
-        rowKeyColumn="id"
-        shadow={0}
-        rows={devis}
-        {...otherProps}
-      >
+      <Table sortable rowKeyColumn="id" shadow={0} rows={devis} {...otherProps}>
         <TableHeader name="id" tooltip="Identifiant du devis">
           Identifiant
         </TableHeader>
         <TableHeader
           name="idProject"
           tooltip="Projet lié au devis"
-          cellFormatter={(id) => {
+          cellFormatter={id => {
             const project = Projects.findOne(id);
-            return <Link to={`/project/${id}`}>{project.name}</Link>;
+            return (
+              <Link to={`/project/${id}`}>
+                {project.name}
+              </Link>
+            );
           }}
         >
           Projet
@@ -42,7 +48,8 @@ const DevisList = ({ devis, renderAction, ...otherProps }) => (
         <TableHeader
           name="signature"
           tooltip="Date de signature du devis"
-          cellFormatter={date => (date ? moment(date).format('LL') : 'Devis non signé')}
+          cellFormatter={date =>
+            date ? moment(date).format('LL') : 'Devis non signé'}
         >
           Signature
         </TableHeader>
@@ -59,7 +66,9 @@ const DevisList = ({ devis, renderAction, ...otherProps }) => (
         >
           Signé?
         </TableHeader>
-        <TableHeader name="action" cellFormatter={renderAction}>Actions</TableHeader>
+        <TableHeader name="action" cellFormatter={renderAction}>
+          Actions
+        </TableHeader>
       </Table>
     </CardText>
     <CardActions border>
@@ -74,12 +83,11 @@ const DevisList = ({ devis, renderAction, ...otherProps }) => (
         Ajouter un devis
       </Button>
     </CardActions>
-  </Cell>
-);
+  </Cell>;
 
 DevisList.propTypes = {
-  devis: React.PropTypes.array.isRequired,
-  renderAction: React.PropTypes.func.isRequired
+  devis: array.isRequired,
+  renderAction: func.isRequired
 };
 
 export default DevisList;

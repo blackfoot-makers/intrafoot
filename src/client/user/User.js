@@ -1,50 +1,62 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import { array, func, shape } from 'prop-types';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { Grid, IconButton } from 'react-mdl';
+import { bind } from 'decko';
 
+import { requireAuth } from '../utils';
 import UserList from './items/UserList';
 import UserAdd from './items/UserAdd';
 
 import { deleteUser } from './userActions';
 
 // Users component - represents the users lists
-class Users extends Component {
+class Users extends PureComponent {
+  state = {
+    editMode: false,
+    width: 0
+  };
 
-  constructor(props) {
-    super(props);
-    this.deleteAUser = this.deleteAUser.bind(this);
-    this.renderAction = this.renderAction.bind(this);
-
-    this.state = {
-      editMode: false,
-      width: 0
-    };
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  componentWillMount() {
+    requireAuth(this.props, this.props.history.replace);
   }
 
   componentDidMount() {
     this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions.bind(this));
+    window.addEventListener('resize', this.updateWindowDimensions);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions.bind(this));
+    window.removeEventListener('resize', this.updateWindowDimensions);
   }
 
+  @bind
   updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    this.setState(state => ({
+      ...state,
+      width: window.innerWidth,
+      height: window.innerHeight
+    }));
   }
 
+  @bind
   deleteAUser(id) {
     this.props.deleteUser(id);
   }
 
+  @bind
   renderAction(data) {
     return (
       <div>
-        <IconButton name="fullscreen" onClick={() => browserHistory.push(`/contact/${data._id}`)} />
-        <IconButton name="edit" onClick={() => browserHistory.push(`/contact/edit/${data._id}`)} />
+        <IconButton
+          name="fullscreen"
+          onClick={() => browserHistory.push(`/contact/${data._id}`)}
+        />
+        <IconButton
+          name="edit"
+          onClick={() => browserHistory.push(`/contact/edit/${data._id}`)}
+        />
         <IconButton
           name="delete"
           onClick={() => {
@@ -82,19 +94,23 @@ class Users extends Component {
 }
 
 Users.propTypes = {
-  users: PropTypes.array.isRequired,
-  deleteUser: PropTypes.func.isRequired
+  users: array.isRequired,
+  deleteUser: func.isRequired,
+  history: shape({
+    replace: func.isRequired
+  }).isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    users: state.users && state.users.allUsers
+    users: state.users && state.users.allUsers,
+    routing: state.routing
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    deleteUser: (id) => {
+    deleteUser: id => {
       dispatch(deleteUser(id));
     }
   };

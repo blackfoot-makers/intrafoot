@@ -3,7 +3,6 @@ import { Accounts, STATES } from 'meteor/std:accounts-ui';
 import { Button, Grid } from 'react-mdl';
 
 class LoginFormAccount extends Accounts.ui.LoginForm {
-
   fields() {
     const { formState } = this.state;
 
@@ -15,26 +14,26 @@ class LoginFormAccount extends Accounts.ui.LoginForm {
           id: 'firstName',
           hint: 'Prénom',
           label: 'Prénom',
-          onChange: this.handleChange.bind(this, 'firstName'),
+          onChange: this.handleChange.bind(this, 'firstName')
         },
         lastName: {
           id: 'lastName',
           hint: 'Nom',
           label: 'Nom',
-          onChange: this.handleChange.bind(this, 'lastName'),
+          onChange: this.handleChange.bind(this, 'lastName')
         },
         title: {
           id: 'title',
           hint: 'Titre',
           label: 'Titre',
-          onChange: this.handleChange.bind(this, 'title'),
+          onChange: this.handleChange.bind(this, 'title')
         },
         company: {
           id: 'company',
           hint: 'Entreprise',
           label: 'Entreprise',
-          onChange: this.handleChange.bind(this, 'company'),
-        },
+          onChange: this.handleChange.bind(this, 'company')
+        }
       };
 
       return newFileds;
@@ -43,7 +42,13 @@ class LoginFormAccount extends Accounts.ui.LoginForm {
   }
 
   signUp(options = {}) {
-    const { firstName = '', lastName = '', email = '', title = '', company = '' } = this.state;
+    const {
+      firstName = '',
+      lastName = '',
+      email = '',
+      title = '',
+      company = ''
+    } = this.state;
     const opt = options;
 
     opt.profile = Object.assign(opt.profile || {}, {
@@ -61,19 +66,15 @@ class LoginFormAccount extends Accounts.ui.LoginForm {
 
     return (
       <Grid>
-        {
-          super.render()
-        }
-        {
-          formState === STATES.PROFILE &&
+        {super.render()}
+        {formState === STATES.PROFILE &&
           <Button
             ripple
             style={{ marginTop: 10 }}
             onClick={this.props.onEditClick}
           >
-              EDITION DE PROFILE
-          </Button>
-        }
+            EDITION DE PROFILE
+          </Button>}
       </Grid>
     );
   }

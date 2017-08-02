@@ -4,8 +4,7 @@ import { Roles } from 'meteor/alanning:roles';
 import Prestas from './prestaSchema';
 import History from '../history/historySchema';
 
-const checkAllParams =
-({
+const checkAllParams = ({
   idContact,
   company,
   prestation,
@@ -14,7 +13,8 @@ const checkAllParams =
   accompte = 0,
   payedDate,
   remarque = '',
-  payed }) => {
+  payed
+}) => {
   check(idContact, String);
   check(company, String);
   check(price, Number);
@@ -31,7 +31,6 @@ const checkAllParams =
 };
 
 Meteor.methods({
-
   addPresta(params) {
     if (!this.userId || !Roles.userIsInRole(this.userId, 'admin')) {
       throw new Meteor.Error('not-authorized');
@@ -97,17 +96,22 @@ Meteor.methods({
       payed
     } = params;
 
-    const prestas = Prestas.update({ _id }, { $set: {
-      idContact,
-      company,
-      prestation,
-      price,
-      facturation,
-      accompte,
-      payedDate,
-      remarque,
-      payed
-    } });
+    const prestas = Prestas.update(
+      { _id },
+      {
+        $set: {
+          idContact,
+          company,
+          prestation,
+          price,
+          facturation,
+          accompte,
+          payedDate,
+          remarque,
+          payed
+        }
+      }
+    );
 
     History.insert({
       user: this.userId,

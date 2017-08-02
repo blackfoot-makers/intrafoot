@@ -1,84 +1,77 @@
 import React from 'react';
-import { Link, IndexLink } from 'react-router';
+import { node } from 'prop-types';
+import { Link, NavLink } from 'react-router-dom';
 
-const LinkToProject = ({ children, ...otherProps }) => (
+const LinkToProject = ({ children, ...otherProps }) =>
   <Link to="/project" {...otherProps}>
-    { children }
-  </Link>
-);
+    {children}
+  </Link>;
 
 LinkToProject.propTypes = {
-  children: React.PropTypes.node.isRequired
+  children: node.isRequired
 };
 
-const LinkToDevis = ({ children, ...otherProps }) => (
+const LinkToDevis = ({ children, ...otherProps }) =>
   <Link to="/devis" {...otherProps}>
-    { children }
-  </Link>
-);
+    {children}
+  </Link>;
 
 LinkToDevis.propTypes = {
-  children: React.PropTypes.node.isRequired
+  children: node.isRequired
 };
 
-const LinkToFacture = ({ children, ...otherProps }) => (
+const LinkToFacture = ({ children, ...otherProps }) =>
   <Link to="/facture" {...otherProps}>
-    { children }
-  </Link>
-);
+    {children}
+  </Link>;
 
 LinkToFacture.propTypes = {
-  children: React.PropTypes.node.isRequired
+  children: node.isRequired
 };
 
-const LinkToUser = ({ children, ...otherProps }) => (
+const LinkToUser = ({ children, ...otherProps }) =>
   <Link to="/user" {...otherProps}>
-    { children }
-  </Link>
-);
+    {children}
+  </Link>;
 
 LinkToUser.propTypes = {
-  children: React.PropTypes.node.isRequired
+  children: node.isRequired
 };
 
-const LinkToContact = ({ children, ...otherProps }) => (
+const LinkToContact = ({ children, ...otherProps }) =>
   <Link to="/contact" {...otherProps}>
-    { children }
-  </Link>
-);
+    {children}
+  </Link>;
 
 LinkToContact.propTypes = {
-  children: React.PropTypes.node.isRequired
+  children: node.isRequired
 };
 
-const LinkToHistory = ({ children, ...otherProps }) => (
+const LinkToHistory = ({ children, ...otherProps }) =>
   <Link to="/history" {...otherProps}>
-    { children }
-  </Link>
-);
+    {children}
+  </Link>;
 
 LinkToHistory.propTypes = {
-  children: React.PropTypes.node.isRequired
+  children: node.isRequired
 };
 
-const LinkToPresta = ({ children, ...otherProps }) => (
+const LinkToPresta = ({ children, ...otherProps }) =>
   <Link to="/presta" {...otherProps}>
-    { children }
-  </Link>
-);
+    {children}
+  </Link>;
 
 LinkToPresta.propTypes = {
-  children: React.PropTypes.node.isRequired
+  children: node.isRequired
 };
 
-const LinkToIndex = ({ children, ...otherProps }) => (
-  <IndexLink to="/" {...otherProps}>
-    { children }
-  </IndexLink>
-);
+const LinkToIndex = ({ children, ...otherProps }) =>
+  <NavLink exact to="/" {...otherProps}>
+    {children}
+  </NavLink>;
 
 LinkToIndex.propTypes = {
-  children: React.PropTypes.node.isRequired
+  children: node.isRequired
 };
 
 export {

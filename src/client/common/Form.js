@@ -1,6 +1,8 @@
 import React from 'react';
+import { bool, string, array, func } from 'prop-types';
 import { Button } from 'react-mdl';
 import { browserHistory } from 'react-router';
+import { bind } from 'decko';
 
 import { SubmitButton } from './InputButton';
 import Field from './Field';
@@ -15,10 +17,6 @@ class Form extends React.Component {
     });
 
     this.state = state;
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleOtherChange = this.handleOtherChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -26,8 +24,10 @@ class Form extends React.Component {
     let changed = false;
 
     nextProps.fields.map(({ fieldKey, defaultValue }, index) => {
-      if (state[fieldKey] !== defaultValue &&
-        this.props.fields[index].defaultValue === state[fieldKey]) {
+      if (
+        state[fieldKey] !== defaultValue &&
+        this.props.fields[index].defaultValue === state[fieldKey]
+      ) {
         state[fieldKey] = defaultValue;
         changed = true;
       }
@@ -39,6 +39,7 @@ class Form extends React.Component {
     }
   }
 
+  @bind
   handleChange(event) {
     const target = event.target;
     const value = target.value;
@@ -50,6 +51,7 @@ class Form extends React.Component {
     this.props.onChange({ [name]: value });
   }
 
+  @bind
   handleOtherChange(data, key) {
     this.setState({
       [key]: data
@@ -66,10 +68,11 @@ class Form extends React.Component {
     this.props.redirectAfterSubmit();
   }
 
+  @bind
   handleSubmit(event) {
     event.preventDefault();
     const devisData = {};
-    this.props.fields.map((field) => {
+    this.props.fields.map(field => {
       const value = this.state[field.fieldKey];
       if (value !== undefined) {
         switch (field.type) {
@@ -90,11 +93,11 @@ class Form extends React.Component {
     });
 
     if (this.props.editMode) {
-      this.props.editAction(devisData, (error) => {
+      this.props.editAction(devisData, error => {
         this.handleError(`${this.props.name} edité`, error);
       });
     } else {
-      this.props.addAction(devisData, (error) => {
+      this.props.addAction(devisData, error => {
         this.handleError(`${this.props.name} ajouté`, error);
       });
     }
@@ -103,44 +106,38 @@ class Form extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        {
-          this.props.fields.map(({ defaultValue, ...props }, index) => {
-            if (!props.display || this.state[props.display] === 'true') {
-              return (
-                <Field
-                  key={index}
-                  value={this.state[props.fieldKey] || defaultValue}
-                  handleChange={this.handleChange}
-                  handleOtherChange={this.handleOtherChange}
-                  {...props}
-                />
-              );
-            }
-            return <div key={index} />;
-          })
-        }
+        {this.props.fields.map(({ defaultValue, ...props }, index) => {
+          if (!props.display || this.state[props.display] === 'true') {
+            return (
+              <Field
+                key={index}
+                value={this.state[props.fieldKey] || defaultValue}
+                handleChange={this.handleChange}
+                handleOtherChange={this.handleOtherChange}
+                {...props}
+              />
+            );
+          }
+          return <div key={index} />;
+        })}
 
         <br />
         <br />
 
-        <Button
-          raised
-          colored
-          component={SubmitButton}
-        />
+        <Button raised colored component={SubmitButton} />
       </form>
     );
   }
 }
 
 Form.propTypes = {
-  editAction: React.PropTypes.func.isRequired,
-  editMode: React.PropTypes.bool,
-  addAction: React.PropTypes.func.isRequired,
-  redirectAfterSubmit: React.PropTypes.func.isRequired,
-  name: React.PropTypes.string.isRequired,
-  fields: React.PropTypes.array.isRequired,
-  onChange: React.PropTypes.func.isRequired
+  editAction: func.isRequired,
+  editMode: bool,
+  addAction: func.isRequired,
+  redirectAfterSubmit: func.isRequired,
+  name: string.isRequired,
+  fields: array.isRequired,
+  onChange: func.isRequired
 };
 
 Form.defaultProps = {

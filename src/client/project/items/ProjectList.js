@@ -1,15 +1,26 @@
 import React from 'react';
+import { array, func } from 'prop-types';
 import { browserHistory, Link } from 'react-router';
-import { Table, TableHeader, Cell, Card, CardTitle, CardText, CardActions, Button, List, ListItem, ListItemContent } from 'react-mdl';
+import {
+  Table,
+  TableHeader,
+  Cell,
+  Card,
+  CardTitle,
+  CardText,
+  CardActions,
+  Button,
+  List,
+  ListItem,
+  ListItemContent
+} from 'react-mdl';
 import moment from 'moment';
 
 import Users from '../../../common/users/usersSchema';
 
-const ProjectList = ({ projects, renderAction, ...otherProps }) => (
+const ProjectList = ({ projects, renderAction, ...otherProps }) =>
   <Cell col={12} component={Card} shadow={0}>
-    <CardTitle>
-      Projets
-    </CardTitle>
+    <CardTitle>Projets</CardTitle>
     <CardText>
       <Table
         sortable
@@ -27,7 +38,10 @@ const ProjectList = ({ projects, renderAction, ...otherProps }) => (
         <TableHeader name="description" tooltip="Description du projet">
           Description
         </TableHeader>
-        <TableHeader name="company" tooltip="Entreprise pour qui le projet est fait">
+        <TableHeader
+          name="company"
+          tooltip="Entreprise pour qui le projet est fait"
+        >
           Entreprise
         </TableHeader>
         <TableHeader
@@ -46,7 +60,7 @@ const ProjectList = ({ projects, renderAction, ...otherProps }) => (
         <TableHeader
           name="participants"
           tooltip="Participants au projet"
-          cellFormatter={(userIds) => {
+          cellFormatter={userIds => {
             if (!userIds) return '';
             const users = userIds.map((elem, index) => {
               const user = Users.findOne(elem);
@@ -79,7 +93,9 @@ const ProjectList = ({ projects, renderAction, ...otherProps }) => (
         >
           NDA
         </TableHeader>
-        <TableHeader name="action" cellFormatter={renderAction}>Actions</TableHeader>
+        <TableHeader name="action" cellFormatter={renderAction}>
+          Actions
+        </TableHeader>
       </Table>
     </CardText>
     <CardActions border>
@@ -94,12 +110,11 @@ const ProjectList = ({ projects, renderAction, ...otherProps }) => (
         Ajouter un projet
       </Button>
     </CardActions>
-  </Cell>
-);
+  </Cell>;
 
 ProjectList.propTypes = {
-  projects: React.PropTypes.array.isRequired,
-  renderAction: React.PropTypes.func.isRequired
+  projects: array.isRequired,
+  renderAction: func.isRequired
 };
 
 export default ProjectList;

@@ -8,9 +8,17 @@ Projects.schema = new SimpleSchema({
   description: { type: String },
   company: { type: String },
   signature: { type: Date, optional: true },
-  status: { type: String, defaultValue: 'en cours', allowedValues: ['abandon', 'en cours', 'stand by', 'terminé'] },
+  status: {
+    type: String,
+    defaultValue: 'en cours',
+    allowedValues: ['abandon', 'en cours', 'stand by', 'terminé']
+  },
   remarque: { type: String, optional: true },
-  participants: { type: [String], regEx: SimpleSchema.RegEx.Id, optional: true },
+  participants: {
+    type: [String],
+    regEx: SimpleSchema.RegEx.Id,
+    optional: true
+  },
   devis: { type: [String], regEx: SimpleSchema.RegEx.Id, optional: true },
   factures: { type: [String], regEx: SimpleSchema.RegEx.Id, optional: true },
   creator: { type: String, regEx: SimpleSchema.RegEx.Id },

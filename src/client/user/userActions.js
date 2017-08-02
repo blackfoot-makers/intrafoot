@@ -22,7 +22,7 @@ export function editUser(data, callback) {
 }
 
 export function loadUser() {
-  return (dispatch) => {
+  return dispatch => {
     Tracker.autorun(() => {
       const users = Users.find({}, { sort: { createdAt: -1 } }).fetch() || [];
       const blackfootUsers = users.reduce((result, user) => {

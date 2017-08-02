@@ -20,11 +20,11 @@ export function editPresta(data, callback) {
 }
 
 export function loadPresta() {
-  return (dispatch) => {
+  return dispatch => {
     Tracker.autorun(() => {
       dispatch({
         type: 'SET_PRESTA',
-        prestas: Prestas.find({}, { sort: { createdAt: -1 } }).fetch() || [],
+        prestas: Prestas.find({}, { sort: { createdAt: -1 } }).fetch() || []
       });
     });
   };

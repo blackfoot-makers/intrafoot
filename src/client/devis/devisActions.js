@@ -20,11 +20,11 @@ export function editDevis(data, callback) {
 }
 
 export function loadDevis() {
-  return (dispatch) => {
+  return dispatch => {
     Tracker.autorun(() => {
       dispatch({
         type: 'SET_DEVIS',
-        devis: Devis.find({}, { sort: { createdAt: -1 } }).fetch() || [],
+        devis: Devis.find({}, { sort: { createdAt: -1 } }).fetch() || []
       });
     });
   };

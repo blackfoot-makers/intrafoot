@@ -1,5 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import createLogger from 'redux-logger';
+import { routerMiddleware } from 'react-router-redux';
+
+import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 // import { initialize } from 'redux-form';
 // import { push } from 'react-router-redux';
@@ -13,13 +15,15 @@ import { loadUser } from './user/userActions';
 import { loadHistory } from './history/historyActions';
 import { loadPresta } from './presta/prestaActions';
 
-export default () => {
+export default history => {
   const logger = createLogger();
-  const middleware = [thunk, logger];
+  const middleware = [thunk, logger, routerMiddleware(history)];
   const storeEnhancers = [
     // autoRehydrate(),
     applyMiddleware(...middleware),
-    window.devToolsExtension && process.env.NODE_ENV !== 'production' ? window.devToolsExtension() : f => f
+    window.devToolsExtension && process.env.NODE_ENV !== 'production'
+      ? window.devToolsExtension()
+      : f => f
   ];
 
   const store = compose(...storeEnhancers)(createStore)(reducers);
@@ -32,18 +36,17 @@ export default () => {
   store.dispatch(loadHistory());
   store.dispatch(loadPresta());
   // if (Meteor.isClient) {
-    // store.dispatch(loadTodo());
-    // persistStore(store, {
-    //   blacklist: ['routing', 'form']
-    // }, () => {
-    //   const state = store.getState();
-    //   store.dispatch(initialize('userForm', state.user));
+  // store.dispatch(loadTodo());
+  // persistStore(store, {
+  //   blacklist: ['routing', 'form']
+  // }, () => {
+  //   const state = store.getState();
+  //   store.dispatch(initialize('userForm', state.user));
 
-      // if (!isLoggedIn(state)) {
-      // store.dispatch(push('/user'));
-      // }
-    // });
+  // if (!isLoggedIn(state)) {
+  // store.dispatch(push('/user'));
   // }
-
+  // });
+  // }
   return store;
 };

@@ -23,7 +23,7 @@ export function editProject(data, callback) {
 export function findProject(search) {
   const project = Projects.findOne({ id: search });
 
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: 'FIND_PROJECT'
     });
@@ -34,7 +34,7 @@ export function findProject(search) {
 }
 
 export function loadProject() {
-  return (dispatch) => {
+  return dispatch => {
     Tracker.autorun(() => {
       dispatch({
         type: 'SET_PROJECT',

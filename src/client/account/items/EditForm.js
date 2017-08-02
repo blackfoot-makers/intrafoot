@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
+import { object, func } from 'prop-types';
 import { Textfield, Button } from 'react-mdl';
+import { bind } from 'decko';
 
 import { SubmitButton } from '../../common/InputButton';
 
-class EditForm extends React.Component {
+class EditForm extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,17 +13,15 @@ class EditForm extends React.Component {
       company: this.props.currentUser.company,
       firstName: this.props.currentUser.firstName,
       lastName: this.props.currentUser.lastName,
-      title: this.props.currentUser.title,
+      title: this.props.currentUser.title
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  @bind
   handleChange(event) {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-
 
     this.setState({
       [name]: value
@@ -29,6 +29,7 @@ class EditForm extends React.Component {
   }
 
   // @todo: Handle error
+  @bind
   handleSubmit(event) {
     event.preventDefault();
     this.props.onSubmit(this.state);
@@ -42,7 +43,6 @@ class EditForm extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-
         <Textfield
           onChange={this.handleChange}
           required
@@ -91,20 +91,15 @@ class EditForm extends React.Component {
           value={this.state.title}
         />
 
-        <Button
-          raised
-          colored
-          component={SubmitButton}
-        />
-
+        <Button raised colored component={SubmitButton} />
       </form>
     );
   }
 }
 
 EditForm.propTypes = {
-  currentUser: React.PropTypes.object.isRequired,
-  onSubmit: React.PropTypes.func.isRequired
+  currentUser: object.isRequired,
+  onSubmit: func.isRequired
 };
 
 export default EditForm;

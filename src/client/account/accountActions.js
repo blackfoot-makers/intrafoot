@@ -1,5 +1,5 @@
 export function setUser(user) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: 'SET_CURRENT_USER',
       user
@@ -8,7 +8,7 @@ export function setUser(user) {
 }
 
 export function getUser() {
-  return (dispatch) => {
+  return dispatch => {
     dispatch(setUser(Meteor.user()));
   };
 }
@@ -25,8 +25,11 @@ export function editUser(newUser) {
     title: newUser.title
   };
 
-  Meteor.users.update({ _id: currentUser._id }, { $set: { profile: currentUser.profile } });
-  return (dispatch) => {
+  Meteor.users.update(
+    { _id: currentUser._id },
+    { $set: { profile: currentUser.profile } }
+  );
+  return dispatch => {
     dispatch(setUser(currentUser));
   };
 }

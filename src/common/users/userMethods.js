@@ -5,8 +5,7 @@ import Users from './usersSchema';
 import Companies from './companySchema';
 import History from '../history/historySchema';
 
-const checkAllParams =
-({
+const checkAllParams = ({
   id = '',
   firstName,
   lastName,
@@ -56,7 +55,6 @@ const checkAllParams =
 };
 
 Meteor.methods({
-
   addUser(params) {
     if (!this.userId || !Roles.userIsInRole(this.userId, 'admin')) {
       throw new Meteor.Error('not-authorized');
@@ -152,22 +150,27 @@ Meteor.methods({
       });
     }
 
-    const user = Users.update({ _id }, { $set: {
-      id,
-      firstName,
-      lastName,
-      phone,
-      linkedin,
-      sites,
-      email,
-      interlocuteur,
-      description,
-      accessLevel,
-      lastContact,
-      history,
-      title,
-      company
-    } });
+    const user = Users.update(
+      { _id },
+      {
+        $set: {
+          id,
+          firstName,
+          lastName,
+          phone,
+          linkedin,
+          sites,
+          email,
+          interlocuteur,
+          description,
+          accessLevel,
+          lastContact,
+          history,
+          title,
+          company
+        }
+      }
+    );
 
     History.insert({
       user: this.userId,

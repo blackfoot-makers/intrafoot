@@ -8,11 +8,11 @@ export function addHistory(data) {
 }
 
 export function loadHistory() {
-  return (dispatch) => {
+  return dispatch => {
     Tracker.autorun(() => {
       dispatch({
         type: 'SET_HISTORY',
-        history: History.find({}, { sort: { date: -1 } }).fetch() || [],
+        history: History.find({}, { sort: { date: -1 } }).fetch() || []
       });
     });
   };

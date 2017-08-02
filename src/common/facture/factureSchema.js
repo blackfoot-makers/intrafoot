@@ -8,7 +8,11 @@ Factures.schema = new SimpleSchema({
   idDevis: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
   price: { type: Number, decimal: true },
   sentDate: { type: Date, optional: true },
-  payed: { type: String, defaultValue: 'false', allowedValues: ['true', 'false', 'annulé'] },
+  payed: {
+    type: String,
+    defaultValue: 'false',
+    allowedValues: ['true', 'false', 'annulé']
+  },
   pricePayed: { type: Number, decimal: true, optional: true },
   delayTillPayed: { type: Number },
   remarque: { type: String, optional: true },

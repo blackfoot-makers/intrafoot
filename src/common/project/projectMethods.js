@@ -6,8 +6,17 @@ import Companies from '../users/companySchema';
 import Users from '../users/usersSchema';
 import History from '../history/historySchema';
 
-const checkAllParams =
-({ id, name, description, signature = null, company, status, remarque = '', participants = [], nda }) => {
+const checkAllParams = ({
+  id,
+  name,
+  description,
+  signature = null,
+  company,
+  status,
+  remarque = '',
+  participants = [],
+  nda
+}) => {
   check(id, String);
   check(name, String);
   check(description, String);
@@ -22,7 +31,6 @@ const checkAllParams =
 };
 
 Meteor.methods({
-
   addProject(params) {
     if (!this.userId || !Roles.userIsInRole(this.userId, 'admin')) {
       throw new Meteor.Error('not-authorized');
@@ -42,7 +50,7 @@ Meteor.methods({
     const projects = Projects.insert(newProjects);
 
     if (newProjects.participants) {
-      newProjects.participants.map((id) => {
+      newProjects.participants.map(id => {
         const user = Users.findOne(id);
         if (user) {
           Users.update(
@@ -92,13 +100,10 @@ Meteor.methods({
     }
 
     if (projects.participants) {
-      projects.participants.map((userId) => {
+      projects.participants.map(userId => {
         const user = Users.findOne(userId);
         if (user) {
-          Users.update(
-            { _id: user._id },
-            { $pull: { projects: id } }
-          );
+          Users.update({ _id: user._id }, { $pull: { projects: id } });
         }
         return true;
       });
@@ -137,19 +142,16 @@ Meteor.methods({
 
     // Update project participants
     if (project && project.participants) {
-      project.participants.map((userId) => {
+      project.participants.map(userId => {
         const user = Users.findOne(userId);
         if (user) {
-          Users.update(
-            { _id: user._id },
-            { $pull: { projects: _id } }
-          );
+          Users.update({ _id: user._id }, { $pull: { projects: _id } });
         }
         return true;
       });
     }
 
-    participants.map((userId) => {
+    participants.map(userId => {
       const user = Users.findOne(userId);
       if (user) {
         Users.update(
@@ -162,17 +164,22 @@ Meteor.methods({
       return true;
     });
 
-    project = Projects.update({ _id }, { $set: {
-      id,
-      name,
-      description,
-      company,
-      signature,
-      status,
-      remarque,
-      participants,
-      nda
-    } });
+    project = Projects.update(
+      { _id },
+      {
+        $set: {
+          id,
+          name,
+          description,
+          company,
+          signature,
+          status,
+          remarque,
+          participants,
+          nda
+        }
+      }
+    );
 
     if (project) {
       History.insert({

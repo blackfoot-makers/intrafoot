@@ -1,31 +1,28 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
+import { object, bool, func } from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { connect } from 'react-redux';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { bind } from 'decko';
 
 import LoginFormAccount from './items/LoginFormAccount';
 import EditForm from './items/EditForm';
 
 import { editUser } from './accountActions';
 
-class LoginForm extends React.Component {
-
-  constructor(props) {
-    super(props);
-
-    this.onEditClick = this._onEditClick.bind(this);
-    this.state = {
-      editMode: this.props.editMode || false
-    };
-  }
+class LoginForm extends PureComponent {
+  state = {
+    editMode: this.props.editMode || false
+  };
 
   getChildContext() {
     return {
-      muiTheme: getMuiTheme(),
+      muiTheme: getMuiTheme()
     };
   }
 
-  _onEditClick() {
+  @bind
+  onEditClick() {
     this.setState({
       editMode: true
     });
@@ -34,26 +31,27 @@ class LoginForm extends React.Component {
   render() {
     if (this.state.editMode) {
       return (
-        <EditForm currentUser={Meteor.user().profile} onSubmit={this.props.editUser} />
+        <EditForm
+          currentUser={Meteor.user().profile}
+          onSubmit={this.props.editUser}
+        />
       );
     }
-    return (
-      <LoginFormAccount onEditClick={this.onEditClick} />
-    );
+    return <LoginFormAccount onEditClick={this.onEditClick} />;
   }
 }
 
 LoginForm.childContextTypes = {
-  muiTheme: React.PropTypes.object,
+  muiTheme: object
 };
 
 LoginForm.propTypes = {
-  editMode: React.PropTypes.bool,
-  editUser: React.PropTypes.func.isRequired
+  editMode: bool,
+  editUser: func.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
-  editUser: (newUser) => {
+  editUser: newUser => {
     dispatch(editUser(newUser));
   }
 });

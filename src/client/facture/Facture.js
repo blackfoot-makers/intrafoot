@@ -1,49 +1,60 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import { array, func, shape } from 'prop-types';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
 import { Grid, IconButton } from 'react-mdl';
+import { bind } from 'decko';
 
+import { requireAuth } from '../utils';
 import FactureList from './items/FactureList';
 import FactureAdd from './items/FactureAdd';
 
 import { deleteFacture } from './factureActions';
 
 // Factures component - represents the factures lists
-class Factures extends Component {
+class Factures extends PureComponent {
+  state = {
+    width: 0
+  };
 
-  constructor(props) {
-    super(props);
-    this.deleteAFacture = this.deleteAFacture.bind(this);
-    this.renderAction = this.renderAction.bind(this);
-
-    this.state = {
-      width: 0
-    };
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  componentWillMount() {
+    requireAuth(this.props, this.props.history.replace);
   }
 
   componentDidMount() {
     this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions.bind(this));
+    window.addEventListener('resize', this.updateWindowDimensions);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions.bind(this));
+    window.removeEventListener('resize', this.updateWindowDimensions);
   }
 
+  @bind
   updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    this.setState(state => ({
+      ...state,
+      width: window.innerWidth,
+      height: window.innerHeight
+    }));
   }
 
+  @bind
   deleteAFacture(id) {
     this.props.deleteFacture(id);
   }
 
+  @bind
   renderAction(data) {
     return (
       <div>
-        <IconButton name="fullscreen" onClick={() => browserHistory.push(`/facture/${data._id}`)} />
-        <IconButton name="edit" onClick={() => browserHistory.push(`/facture/edit/${data._id}`)} />
+        <IconButton
+          name="fullscreen"
+          onClick={() => this.props.history.push(`/facture/${data._id}`)}
+        />
+        <IconButton
+          name="edit"
+          onClick={() => this.props.history.push(`/facture/edit/${data._id}`)}
+        />
         <IconButton
           name="delete"
           onClick={() => {
@@ -81,8 +92,12 @@ class Factures extends Component {
 }
 
 Factures.propTypes = {
-  factures: PropTypes.array.isRequired,
-  deleteFacture: PropTypes.func.isRequired
+  factures: array.isRequired,
+  deleteFacture: func.isRequired,
+  history: shape({
+    replace: func.isRequired,
+    push: func.isRequired
+  }).isRequired
 };
 
 function mapStateToProps(state) {
@@ -93,7 +108,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    deleteFacture: (id) => {
+    deleteFacture: id => {
       dispatch(deleteFacture(id));
     }
   };

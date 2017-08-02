@@ -1,16 +1,24 @@
 import React from 'react';
+import { array, func } from 'prop-types';
 import { browserHistory, Link } from 'react-router';
-import { Table, TableHeader, Cell, Card, CardTitle, CardText, CardActions, Button } from 'react-mdl';
+import {
+  Table,
+  TableHeader,
+  Cell,
+  Card,
+  CardTitle,
+  CardText,
+  CardActions,
+  Button
+} from 'react-mdl';
 import moment from 'moment';
 
 import Projects from '../../../common/project/projectSchema';
 import Devis from '../../../common/devis/devisSchema';
 
-const FactureList = ({ factures, renderAction, ...otherProps }) => (
+const FactureList = ({ factures, renderAction, ...otherProps }) =>
   <Cell col={12} component={Card} shadow={0}>
-    <CardTitle>
-      Factures
-    </CardTitle>
+    <CardTitle>Factures</CardTitle>
     <CardText>
       <Table
         sortable
@@ -25,9 +33,13 @@ const FactureList = ({ factures, renderAction, ...otherProps }) => (
         <TableHeader
           name="idProject"
           tooltip="Projet lié à la facture"
-          cellFormatter={(id) => {
+          cellFormatter={id => {
             const project = Projects.findOne(id);
-            return <Link to={`/project/${id}`}>{project.name}</Link>;
+            return (
+              <Link to={`/project/${id}`}>
+                {project.name}
+              </Link>
+            );
           }}
         >
           Projet
@@ -35,10 +47,14 @@ const FactureList = ({ factures, renderAction, ...otherProps }) => (
         <TableHeader
           name="idDevis"
           tooltip="Devis lié à la facture"
-          cellFormatter={(id) => {
+          cellFormatter={id => {
             const devis = Devis.findOne(id);
             if (!devis) return '';
-            return <Link to={`/devis/${id}`}>{devis.id}</Link>;
+            return (
+              <Link to={`/devis/${id}`}>
+                {devis.id}
+              </Link>
+            );
           }}
         >
           Devis
@@ -56,7 +72,7 @@ const FactureList = ({ factures, renderAction, ...otherProps }) => (
         <TableHeader
           name="payed"
           tooltip="Est-ce que la facture est réglée?"
-          cellFormatter={(payed) => {
+          cellFormatter={payed => {
             switch (payed) {
               case 'annulé':
                 return 'Annulé';
@@ -70,10 +86,16 @@ const FactureList = ({ factures, renderAction, ...otherProps }) => (
         >
           Réglée?
         </TableHeader>
-        <TableHeader name="pricePayed" tooltip="La somme qui a été reçu pour cette facture">
+        <TableHeader
+          name="pricePayed"
+          tooltip="La somme qui a été reçu pour cette facture"
+        >
           Versement
         </TableHeader>
-        <TableHeader name="delayTillPayed" tooltip="Nombre de jour maximum avant le règlement">
+        <TableHeader
+          name="delayTillPayed"
+          tooltip="Nombre de jour maximum avant le règlement"
+        >
           Délai de règlement
         </TableHeader>
         <TableHeader name="remarque" tooltip="Remarque">
@@ -86,7 +108,9 @@ const FactureList = ({ factures, renderAction, ...otherProps }) => (
         >
           Date de règlement
         </TableHeader>
-        <TableHeader name="action" cellFormatter={renderAction}>Actions</TableHeader>
+        <TableHeader name="action" cellFormatter={renderAction}>
+          Actions
+        </TableHeader>
       </Table>
     </CardText>
     <CardActions border>
@@ -101,12 +125,11 @@ const FactureList = ({ factures, renderAction, ...otherProps }) => (
         Ajouter une facture
       </Button>
     </CardActions>
-  </Cell>
-);
+  </Cell>;
 
 FactureList.propTypes = {
-  factures: React.PropTypes.array.isRequired,
-  renderAction: React.PropTypes.func.isRequired
+  factures: array.isRequired,
+  renderAction: func.isRequired
 };
 
 export default FactureList;

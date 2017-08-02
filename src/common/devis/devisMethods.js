@@ -5,15 +5,15 @@ import Devis from './devisSchema';
 import Projects from '../project/projectSchema';
 import History from '../history/historySchema';
 
-const checkAllParams =
-({
+const checkAllParams = ({
   id,
   idProject,
   price,
   signature = null,
   status,
   remarque = '',
-  signed }) => {
+  signed
+}) => {
   check(id, String);
   check(idProject, String);
   check(price, Number);
@@ -26,7 +26,6 @@ const checkAllParams =
 };
 
 Meteor.methods({
-
   addDevis(params) {
     if (!this.userId || !Roles.userIsInRole(this.userId, 'admin')) {
       throw new Meteor.Error('not-authorized');
@@ -111,21 +110,23 @@ Meteor.methods({
 
     const project = Projects.findOne(idProject);
     if (project && signature) {
-      Projects.update(
-        { _id: project._id },
-        { $set: { signature } }
-      );
+      Projects.update({ _id: project._id }, { $set: { signature } });
     }
 
-    const devis = Devis.update({ _id }, { $set: {
-      id,
-      idProject,
-      price,
-      signature,
-      status,
-      remarque,
-      signed
-    } });
+    const devis = Devis.update(
+      { _id },
+      {
+        $set: {
+          id,
+          idProject,
+          price,
+          signature,
+          status,
+          remarque,
+          signed
+        }
+      }
+    );
 
     History.insert({
       user: this.userId,

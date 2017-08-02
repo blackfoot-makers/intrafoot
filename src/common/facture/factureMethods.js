@@ -5,8 +5,7 @@ import Factures from './factureSchema';
 import Projects from '../project/projectSchema';
 import History from '../history/historySchema';
 
-const checkAllParams =
-({
+const checkAllParams = ({
   id,
   idProject,
   idDevis,
@@ -16,7 +15,8 @@ const checkAllParams =
   pricePayed,
   delayTillPayed,
   remarque = '',
-  payedDate }) => {
+  payedDate
+}) => {
   check(id, String);
   check(idProject, String);
   check(price, Number);
@@ -38,7 +38,6 @@ const checkAllParams =
 };
 
 Meteor.methods({
-
   addFacture(params) {
     if (!this.userId || !Roles.userIsInRole(this.userId, 'admin')) {
       throw new Meteor.Error('not-authorized');
@@ -118,18 +117,23 @@ Meteor.methods({
       payedDate
     } = params;
 
-    const facture = Factures.update({ _id }, { $set: {
-      id,
-      idProject,
-      idDevis,
-      price,
-      sentDate,
-      payed,
-      pricePayed,
-      delayTillPayed,
-      remarque,
-      payedDate
-    } });
+    const facture = Factures.update(
+      { _id },
+      {
+        $set: {
+          id,
+          idProject,
+          idDevis,
+          price,
+          sentDate,
+          payed,
+          pricePayed,
+          delayTillPayed,
+          remarque,
+          payedDate
+        }
+      }
+    );
 
     if (facture) {
       History.insert({

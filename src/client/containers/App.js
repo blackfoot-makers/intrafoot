@@ -1,12 +1,33 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
+import { object, func } from 'prop-types';
+import { Route } from 'react-router-dom';
+import { Switch } from 'react-router';
 import { Layout, Content, Grid } from 'react-mdl';
 
 import SubscribeComponent from '../SubscribeComponent';
 import AppBar from './items/app-bar';
 import AppDrawer from './items/app-drawer';
 // import AppFooter from './items/app-footer';
+import DefaultPage from '../views/defaultPage';
+import LoginForm from '../account/LoginForm';
+import User from '../user/User';
+import UserAdd from '../user/items/UserAdd';
+import UserShow from '../user/items/UserShow';
+import Project from '../project/Project';
+import ProjectAdd from '../project/items/ProjectAdd';
+import ProjectShow from '../project/items/ProjectShow';
+import Devis from '../devis/Devis';
+import DevisAdd from '../devis/items/DevisAdd';
+import DevisShow from '../devis/items/DevisShow';
+import Facture from '../facture/Facture';
+import FactureAdd from '../facture/items/FactureAdd';
+import FactureShow from '../facture/items/FactureShow';
+import Presta from '../presta/Presta';
+import PrestaAdd from '../presta/items/PrestaAdd';
+import PrestaShow from '../presta/items/PrestaShow';
+import History from '../history/History';
 
-class App extends React.Component {
+class App extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -18,10 +39,14 @@ class App extends React.Component {
     props.subscribe('companies');
     props.subscribe('history');
   }
+
   render() {
-    const { children, location } = this.props;
+    const { location } = this.props;
     const pathIndex = location.pathname.indexOf('/', 1);
-    const pathname = location.pathname.substr(1, pathIndex > 0 ? pathIndex - 1 : undefined);
+    const pathname = location.pathname.substr(
+      1,
+      pathIndex > 0 ? pathIndex - 1 : undefined
+    );
     let subTitle = '';
 
     switch (pathname) {
@@ -48,7 +73,31 @@ class App extends React.Component {
         <AppBar subTitle={subTitle} />
         <AppDrawer />
         <Content component={Grid}>
-          { children }
+          <Switch>
+            <Route exact path="/" component={DefaultPage} />
+            <Route path="/user" component={LoginForm} />
+            <Route path="/contact" component={User} />
+            <Route path="/contact/add" component={UserAdd} />
+            <Route path="/contact/edit/:contactId" component={UserAdd} />
+            <Route path="/contact/:contactId" component={UserShow} />
+            <Route path="/project" component={Project} />
+            <Route path="/project/add" component={ProjectAdd} />
+            <Route path="/project/edit/:projectId" component={ProjectAdd} />
+            <Route path="/project/:projectId" component={ProjectShow} />
+            <Route path="/devis" component={Devis} />
+            <Route path="/devis/add" component={DevisAdd} />
+            <Route path="/devis/edit/:devisId" component={DevisAdd} />
+            <Route path="/devis/:devisId" component={DevisShow} />
+            <Route path="/facture" component={Facture} />
+            <Route path="/facture/add" component={FactureAdd} />
+            <Route path="/facture/edit/:factureId" component={FactureAdd} />
+            <Route path="/facture/:factureId" component={FactureShow} />
+            <Route path="/presta" component={Presta} />
+            <Route path="/presta/add" component={PrestaAdd} />
+            <Route path="/presta/edit/:prestaId" component={PrestaAdd} />
+            <Route path="/presta/:prestaId" component={PrestaShow} />
+            <Route path="/history" component={History} />
+          </Switch>
         </Content>
         <div
           aria-live="assertive"
@@ -64,10 +113,10 @@ class App extends React.Component {
     );
   }
 }
+
 App.propTypes = {
-  children: React.PropTypes.node.isRequired,
-  location: React.PropTypes.object.isRequired,
-  subscribe: React.PropTypes.func.isRequired
+  location: object.isRequired,
+  subscribe: func.isRequired
 };
 
 export default SubscribeComponent(App);

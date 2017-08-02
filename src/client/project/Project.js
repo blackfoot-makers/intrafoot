@@ -1,49 +1,60 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import { array, func, shape } from 'prop-types';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
 import { Grid, IconButton } from 'react-mdl';
+import { bind } from 'decko';
 
+import { requireAuth } from '../utils';
 import ProjectList from './items/ProjectList';
 import ProjectAdd from './items/ProjectAdd';
 
 import { deleteProject } from './projectActions';
 
 // Projects component - represents the projects lists
-class Projects extends Component {
+class Projects extends PureComponent {
+  state = {
+    width: 0
+  };
 
-  constructor(props) {
-    super(props);
-    this.deleteAProject = this.deleteAProject.bind(this);
-    this.renderAction = this.renderAction.bind(this);
-
-    this.state = {
-      width: 0
-    };
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  componentWillMount() {
+    requireAuth(this.props, this.props.history.replace);
   }
 
   componentDidMount() {
     this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions.bind(this));
+    window.addEventListener('resize', this.updateWindowDimensions);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions.bind(this));
+    window.removeEventListener('resize', this.updateWindowDimensions);
   }
 
+  @bind
   updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    this.setState(state => ({
+      ...state,
+      width: window.innerWidth,
+      height: window.innerHeight
+    }));
   }
 
+  @bind
   deleteAProject(id) {
     this.props.deleteProject(id);
   }
 
+  @bind
   renderAction(data) {
     return (
       <div>
-        <IconButton name="fullscreen" onClick={() => browserHistory.push(`/project/${data._id}`)} />
-        <IconButton name="edit" onClick={() => browserHistory.push(`/project/edit/${data._id}`)} />
+        <IconButton
+          name="fullscreen"
+          onClick={() => this.props.history.push(`/project/${data._id}`)}
+        />
+        <IconButton
+          name="edit"
+          onClick={() => this.props.history.push(`/project/edit/${data._id}`)}
+        />
         <IconButton
           name="delete"
           onClick={() => {
@@ -81,8 +92,12 @@ class Projects extends Component {
 }
 
 Projects.propTypes = {
-  projects: PropTypes.array.isRequired,
-  deleteProject: PropTypes.func.isRequired
+  projects: array.isRequired,
+  deleteProject: func.isRequired,
+  history: shape({
+    replace: func.isRequired,
+    push: func.isRequired
+  }).isRequired
 };
 
 function mapStateToProps(state) {
@@ -93,7 +108,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    deleteProject: (id) => {
+    deleteProject: id => {
       dispatch(deleteProject(id));
     }
   };

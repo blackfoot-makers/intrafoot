@@ -1,6 +1,12 @@
 import React from 'react';
+import { string, array, any, func } from 'prop-types';
 import { Textfield, RadioGroup, Radio } from 'react-mdl';
-import { SelectField, Option, AutoComplete, MultiSelectField } from 'react-mdl-extra';
+import {
+  SelectField,
+  Option,
+  AutoComplete,
+  MultiSelectField
+} from 'react-mdl-extra';
 import DatePicker from 'react-datepicker';
 
 const Field = ({
@@ -17,7 +23,9 @@ const Field = ({
     case 'autocomplete':
       return (
         <AutoComplete
-          onChange={(data) => { handleOtherChange(data, fieldKey); }}
+          onChange={data => {
+            handleOtherChange(data, fieldKey);
+          }}
           value={value}
           label={label}
           floatingLabel
@@ -27,46 +35,50 @@ const Field = ({
     case 'multiselect':
       return (
         <MultiSelectField
-          onChange={(data) => { handleOtherChange(data, fieldKey); }}
+          onChange={data => {
+            handleOtherChange(data, fieldKey);
+          }}
           value={value}
           label={label}
           floatingLabel
           {...otherProps}
         >
-          {
-            options.map((data, index) => (
-              <Option key={index} value={data._id}>
-                {`${data.firstName} ${data.lastName}`}
-              </Option>
-            ))
-          }
+          {options.map((data, index) =>
+            <Option key={index} value={data._id}>
+              {`${data.firstName} ${data.lastName}`}
+            </Option>
+          )}
         </MultiSelectField>
       );
     case 'select':
       return (
         <SelectField
-          onChange={(data) => { handleOtherChange(data, fieldKey); }}
+          onChange={data => {
+            handleOtherChange(data, fieldKey);
+          }}
           value={value}
           label={label}
           floatingLabel
           offset={'-47px 0'}
           {...otherProps}
         >
-          {
-            options.map((data, index) =>
-              (<Option key={index} value={data._id}>
-                {data.name || data.firstName || data.id}
-              </Option>)
-            )
-          }
+          {options.map((data, index) =>
+            <Option key={index} value={data._id}>
+              {data.name || data.firstName || data.id}
+            </Option>
+          )}
         </SelectField>
       );
     case 'date':
       return (
         <div>
-          <label htmlFor={fieldKey}>{label}</label>
+          <label htmlFor={fieldKey}>
+            {label}
+          </label>
           <DatePicker
-            onChange={(data) => { handleOtherChange(data, fieldKey); }}
+            onChange={data => {
+              handleOtherChange(data, fieldKey);
+            }}
             name={fieldKey}
             id={fieldKey}
             selected={value}
@@ -88,15 +100,21 @@ const Field = ({
     case 'bool':
       return (
         <div>
-          <label htmlFor={fieldKey}>{label}</label>
+          <label htmlFor={fieldKey}>
+            {label}
+          </label>
           <RadioGroup
             onChange={handleChange}
             name={fieldKey}
             id={fieldKey}
             value={value}
           >
-            <Radio value="true" ripple>Oui</Radio>
-            <Radio value="false" ripple>Non</Radio>
+            <Radio value="true" ripple>
+              Oui
+            </Radio>
+            <Radio value="false" ripple>
+              Non
+            </Radio>
           </RadioGroup>
         </div>
       );
@@ -115,13 +133,13 @@ const Field = ({
 };
 
 Field.propTypes = {
-  type: React.PropTypes.string.isRequired,
-  fieldKey: React.PropTypes.string.isRequired,
-  label: React.PropTypes.string.isRequired,
-  options: React.PropTypes.array,
-  value: React.PropTypes.any.isRequired,
-  handleChange: React.PropTypes.func.isRequired,
-  handleOtherChange: React.PropTypes.func.isRequired
+  type: string.isRequired,
+  fieldKey: string.isRequired,
+  label: string.isRequired,
+  options: array,
+  value: any.isRequired,
+  handleChange: func.isRequired,
+  handleOtherChange: func.isRequired
 };
 
 Field.defaultProps = {

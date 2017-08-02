@@ -1,16 +1,24 @@
 import React from 'react';
+import { array, func } from 'prop-types';
 import { browserHistory, Link } from 'react-router';
-import { Table, TableHeader, Cell, Card, CardTitle, CardText, CardActions, Button } from 'react-mdl';
+import {
+  Table,
+  TableHeader,
+  Cell,
+  Card,
+  CardTitle,
+  CardText,
+  CardActions,
+  Button
+} from 'react-mdl';
 import moment from 'moment';
 
 import Users from '../../../common/users/usersSchema';
 import Companies from '../../../common/users/companySchema';
 
-const PrestaList = ({ prestas, renderAction, ...otherProps }) => (
+const PrestaList = ({ prestas, renderAction, ...otherProps }) =>
   <Cell col={12} component={Card} shadow={0}>
-    <CardTitle>
-      Prestas
-    </CardTitle>
+    <CardTitle>Prestas</CardTitle>
     <CardText>
       <Table
         sortable
@@ -22,9 +30,13 @@ const PrestaList = ({ prestas, renderAction, ...otherProps }) => (
         <TableHeader
           name="idContact"
           tooltip="Nom du presta"
-          cellFormatter={(id) => {
+          cellFormatter={id => {
             const user = Users.findOne(id);
-            return <Link to={`/contact/${id}`}>{`${user.firstName} ${user.lastName}`}</Link>;
+            return (
+              <Link
+                to={`/contact/${id}`}
+              >{`${user.firstName} ${user.lastName}`}</Link>
+            );
           }}
         >
           Presta
@@ -32,17 +44,14 @@ const PrestaList = ({ prestas, renderAction, ...otherProps }) => (
         <TableHeader
           name="company"
           tooltip="Entreprise du contact"
-          cellFormatter={(id) => {
+          cellFormatter={id => {
             const company = Companies.findOne(id);
             return company.name;
           }}
         >
           Entreprise
         </TableHeader>
-        <TableHeader
-          name="prestation"
-          tooltip="Prestation"
-        >
+        <TableHeader name="prestation" tooltip="Prestation">
           Prestation
         </TableHeader>
         <TableHeader name="price" tooltip="Prix de la presta HT">
@@ -55,10 +64,7 @@ const PrestaList = ({ prestas, renderAction, ...otherProps }) => (
         >
           Date de facturation
         </TableHeader>
-        <TableHeader
-          name="accompte"
-          tooltip="Accompte versé"
-        >
+        <TableHeader name="accompte" tooltip="Accompte versé">
           Accompte
         </TableHeader>
         <TableHeader
@@ -78,7 +84,9 @@ const PrestaList = ({ prestas, renderAction, ...otherProps }) => (
         <TableHeader name="remarque" tooltip="Remarque">
           Remarque
         </TableHeader>
-        <TableHeader name="action" cellFormatter={renderAction}>Actions</TableHeader>
+        <TableHeader name="action" cellFormatter={renderAction}>
+          Actions
+        </TableHeader>
       </Table>
     </CardText>
     <CardActions border>
@@ -93,12 +101,11 @@ const PrestaList = ({ prestas, renderAction, ...otherProps }) => (
         Ajouter un prestataire
       </Button>
     </CardActions>
-  </Cell>
-);
+  </Cell>;
 
 PrestaList.propTypes = {
-  prestas: React.PropTypes.array.isRequired,
-  renderAction: React.PropTypes.func.isRequired
+  prestas: array.isRequired,
+  renderAction: func.isRequired
 };
 
 export default PrestaList;

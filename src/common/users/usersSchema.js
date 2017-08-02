@@ -1,14 +1,14 @@
-import { Accounts } from "meteor/accounts-base";
-import { SimpleSchema } from "meteor/aldeed:simple-schema";
-import { Roles } from "meteor/alanning:roles";
-import Companies from "./companySchema.js";
+import { Accounts } from 'meteor/accounts-base';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { Roles } from 'meteor/alanning:roles';
+import Companies from './companySchema.js';
 
 Accounts.config({
   sendVerificationEmail: true,
   forbidClientAccountCreation: false
 });
 
-const Users = new Mongo.Collection("user");
+const Users = new Mongo.Collection('user');
 
 Users.schema = new SimpleSchema({
   id: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
@@ -42,11 +42,11 @@ if (Meteor.isServer) {
     if (
       user.profile &&
       user.profile.email.includes(
-        "@blackfoot.io",
-        user.profile.email.indexOf("@")
+        '@blackfoot.io',
+        user.profile.email.indexOf('@')
       )
     ) {
-      Roles.setRolesOnUserObj(user, "admin", Roles.GLOBAL_GROUP);
+      Roles.setRolesOnUserObj(user, 'admin', Roles.GLOBAL_GROUP);
     }
 
     Users.insert({

@@ -1,4 +1,5 @@
 import React from 'react';
+import { object } from 'prop-types';
 import { Footer, Grid, Button } from 'react-mdl';
 import { browserHistory } from 'react-router';
 
@@ -30,7 +31,7 @@ const AppFooter = ({ location }) => {
 };
 
 AppFooter.propTypes = {
-  location: React.PropTypes.object
+  location: object
 };
 
 export default AppFooter;

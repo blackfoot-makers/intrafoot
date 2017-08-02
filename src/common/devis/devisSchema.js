@@ -7,7 +7,11 @@ Devis.schema = new SimpleSchema({
   idProject: { type: String, regEx: SimpleSchema.RegEx.Id },
   price: { type: Number, decimal: true },
   signature: { type: Date, optional: true },
-  status: { type: String, defaultValue: 'accepté', allowedValues: ['abandon', 'accepté', 'stand by', 'terminé'] },
+  status: {
+    type: String,
+    defaultValue: 'accepté',
+    allowedValues: ['abandon', 'accepté', 'stand by', 'terminé']
+  },
   remarque: { type: String, optional: true },
   creator: { type: String, regEx: SimpleSchema.RegEx.Id },
   signed: { type: Boolean, defaultValue: false }

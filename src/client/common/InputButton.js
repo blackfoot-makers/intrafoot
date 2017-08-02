@@ -1,32 +1,36 @@
 import React from 'react';
+import { string, node } from 'prop-types';
 
-const InputButton = ({ type, value, children, ...otherProps }) => (
-    React.createElement('input', {
+const InputButton = ({ type, value, children, ...otherProps }) =>
+  React.createElement(
+    'input',
+    {
       type,
       value,
       ...otherProps
-    }, children)
-);
+    },
+    children
+  );
 
 InputButton.propTypes = {
-  type: React.PropTypes.string.isRequired,
-  value: React.PropTypes.string.isRequired,
-  children: React.PropTypes.node
+  type: string.isRequired,
+  value: string.isRequired,
+  children: node
 };
 
-const SubmitButton = ({ children, ...otherProps }) => (
-  React.createElement(InputButton, {
-    type: 'submit',
-    value: 'Submit',
-    ...otherProps
-  }, children)
-);
+const SubmitButton = ({ children, ...otherProps }) =>
+  React.createElement(
+    InputButton,
+    {
+      type: 'submit',
+      value: 'Submit',
+      ...otherProps
+    },
+    children
+  );
 
 SubmitButton.propTypes = {
-  children: React.PropTypes.node
+  children: node
 };
 
-export {
-  InputButton,
-  SubmitButton
-};
+export { InputButton, SubmitButton };

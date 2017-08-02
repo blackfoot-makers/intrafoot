@@ -1,40 +1,40 @@
 import React from 'react';
+import { array, func } from 'prop-types';
 import { browserHistory, Link } from 'react-router';
-import { Table, TableHeader, Cell, Card, CardTitle, CardText, CardActions, Button, List, ListItem, ListItemContent, Tooltip } from 'react-mdl';
+import {
+  Table,
+  TableHeader,
+  Cell,
+  Card,
+  CardTitle,
+  CardText,
+  CardActions,
+  Button,
+  List,
+  ListItem,
+  ListItemContent,
+  Tooltip
+} from 'react-mdl';
 import moment from 'moment';
 
 import Projects from '../../../common/project/projectSchema';
 import Users from '../../../common/users/usersSchema';
 
-const UserList = ({ users, renderAction, ...otherProps }) => (
+const UserList = ({ users, renderAction, ...otherProps }) =>
   <Cell col={12} component={Card} shadow={0}>
-    <CardTitle>
-      Contacts
-    </CardTitle>
+    <CardTitle>Contacts</CardTitle>
     <CardText>
-      <Table
-        sortable
-        rowKeyColumn="id"
-        shadow={0}
-        rows={users}
-        {...otherProps}
-      >
+      <Table sortable rowKeyColumn="id" shadow={0} rows={users} {...otherProps}>
         <TableHeader name="firstName" tooltip="Prénom">
           Prénom
         </TableHeader>
         <TableHeader name="lastName" tooltip="Nom">
           Nom
         </TableHeader>
-        <TableHeader
-          name="title"
-          tooltip="Titre officiel du contact"
-        >
+        <TableHeader name="title" tooltip="Titre officiel du contact">
           Titre
         </TableHeader>
-        <TableHeader
-          name="company"
-          tooltip="Entreprise"
-        >
+        <TableHeader name="company" tooltip="Entreprise">
           Entreprise
         </TableHeader>
         <TableHeader name="phone" tooltip="Numéro de téléphone">
@@ -46,7 +46,7 @@ const UserList = ({ users, renderAction, ...otherProps }) => (
         <TableHeader
           name="projects"
           tooltip="Projet fait avec ce contact"
-          cellFormatter={(ids) => {
+          cellFormatter={ids => {
             if (!ids) return '';
             const projects = ids.map((id, index) => {
               const project = Projects.findOne(id);
@@ -72,7 +72,9 @@ const UserList = ({ users, renderAction, ...otherProps }) => (
                 <ListItem key={index}>
                   <Tooltip label={image[project.status].tooltip}>
                     <ListItemContent icon={image[project.status].img}>
-                      <Link to={`/project/${id}`}>{project.name}</Link>
+                      <Link to={`/project/${id}`}>
+                        {project.name}
+                      </Link>
                     </ListItemContent>
                   </Tooltip>
                 </ListItem>
@@ -90,9 +92,14 @@ const UserList = ({ users, renderAction, ...otherProps }) => (
         <TableHeader
           name="interlocuteur"
           tooltip="Principal interlocuteur"
-          cellFormatter={(id) => {
+          cellFormatter={id => {
             const contact = Users.findOne(id);
-            if (contact) return <Link to={`/contact/${id}`}>{contact.firstName}</Link>;
+            if (contact)
+              return (
+                <Link to={`/contact/${id}`}>
+                  {contact.firstName}
+                </Link>
+              );
             return '';
           }}
         >
@@ -101,7 +108,10 @@ const UserList = ({ users, renderAction, ...otherProps }) => (
         <TableHeader name="description" tooltip="Remarque sur le contact">
           Description
         </TableHeader>
-        <TableHeader name="accessLevel" tooltip="Facilité d'accès (entre 0 et 5)">
+        <TableHeader
+          name="accessLevel"
+          tooltip="Facilité d'accès (entre 0 et 5)"
+        >
           {"Facile d'accès?"}
         </TableHeader>
         <TableHeader
@@ -111,7 +121,9 @@ const UserList = ({ users, renderAction, ...otherProps }) => (
         >
           Dernier contact
         </TableHeader>
-        <TableHeader name="action" cellFormatter={renderAction}>Actions</TableHeader>
+        <TableHeader name="action" cellFormatter={renderAction}>
+          Actions
+        </TableHeader>
       </Table>
     </CardText>
     <CardActions border>
@@ -126,12 +138,11 @@ const UserList = ({ users, renderAction, ...otherProps }) => (
         Ajouter un contact
       </Button>
     </CardActions>
-  </Cell>
-);
+  </Cell>;
 
 UserList.propTypes = {
-  users: React.PropTypes.array.isRequired,
-  renderAction: React.PropTypes.func.isRequired
+  users: array.isRequired,
+  renderAction: func.isRequired
 };
 
 export default UserList;
