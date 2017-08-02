@@ -1,6 +1,6 @@
 import React from 'react';
-import { array, func } from 'prop-types';
-import { browserHistory, Link } from 'react-router';
+import { array, func, shape } from 'prop-types';
+import { Link } from 'react-router';
 import {
   Table,
   TableHeader,
@@ -16,7 +16,7 @@ import moment from 'moment';
 import Projects from '../../../common/project/projectSchema';
 import Devis from '../../../common/devis/devisSchema';
 
-const FactureList = ({ factures, renderAction, ...otherProps }) =>
+const FactureList = ({ factures, renderAction, history, ...otherProps }) =>
   <Cell col={12} component={Card} shadow={0}>
     <CardTitle>Factures</CardTitle>
     <CardText>
@@ -118,7 +118,7 @@ const FactureList = ({ factures, renderAction, ...otherProps }) =>
         colored
         ripple
         onClick={() => {
-          browserHistory.push('/facture/add');
+          history.push('/facture/add');
           return false;
         }}
       >
@@ -129,7 +129,11 @@ const FactureList = ({ factures, renderAction, ...otherProps }) =>
 
 FactureList.propTypes = {
   factures: array.isRequired,
-  renderAction: func.isRequired
+  renderAction: func.isRequired,
+  history: shape({
+    replace: func.isRequired,
+    push: func.isRequired
+  }).isRequired
 };
 
 export default FactureList;

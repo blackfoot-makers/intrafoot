@@ -17,7 +17,7 @@ import 'react-mdl/extra/material.js';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import './createMomentLocal';
-// import config from '../../config.json';
+import config from '../../config.json';
 
 import createStore from '../../src/client/createStore';
 import App from '../../src/client/containers/App';

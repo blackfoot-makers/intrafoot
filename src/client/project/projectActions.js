@@ -1,5 +1,5 @@
 import { Tracker } from 'meteor/tracker';
-import { browserHistory } from 'react-router';
+import { push } from 'react-router-redux';
 import Projects from '../../common/project/projectSchema';
 
 export function addProject(data, callback) {
@@ -29,7 +29,7 @@ export function findProject(search) {
     });
     const id = project && project._id;
 
-    browserHistory.push(`/project/${id}`);
+    push(`/project/${id}`);
   };
 }
 

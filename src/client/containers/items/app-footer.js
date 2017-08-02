@@ -1,9 +1,8 @@
 import React from 'react';
-import { object } from 'prop-types';
+import { object, func, shape } from 'prop-types';
 import { Footer, Grid, Button } from 'react-mdl';
-import { browserHistory } from 'react-router';
 
-const AppFooter = ({ location }) => {
+const AppFooter = ({ location, history }) => {
   const pathname = location && location.pathname;
 
   switch (pathname) {
@@ -16,7 +15,7 @@ const AppFooter = ({ location }) => {
               colored
               ripple
               onClick={() => {
-                browserHistory.push('/project/add');
+                history.push('/project/add');
                 return false;
               }}
             >
@@ -31,7 +30,11 @@ const AppFooter = ({ location }) => {
 };
 
 AppFooter.propTypes = {
-  location: object
+  location: object,
+  history: shape({
+    replace: func.isRequired,
+    push: func.isRequired
+  }).isRequired
 };
 
 export default AppFooter;

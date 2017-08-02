@@ -1,6 +1,6 @@
 import React from 'react';
-import { array, func } from 'prop-types';
-import { browserHistory, Link } from 'react-router';
+import { array, func, shape } from 'prop-types';
+import { Link } from 'react-router';
 import {
   Table,
   TableHeader,
@@ -16,7 +16,7 @@ import moment from 'moment';
 import Users from '../../../common/users/usersSchema';
 import Companies from '../../../common/users/companySchema';
 
-const PrestaList = ({ prestas, renderAction, ...otherProps }) =>
+const PrestaList = ({ prestas, renderAction, history, ...otherProps }) =>
   <Cell col={12} component={Card} shadow={0}>
     <CardTitle>Prestas</CardTitle>
     <CardText>
@@ -94,7 +94,7 @@ const PrestaList = ({ prestas, renderAction, ...otherProps }) =>
         colored
         ripple
         onClick={() => {
-          browserHistory.push('/presta/add');
+          history.push('/presta/add');
           return false;
         }}
       >
@@ -105,7 +105,11 @@ const PrestaList = ({ prestas, renderAction, ...otherProps }) =>
 
 PrestaList.propTypes = {
   prestas: array.isRequired,
-  renderAction: func.isRequired
+  renderAction: func.isRequired,
+  history: shape({
+    replace: func.isRequired,
+    push: func.isRequired
+  }).isRequired
 };
 
 export default PrestaList;

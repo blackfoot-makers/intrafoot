@@ -1,6 +1,6 @@
 import React from 'react';
-import { array, func } from 'prop-types';
-import { browserHistory, Link } from 'react-router';
+import { array, func, shape } from 'prop-types';
+import { Link } from 'react-router';
 import {
   Table,
   TableHeader,
@@ -15,7 +15,7 @@ import moment from 'moment';
 
 import Projects from '../../../common/project/projectSchema';
 
-const DevisList = ({ devis, renderAction, ...otherProps }) =>
+const DevisList = ({ devis, renderAction, history, ...otherProps }) =>
   <Cell col={12} component={Card} shadow={0}>
     <CardTitle>Devis</CardTitle>
     <CardText>
@@ -76,7 +76,7 @@ const DevisList = ({ devis, renderAction, ...otherProps }) =>
         colored
         ripple
         onClick={() => {
-          browserHistory.push('/devis/add');
+          history.push('/devis/add');
           return false;
         }}
       >
@@ -87,7 +87,11 @@ const DevisList = ({ devis, renderAction, ...otherProps }) =>
 
 DevisList.propTypes = {
   devis: array.isRequired,
-  renderAction: func.isRequired
+  renderAction: func.isRequired,
+  history: shape({
+    replace: func.isRequired,
+    push: func.isRequired
+  }).isRequired
 };
 
 export default DevisList;

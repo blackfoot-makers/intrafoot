@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { object, func } from 'prop-types';
+import { object, func, shape } from 'prop-types';
 import { Route } from 'react-router-dom';
 import { Switch } from 'react-router';
 import { Layout, Content, Grid } from 'react-mdl';
@@ -41,7 +41,7 @@ class App extends PureComponent {
   }
 
   render() {
-    const { location } = this.props;
+    const { location, history } = this.props;
     const pathIndex = location.pathname.indexOf('/', 1);
     const pathname = location.pathname.substr(
       1,
@@ -71,32 +71,32 @@ class App extends PureComponent {
     return (
       <Layout fixedHeader>
         <AppBar subTitle={subTitle} />
-        <AppDrawer />
+        <AppDrawer history={history} />
         <Content component={Grid}>
           <Switch>
             <Route exact path="/" component={DefaultPage} />
-            <Route path="/user" component={LoginForm} />
-            <Route path="/contact" component={User} />
-            <Route path="/contact/add" component={UserAdd} />
+            <Route exact path="/user" component={LoginForm} />
+            <Route exact path="/contact" component={User} />
+            <Route exact path="/contact/add" component={UserAdd} />
             <Route path="/contact/edit/:contactId" component={UserAdd} />
             <Route path="/contact/:contactId" component={UserShow} />
-            <Route path="/project" component={Project} />
-            <Route path="/project/add" component={ProjectAdd} />
+            <Route exact path="/project" component={Project} />
+            <Route exact path="/project/add" component={ProjectAdd} />
             <Route path="/project/edit/:projectId" component={ProjectAdd} />
             <Route path="/project/:projectId" component={ProjectShow} />
-            <Route path="/devis" component={Devis} />
-            <Route path="/devis/add" component={DevisAdd} />
+            <Route exact path="/devis" component={Devis} />
+            <Route exact path="/devis/add" component={DevisAdd} />
             <Route path="/devis/edit/:devisId" component={DevisAdd} />
             <Route path="/devis/:devisId" component={DevisShow} />
-            <Route path="/facture" component={Facture} />
-            <Route path="/facture/add" component={FactureAdd} />
+            <Route exact path="/facture" component={Facture} />
+            <Route exact path="/facture/add" component={FactureAdd} />
             <Route path="/facture/edit/:factureId" component={FactureAdd} />
             <Route path="/facture/:factureId" component={FactureShow} />
-            <Route path="/presta" component={Presta} />
-            <Route path="/presta/add" component={PrestaAdd} />
+            <Route exact path="/presta" component={Presta} />
+            <Route exact path="/presta/add" component={PrestaAdd} />
             <Route path="/presta/edit/:prestaId" component={PrestaAdd} />
             <Route path="/presta/:prestaId" component={PrestaShow} />
-            <Route path="/history" component={History} />
+            <Route exact path="/history" component={History} />
           </Switch>
         </Content>
         <div
@@ -116,7 +116,11 @@ class App extends PureComponent {
 
 App.propTypes = {
   location: object.isRequired,
-  subscribe: func.isRequired
+  subscribe: func.isRequired,
+  history: shape({
+    replace: func.isRequired,
+    push: func.isRequired
+  }).isRequired
 };
 
 export default SubscribeComponent(App);

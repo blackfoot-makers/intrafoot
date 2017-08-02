@@ -82,6 +82,7 @@ class Devis extends PureComponent {
           devis={devis}
           renderAction={this.renderAction}
           width={this.state.width}
+          history={this.props.history}
         />
       </Grid>
     );

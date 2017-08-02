@@ -85,6 +85,7 @@ class Projects extends PureComponent {
           projects={projects}
           renderAction={this.renderAction}
           width={this.state.width}
+          history={this.props.history}
         />
       </Grid>
     );

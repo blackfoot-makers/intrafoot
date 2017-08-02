@@ -1,7 +1,6 @@
 import React from 'react';
-import { object } from 'prop-types';
+import { object, shape, func } from 'prop-types';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
 import { Drawer, Navigation, Button } from 'react-mdl';
 
 import {
@@ -15,7 +14,7 @@ import {
   LinkToPresta
 } from '../../common/Links';
 
-const AppDrawer = ({ currentUser }) =>
+const AppDrawer = ({ currentUser, history }) =>
   <Drawer title="IntraFoot">
     <Navigation>
       <LinkToIndex>Dashboard</LinkToIndex>
@@ -32,7 +31,7 @@ const AppDrawer = ({ currentUser }) =>
         <Button
           onClick={() =>
             Meteor.logout(() => {
-              browserHistory.push('/user');
+              history.push('/user');
             })}
         >
           Se déconnecter
@@ -41,7 +40,11 @@ const AppDrawer = ({ currentUser }) =>
   </Drawer>;
 
 AppDrawer.propTypes = {
-  currentUser: object
+  currentUser: object,
+  history: shape({
+    replace: func.isRequired,
+    push: func.isRequired
+  }).isRequired
 };
 
 const mapStateToProps = () => ({

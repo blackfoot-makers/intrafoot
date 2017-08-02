@@ -1,7 +1,6 @@
 import React from 'react';
 import { bool, string, array, func } from 'prop-types';
 import { Button } from 'react-mdl';
-import { browserHistory } from 'react-router';
 import { bind } from 'decko';
 
 import { SubmitButton } from './InputButton';
@@ -142,7 +141,7 @@ Form.propTypes = {
 
 Form.defaultProps = {
   fields: [],
-  redirectAfterSubmit: () => browserHistory.push('/'),
+  redirectAfterSubmit: () => {},
   onChange: data => console.log('Field change is ', data)
 };
 

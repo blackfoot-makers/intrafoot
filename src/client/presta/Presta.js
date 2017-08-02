@@ -85,6 +85,7 @@ class Prestas extends PureComponent {
           prestas={prestas}
           renderAction={this.renderAction}
           width={this.state.width}
+          history={this.props.history}
         />
       </Grid>
     );

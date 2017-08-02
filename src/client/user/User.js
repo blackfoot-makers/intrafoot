@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import { array, func, shape } from 'prop-types';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
 import { Grid, IconButton } from 'react-mdl';
 import { bind } from 'decko';
 
@@ -51,11 +50,11 @@ class Users extends PureComponent {
       <div>
         <IconButton
           name="fullscreen"
-          onClick={() => browserHistory.push(`/contact/${data._id}`)}
+          onClick={() => this.props.history.push(`/contact/${data._id}`)}
         />
         <IconButton
           name="edit"
-          onClick={() => browserHistory.push(`/contact/edit/${data._id}`)}
+          onClick={() => this.props.history.push(`/contact/edit/${data._id}`)}
         />
         <IconButton
           name="delete"
@@ -87,6 +86,7 @@ class Users extends PureComponent {
           users={users}
           renderAction={this.renderAction}
           width={this.state.width}
+          history={this.props.history}
         />
       </Grid>
     );

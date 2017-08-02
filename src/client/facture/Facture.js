@@ -45,6 +45,7 @@ class Factures extends PureComponent {
 
   @bind
   renderAction(data) {
+    console.log('HISTORY IS ', this.props.history, this.props);
     return (
       <div>
         <IconButton
@@ -85,6 +86,7 @@ class Factures extends PureComponent {
           factures={factures}
           renderAction={this.renderAction}
           width={this.state.width}
+          history={this.props.history}
         />
       </Grid>
     );

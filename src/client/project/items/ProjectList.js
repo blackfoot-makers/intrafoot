@@ -1,6 +1,6 @@
 import React from 'react';
-import { array, func } from 'prop-types';
-import { browserHistory, Link } from 'react-router';
+import { array, func, shape } from 'prop-types';
+import { Link } from 'react-router';
 import {
   Table,
   TableHeader,
@@ -18,7 +18,7 @@ import moment from 'moment';
 
 import Users from '../../../common/users/usersSchema';
 
-const ProjectList = ({ projects, renderAction, ...otherProps }) =>
+const ProjectList = ({ projects, renderAction, history, ...otherProps }) =>
   <Cell col={12} component={Card} shadow={0}>
     <CardTitle>Projets</CardTitle>
     <CardText>
@@ -103,7 +103,7 @@ const ProjectList = ({ projects, renderAction, ...otherProps }) =>
         colored
         ripple
         onClick={() => {
-          browserHistory.push('/project/add');
+          history.push('/project/add');
           return false;
         }}
       >
@@ -114,7 +114,11 @@ const ProjectList = ({ projects, renderAction, ...otherProps }) =>
 
 ProjectList.propTypes = {
   projects: array.isRequired,
-  renderAction: func.isRequired
+  renderAction: func.isRequired,
+  history: shape({
+    replace: func.isRequired,
+    push: func.isRequired
+  }).isRequired
 };
 
 export default ProjectList;
