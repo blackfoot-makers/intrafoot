@@ -2,6 +2,7 @@ node_modules/
 .meteor/
 yarn.lock
 mup.json
+mup.js
 settings.json
 secrets.tar
 IntraBlackfoot.pem
