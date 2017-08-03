@@ -6,7 +6,6 @@ import {
   string,
   instanceOf,
   bool,
-  object,
   shape
 } from 'prop-types';
 import { connect } from 'react-redux';
