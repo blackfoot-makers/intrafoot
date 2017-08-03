@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
-import { object, shape, func } from 'prop-types';
+import { string, shape, func } from 'prop-types';
 import { List, ListItem, Cell } from 'react-mdl';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import { requireAuth } from '../../utils';
@@ -15,7 +15,7 @@ class PrestaShow extends PureComponent {
   }
 
   render() {
-    const { params } = this.props;
+    const { match: { params } } = this.props;
     const presta = Prestas.findOne(params.prestaId);
 
     if (!presta) {
@@ -68,7 +68,11 @@ class PrestaShow extends PureComponent {
 }
 
 PrestaShow.propTypes = {
-  params: object,
+  match: shape({
+    params: shape({
+      prestaId: string
+    }).isRequired
+  }).isRequired,
   history: shape({
     replace: func.isRequired
   }).isRequired

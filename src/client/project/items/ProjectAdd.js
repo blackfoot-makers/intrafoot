@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { object, func, shape } from 'prop-types';
+import { object, func, shape, string } from 'prop-types';
 import { connect } from 'react-redux';
 
 import Form from '../../common/Form';
@@ -26,8 +26,8 @@ class ProjectAdd extends PureComponent {
       editMode: false
     };
 
-    if (this.props.params.projectId) {
-      const project = Projects.findOne(this.props.params.projectId);
+    if (this.props.match.params.projectId) {
+      const project = Projects.findOne(this.props.match.params.projectId);
       defaultValue = {
         id: project.id,
         company: project.company,
@@ -149,7 +149,11 @@ const mapDispatchToProps = dispatch => ({
 ProjectAdd.propTypes = {
   addProject: func.isRequired,
   editProject: func.isRequired,
-  params: object,
+  match: shape({
+    params: shape({
+      projectId: string
+    }).isRequired
+  }).isRequired,
   users: object.isRequired,
   history: shape({
     replace: func.isRequired,

@@ -178,8 +178,8 @@ class FactureAdd extends PureComponent {
       editMode: false
     };
 
-    if (props.params.factureId) {
-      const facture = Factures.findOne(props.params.factureId);
+    if (props.match.params.factureId) {
+      const facture = Factures.findOne(props.match.params.factureId);
       defaultValue = {
         id: facture.id,
         idProject: facture.idProject,
@@ -267,7 +267,11 @@ const mapDispatchToProps = dispatch => ({
 
 FactureAdd.propTypes = {
   devis: array.isRequired,
-  params: object,
+  match: shape({
+    params: shape({
+      factureId: string
+    }).isRequired
+  }).isRequired,
   history: shape({
     replace: func.isRequired,
     push: func.isRequired

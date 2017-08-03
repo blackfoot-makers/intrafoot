@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { func, object, array, shape } from 'prop-types';
+import { func, string, array, shape } from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
@@ -26,8 +26,8 @@ class DevisAdd extends PureComponent {
       editMode: false
     };
 
-    if (this.props.params.devisId) {
-      const devis = Devis.findOne(this.props.params.devisId);
+    if (this.props.match.params.devisId) {
+      const devis = Devis.findOne(this.props.match.params.devisId);
       defaultValue = {
         id: devis.id,
         idProject: devis.idProject,
@@ -138,7 +138,11 @@ const mapDispatchToProps = dispatch => ({
 DevisAdd.propTypes = {
   addDevis: func.isRequired,
   editDevis: func.isRequired,
-  params: object,
+  match: shape({
+    params: shape({
+      devisId: string
+    }).isRequired
+  }).isRequired,
   projects: array.isRequired,
   history: shape({
     replace: func.isRequired,

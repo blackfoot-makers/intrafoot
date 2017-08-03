@@ -1,6 +1,6 @@
 import React from 'react';
 import { array, func, shape } from 'prop-types';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import {
   Table,
   TableHeader,
@@ -66,7 +66,7 @@ const ProjectList = ({ projects, renderAction, history, ...otherProps }) =>
               const user = Users.findOne(elem);
               if (user) {
                 return (
-                  <ListItem key={index}>
+                  <ListItem key={`${user._id}${index}`}>
                     <ListItemContent icon="person">
                       <Link to={`/contact/${user._id}`}>
                         {`${user.firstName} ${user.lastName}`}

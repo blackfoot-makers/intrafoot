@@ -157,8 +157,8 @@ class PrestaAdd extends React.Component {
       editMode: false
     };
 
-    if (props.params.prestaId) {
-      const presta = Prestas.findOne(props.params.prestaId);
+    if (props.match.params.prestaId) {
+      const presta = Prestas.findOne(props.match.params.prestaId);
       defaultValue = {
         idContact: presta.idContact,
         company: presta.company,
@@ -204,7 +204,11 @@ const mapDispatchToProps = dispatch => ({
 
 PrestaAdd.propTypes = {
   users: object.isRequired,
-  params: object,
+  match: shape({
+    params: shape({
+      prestaId: string
+    }).isRequired
+  }).isRequired,
   history: shape({
     replace: func.isRequired,
     push: func.isRequired

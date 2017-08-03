@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
-import { object, shape, func } from 'prop-types';
+import { string, shape, func } from 'prop-types';
 import { List, ListItem, Cell, ListItemContent } from 'react-mdl';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import { requireAuth } from '../../utils';
@@ -16,7 +16,7 @@ class ProjectShow extends PureComponent {
   }
 
   render() {
-    const { params } = this.props;
+    const { match: { params } } = this.props;
     const project = Projects.findOne(params.projectId);
 
     if (!project) {
@@ -113,7 +113,11 @@ class ProjectShow extends PureComponent {
 }
 
 ProjectShow.propTypes = {
-  params: object,
+  match: shape({
+    params: shape({
+      projectId: string
+    }).isRequired
+  }).isRequired,
   history: shape({
     replace: func.isRequired
   }).isRequired

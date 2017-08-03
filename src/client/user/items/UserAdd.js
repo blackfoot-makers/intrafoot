@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { object, func, shape } from 'prop-types';
+import { string, func, shape, object } from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
@@ -15,7 +15,7 @@ class UserAdd extends PureComponent {
   }
 
   render() {
-    const { params, users } = this.props;
+    const { match: { params }, users } = this.props;
     let defaultValue = {
       firstName: '',
       lastName: '',
@@ -182,7 +182,11 @@ const mapDispatchToProps = dispatch => ({
 UserAdd.propTypes = {
   addUser: func.isRequired,
   editUser: func.isRequired,
-  params: object,
+  match: shape({
+    params: shape({
+      contactId: string
+    }).isRequired
+  }).isRequired,
   users: object.isRequired,
   history: shape({
     replace: func.isRequired,
