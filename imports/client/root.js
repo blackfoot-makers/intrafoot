@@ -17,7 +17,6 @@ import 'react-mdl/extra/material.js';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import './createMomentLocal';
-import config from '../../config.json';
 
 import createStore from '../../src/client/createStore';
 import App from '../../src/client/containers/App';
@@ -46,11 +45,6 @@ Root.propTypes = {
 };
 
 Meteor.startup(() => {
-  // Remove first to dodge multiple key error
-  // Accounts.loginServiceConfiguration.remove({
-  //   service: 'google'
-  // });
-  // Accounts.loginServiceConfiguration.insert(config.google);
   injectTapEventPlugin();
   const history = createHistory();
   const store = createStore(history);

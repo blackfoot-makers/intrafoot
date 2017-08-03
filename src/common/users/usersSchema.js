@@ -7,6 +7,20 @@ Accounts.config({
   sendVerificationEmail: true,
   forbidClientAccountCreation: false
 });
+Accounts.emailTemplates = {
+  ...Accounts.emailTemplates,
+  from: 'Blackfoot clan <intra@blackfoot.io>',
+  siteName: 'intra.blackfoot.io',
+  verifyEmail: {
+    subject() {
+      return 'Active ton compte';
+    },
+    text(user, url) {
+      return `Salut ${user.profile
+        .firstName}!\nTu peux activer ton compte en cliquant sur ce lien: ${url}`;
+    }
+  }
+};
 
 const Users = new Mongo.Collection('user');
 

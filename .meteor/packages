@@ -27,7 +27,6 @@ accounts-ui@1.1.9
 aldeed:simple-schema
 aldeed:collection2
 zetoff:accounts-material-ui
-accounts-google@1.2.0
 alanning:roles
 google-config-ui@1.0.0
 dynamic-import
