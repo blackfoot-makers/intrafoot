@@ -224,7 +224,7 @@ class DefaultPage extends PureComponent {
           </CardActions>
         </Cell>
         <Cell col={colSize} component={Card} shadow={0}>
-          <CardTitle>Prestatires</CardTitle>
+          <CardTitle>Prestataires</CardTitle>
           <CardText>
             <DataTable rows={prestaRows}>
               <TableHeader name="type" tooltip="Réglé ou non?">
