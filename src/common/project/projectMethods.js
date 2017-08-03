@@ -56,7 +56,7 @@ Meteor.methods({
           Users.update(
             { _id: user._id },
             {
-              $addToSet: projects
+              $addToSet: { projects }
             }
           );
         }
