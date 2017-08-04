@@ -120,10 +120,36 @@ class DefaultPage extends PureComponent {
     return factures;
   }
 
+  _getProject() {
+    const projects = [{ now: 0, cancel: 0, finished: 0, standBy: 0 }];
+
+    this.props.projects.map(data => {
+      switch (data.status) {
+        default:
+        case 'en cours':
+          projects[0].now += 1;
+          break;
+        case 'abandon':
+          projects[0].cancel += 1;
+          break;
+        case 'terminé':
+          projects[0].finished += 1;
+          break;
+        case 'stand by':
+          projects[0].standBy += 1;
+          break;
+      }
+      return data;
+    });
+
+    return projects;
+  }
+
   render() {
     const facturesRows = this._getFactures();
     const devisRows = this._getDevis();
     const prestaRows = this._getPrestas();
+    const projectRows = this._getProject();
     const colSize = 6;
 
     return (
@@ -175,8 +201,36 @@ class DefaultPage extends PureComponent {
         <Cell col={colSize} component={Card} shadow={0}>
           <CardTitle>Projets</CardTitle>
           <CardText>
-            Résumé des projets: <br />
-            Nous avons en ce moment {this.props.projects.length} projets.
+            <DataTable rows={projectRows}>
+              <TableHeader
+                numeric
+                name="now"
+                tooltip="Le nombre de projets en cours"
+              >
+                En cours
+              </TableHeader>
+              <TableHeader
+                numeric
+                name="cancel"
+                tooltip="Le nombre de projets abandonné"
+              >
+                Abandonné
+              </TableHeader>
+              <TableHeader
+                numeric
+                name="finished"
+                tooltip="Le nombre de projets fini"
+              >
+                Terminé
+              </TableHeader>
+              <TableHeader
+                numeric
+                name="standBy"
+                tooltip="Le nombre de projets en stand by"
+              >
+                Stand by
+              </TableHeader>
+            </DataTable>
           </CardText>
           <CardActions border>
             <Button colored ripple component={LinkToProject}>

@@ -2,7 +2,6 @@ import { Roles } from 'meteor/alanning:roles';
 
 export function redirectToLogin(message, nextState, replace) {
   const notification = document.getElementById('snackbarIntraFoot');
-  console.log('NOTIFCATION IS ', notification);
   if (notification) {
     notification.MaterialSnackbar.showSnackbar({
       message
