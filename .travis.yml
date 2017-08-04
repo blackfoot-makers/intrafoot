@@ -14,5 +14,5 @@ install:
 - npm install
 script:
 - npm test
-- mup deploy
+- sh deploy.sh
 services: mongodb
