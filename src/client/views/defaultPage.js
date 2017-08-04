@@ -83,7 +83,8 @@ class DefaultPage extends PureComponent {
       devis[index].ht += data.price;
       devis[index].tva += data.price * 0.2;
       devis[index].total = devis[index].ht + devis[index].tva;
-      if (data.signed) {
+      // In devis signed there is no finished ones
+      if (data.signed && data.status !== 'terminé') {
         devis[1].ht += data.price;
         devis[1].tva += data.price * 0.2;
         devis[1].total = devis[1].ht + devis[1].tva;
