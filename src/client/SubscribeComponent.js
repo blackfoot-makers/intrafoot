@@ -15,7 +15,7 @@ export default ComposedComponent =>
       if (this.subs[name]) {
         this.subs[name].stop();
       }
-      console.log('subscriboing stuff == ', name, ...args);
+      // console.log('subscriboing stuff == ', name, ...args);
       this.subs[name] = Meteor.subscribe(name, ...args);
     }
 
@@ -23,7 +23,7 @@ export default ComposedComponent =>
       if (this.subs[name]) {
         return this.subs[name].ready();
       }
-      console.log('subscriptionReady is ', name);
+      // console.log('subscriptionReady is ', name);
       return false;
     }
 

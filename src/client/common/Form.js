@@ -142,7 +142,7 @@ Form.propTypes = {
 Form.defaultProps = {
   fields: [],
   redirectAfterSubmit: () => {},
-  onChange: data => console.log('Field change is ', data)
+  onChange: () => {}
 };
 
 export default Form;
