@@ -10,7 +10,8 @@ import {
   LinkToDevis,
   LinkToFacture,
   LinkToContact,
-  LinkToPresta
+  LinkToPresta,
+  LinkToVirtucompte
 } from '../common/Links';
 import CustomCell from './components/Cell';
 import CustomDataTable from './components/Datatable';
@@ -148,6 +149,13 @@ class DefaultPage extends PureComponent {
         total: 0
       }
     ];
+    this.props.virtucompte.map(data => {
+      if (data.account !== 'in') {
+        virtuRows[data.account] += data.amount;
+      }
+      virtuRows.total += data.amount;
+      return data;
+    });
     return virtuRows;
   }
 
@@ -163,7 +171,7 @@ class DefaultPage extends PureComponent {
         <CustomCell
           colSize={8}
           title="Virtucompte"
-          actionComponent={LinkToFacture}
+          actionComponent={LinkToVirtucompte}
           actionText="Ajouter une entrée au Virtucompte"
         >
           <CustomDataTable
@@ -279,7 +287,8 @@ DefaultPage.propTypes = {
   prestas: array.isRequired,
   history: shape({
     replace: func.isRequired
-  }).isRequired
+  }).isRequired,
+  virtucompte: array.isRequired
 };
 
 DefaultPage.childContextTypes = {
@@ -293,7 +302,8 @@ function mapStateToProps(state) {
     projects: state.projects,
     factures: state.factures,
     users: state.users,
-    prestas: state.prestas
+    prestas: state.prestas,
+    virtucompte: state.virtucompte
   };
 }
 
