@@ -2,20 +2,7 @@ import React, { PureComponent } from 'react';
 import { array, object, shape, func } from 'prop-types';
 import { connect } from 'react-redux';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import {
-  Grid,
-  Cell,
-  Card,
-  CardTitle,
-  CardText,
-  CardActions,
-  CardMenu,
-  DataTable,
-  TableHeader,
-  Badge,
-  Button,
-  Icon
-} from 'react-mdl';
+import { Grid } from 'react-mdl';
 
 import { requireAuth } from '../utils';
 import {
@@ -25,6 +12,8 @@ import {
   LinkToContact,
   LinkToPresta
 } from '../common/Links';
+import CustomCell from './components/Cell';
+import CustomDataTable from './components/Datatable';
 
 class DefaultPage extends PureComponent {
   getChildContext() {
@@ -168,261 +157,115 @@ class DefaultPage extends PureComponent {
     const prestaRows = this._getPrestas();
     const projectRows = this._getProject();
     const virtuRows = this._getVirtuRows();
-    const colSize = 6;
 
     return (
       <Grid>
-        <Cell col={8} component={Card} shadow={0}>
-          <CardTitle>Virtucompte</CardTitle>
-          <CardText>
-            <DataTable rows={virtuRows}>
-              <TableHeader
-                numeric
-                cellFormatter={price => `${price.toFixed(2)}€`}
-                name="presta"
-                tooltip="Le compte des prestas"
-              >
-                Presta
-              </TableHeader>
-              <TableHeader
-                numeric
-                cellFormatter={price => `${price.toFixed(2)}€`}
-                name="salaire"
-                tooltip="Le compte des salaires"
-              >
-                Salaire
-              </TableHeader>
-              <TableHeader
-                numeric
-                cellFormatter={price => `${price.toFixed(2)}€`}
-                name="tva"
-                tooltip="Le compte TVA"
-              >
-                TVA
-              </TableHeader>
-              <TableHeader
-                numeric
-                cellFormatter={price => `${price.toFixed(2)}€`}
-                name="materiel"
-                tooltip="Le compte pour le matériel"
-              >
-                Matériel
-              </TableHeader>
-              <TableHeader
-                numeric
-                cellFormatter={price => `${price.toFixed(2)}€`}
-                name="cnoire"
-                tooltip="Le compte caisse noire"
-              >
-                Caisse noire
-              </TableHeader>
-              <TableHeader
-                numeric
-                cellFormatter={price => `${price.toFixed(2)}€`}
-                name="mixtes"
-                tooltip="Le compte charges mixtes"
-              >
-                Charges mixtes
-              </TableHeader>
-              <TableHeader
-                numeric
-                cellFormatter={price => `${price.toFixed(2)}€`}
-                name="benef"
-                tooltip="Le compte benef"
-              >
-                Benef
-              </TableHeader>
-              <TableHeader
-                numeric
-                cellFormatter={price => `${price.toFixed(2)}€`}
-                name="total"
-                tooltip="Le compte total de tous les comptes"
-              >
-                Total
-              </TableHeader>
-            </DataTable>
-          </CardText>
-          <CardActions border>
-            <Button colored ripple component={LinkToFacture}>
-              Ajouter une entrée au Virtucompte
-            </Button>
-          </CardActions>
-        </Cell>
-        <Cell col={4} component={Card} shadow={0}>
-          <CardTitle>Contacts</CardTitle>
-          <CardText>
+        <CustomCell
+          colSize={8}
+          title="Virtucompte"
+          actionComponent={LinkToFacture}
+          actionText="Ajouter une entrée au Virtucompte"
+        >
+          <CustomDataTable
+            rows={virtuRows}
+            titles={[
+              { title: 'Presta', tooltip: 'Le compte des prestas' },
+              { title: 'Salaire', tooltip: 'Le compte des salaires' },
+              { title: 'TVA', tooltip: 'Le compte TVA' },
+              { title: 'Matériel', tooltip: 'Le compte pour le matériel' },
+              { title: 'Caisse noire', tooltip: 'Le compte caisse noire' },
+              { title: 'Charges mixtes', tooltip: 'Le compte charges mixtes' },
+              { title: 'Benef', tooltip: 'Le compte benef' },
+              { title: 'Total', tooltip: 'Le compte total de tous les comptes' }
+            ]}
+          />
+        </CustomCell>
+        <CustomCell
+          colSize={4}
+          title="Contact"
+          actionComponent={LinkToContact}
+          actionText="Voir les contacts"
+        >
+          <div>
             Résumé des contacts: <br />
             Nous avons en ce moment {this.props.users.allUsers.length} contacts
             dont {this.props.users.blackfootUsers.length} administrateurs.
-          </CardText>
-          <CardActions border>
-            <Button colored ripple component={LinkToContact}>
-              Voir les contacts
-            </Button>
-          </CardActions>
-        </Cell>
-        <Cell col={colSize} component={Card} shadow={0}>
-          <CardTitle>Factures</CardTitle>
-          <CardText>
-            <DataTable rows={facturesRows}>
-              <TableHeader name="type" tooltip="Le type de facture">
-                Type
-              </TableHeader>
-              <TableHeader
-                numeric
-                cellFormatter={price => `${price.toFixed(2)}€`}
-                name="ht"
-                tooltip="Le prix total hors taxe des factures"
-              >
-                Hors taxes
-              </TableHeader>
-              <TableHeader
-                numeric
-                cellFormatter={price => `${price.toFixed(2)}€`}
-                name="tva"
-                tooltip="La tva des factures"
-              >
-                TVA
-              </TableHeader>
-              <TableHeader
-                numeric
-                cellFormatter={price => `${price.toFixed(2)}€`}
-                name="total"
-                tooltip="Le total tout compris des factures"
-              >
-                Total
-              </TableHeader>
-            </DataTable>
-          </CardText>
-          <CardActions border>
-            <Button colored ripple component={LinkToFacture}>
-              Voir les factures
-            </Button>
-          </CardActions>
-          <CardMenu>
-            <Badge text="4" overlap>
-              <Icon name="notifications" />
-            </Badge>
-          </CardMenu>
-        </Cell>
-        <Cell col={colSize} component={Card} shadow={0}>
-          <CardTitle>Projets</CardTitle>
-          <CardText>
-            <DataTable rows={projectRows}>
-              <TableHeader
-                numeric
-                name="now"
-                tooltip="Le nombre de projets en cours"
-              >
-                En cours
-              </TableHeader>
-              <TableHeader
-                numeric
-                name="cancel"
-                tooltip="Le nombre de projets abandonné"
-              >
-                Abandonné
-              </TableHeader>
-              <TableHeader
-                numeric
-                name="finished"
-                tooltip="Le nombre de projets fini"
-              >
-                Terminé
-              </TableHeader>
-              <TableHeader
-                numeric
-                name="standBy"
-                tooltip="Le nombre de projets en stand by"
-              >
-                Stand by
-              </TableHeader>
-            </DataTable>
-          </CardText>
-          <CardActions border>
-            <Button colored ripple component={LinkToProject}>
-              Voir les projets
-            </Button>
-          </CardActions>
-        </Cell>
-        <Cell col={colSize} component={Card} shadow={0}>
-          <CardTitle>Devis</CardTitle>
-          <CardText>
-            <DataTable rows={devisRows}>
-              <TableHeader name="type" tooltip="Le type de devis">
-                Type
-              </TableHeader>
-              <TableHeader
-                numeric
-                cellFormatter={price => `${price.toFixed(2)}€`}
-                name="ht"
-                tooltip="Le prix total hors taxe des devis"
-              >
-                Hors taxes
-              </TableHeader>
-              <TableHeader
-                numeric
-                cellFormatter={price => `${price.toFixed(2)}€`}
-                name="tva"
-                tooltip="La tva des devis"
-              >
-                TVA
-              </TableHeader>
-              <TableHeader
-                numeric
-                cellFormatter={price => `${price.toFixed(2)}€`}
-                name="total"
-                tooltip="Le total tout compris des devis"
-              >
-                Total
-              </TableHeader>
-            </DataTable>
-          </CardText>
-          <CardActions border>
-            <Button colored ripple component={LinkToDevis}>
-              Voir les devis
-            </Button>
-          </CardActions>
-        </Cell>
-        <Cell col={colSize} component={Card} shadow={0}>
-          <CardTitle>Prestataires</CardTitle>
-          <CardText>
-            <DataTable rows={prestaRows}>
-              <TableHeader name="type" tooltip="Réglé ou non?">
-                Type
-              </TableHeader>
-              <TableHeader
-                numeric
-                cellFormatter={price => `${price.toFixed(2)}€`}
-                name="ht"
-                tooltip="Le prix total hors taxe des devis"
-              >
-                Hors taxes
-              </TableHeader>
-              <TableHeader
-                numeric
-                cellFormatter={price => `${price.toFixed(2)}€`}
-                name="tva"
-                tooltip="La tva des devis"
-              >
-                TVA
-              </TableHeader>
-              <TableHeader
-                numeric
-                cellFormatter={price => `${price.toFixed(2)}€`}
-                name="total"
-                tooltip="Le total tout compris"
-              >
-                Total
-              </TableHeader>
-            </DataTable>
-          </CardText>
-          <CardActions border>
-            <Button colored ripple component={LinkToPresta}>
-              Voir les prestataires
-            </Button>
-          </CardActions>
-        </Cell>
+          </div>
+        </CustomCell>
+        <CustomCell
+          title="Factures"
+          actionComponent={LinkToFacture}
+          actionText="Voir les factures"
+          notification="4"
+        >
+          <CustomDataTable
+            rows={facturesRows}
+            titles={[
+              { title: 'Type', tooltip: 'Le type de facture' },
+              {
+                title: 'Hors taxes',
+                tooltip: 'Le prix total hors taxe des factures'
+              },
+              { title: 'TVA', tooltip: 'La tva des factures' },
+              { title: 'Total', tooltip: 'Le total tout compris des factures' }
+            ]}
+          />
+        </CustomCell>
+        <CustomCell
+          title="Devis"
+          actionComponent={LinkToDevis}
+          actionText="Voir les devis"
+        >
+          <CustomDataTable
+            rows={devisRows}
+            titles={[
+              { title: 'Type', tooltip: 'Le type de devis' },
+              {
+                title: 'Hors taxes',
+                tooltip: 'Le prix total hors taxe des devis'
+              },
+              { title: 'TVA', tooltip: 'La tva des devis' },
+              { title: 'Total', tooltip: 'Le total tout compris des devis' }
+            ]}
+          />
+        </CustomCell>
+        <CustomCell
+          title="Projets"
+          actionComponent={LinkToProject}
+          actionText="Voir les projets"
+        >
+          <CustomDataTable
+            rows={projectRows}
+            isPrice={false}
+            titles={[
+              { title: 'En cours', tooltip: 'Le nombre de projets en cours' },
+              {
+                title: 'Abandonné',
+                tooltip: 'Le nombre de projets abandonné'
+              },
+              { title: 'Terminé', tooltip: 'Le nombre de projets fini' },
+              { title: 'Stand by', tooltip: 'Le nombre de projets en stand by' }
+            ]}
+          />
+        </CustomCell>
+        <CustomCell
+          title="Prestataires"
+          actionComponent={LinkToPresta}
+          actionText="Voir les prestataires"
+        >
+          <CustomDataTable
+            rows={prestaRows}
+            titles={[
+              { title: 'Type', tooltip: 'Réglé ou non?' },
+              {
+                title: 'Hors taxes',
+                tooltip: 'Le prix total hors taxe des prestas'
+              },
+              { title: 'TVA', tooltip: 'La tva des prestas' },
+              { title: 'Total', tooltip: 'Le total tout compris' }
+            ]}
+          />
+        </CustomCell>
       </Grid>
     );
   }
