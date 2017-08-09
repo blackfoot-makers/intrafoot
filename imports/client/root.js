@@ -1,11 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { shape, func, object } from 'prop-types';
+import { shape, func } from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import { Route } from 'react-router-dom';
-import createHistory from 'history/createBrowserHistory';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import { Accounts } from 'meteor/std:accounts-ui';
@@ -19,7 +16,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './createMomentLocal';
 
 import createStore from '../../src/client/createStore';
-import App from '../../src/client/containers/App';
+import Router from '../../src/client/containers/routes';
 
 T9n.setLanguage('fr');
 
@@ -28,11 +25,9 @@ Accounts.ui.config({
   requireEmailVerification: true
 });
 
-const Root = ({ store, history }) =>
+const Root = ({ store }) =>
   <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <Route path="/" component={App} />
-    </ConnectedRouter>
+    <Router />
   </Provider>;
 
 Root.propTypes = {
@@ -40,16 +35,11 @@ Root.propTypes = {
     subscribe: func.isRequired,
     dispatch: func.isRequired,
     getState: func.isRequired
-  }),
-  history: object.isRequired
+  })
 };
 
 Meteor.startup(() => {
   injectTapEventPlugin();
-  const history = createHistory();
-  const store = createStore(history);
-  render(
-    <Root store={store} history={history} />,
-    document.getElementById('app')
-  );
+  const store = createStore();
+  render(<Root store={store} />, document.getElementById('app'));
 });
