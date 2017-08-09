@@ -146,15 +146,121 @@ class DefaultPage extends PureComponent {
     return projects;
   }
 
+  _getVirtuRows() {
+    const virtuRows = [
+      {
+        presta: 0,
+        salaire: 0,
+        tva: 0,
+        materiel: 0,
+        cnoire: 0,
+        mixtes: 0,
+        benef: 0,
+        total: 0
+      }
+    ];
+    return virtuRows;
+  }
+
   render() {
     const facturesRows = this._getFactures();
     const devisRows = this._getDevis();
     const prestaRows = this._getPrestas();
     const projectRows = this._getProject();
+    const virtuRows = this._getVirtuRows();
     const colSize = 6;
 
     return (
       <Grid>
+        <Cell col={8} component={Card} shadow={0}>
+          <CardTitle>Virtucompte</CardTitle>
+          <CardText>
+            <DataTable rows={virtuRows}>
+              <TableHeader
+                numeric
+                cellFormatter={price => `${price.toFixed(2)}€`}
+                name="presta"
+                tooltip="Le compte des prestas"
+              >
+                Presta
+              </TableHeader>
+              <TableHeader
+                numeric
+                cellFormatter={price => `${price.toFixed(2)}€`}
+                name="salaire"
+                tooltip="Le compte des salaires"
+              >
+                Salaire
+              </TableHeader>
+              <TableHeader
+                numeric
+                cellFormatter={price => `${price.toFixed(2)}€`}
+                name="tva"
+                tooltip="Le compte TVA"
+              >
+                TVA
+              </TableHeader>
+              <TableHeader
+                numeric
+                cellFormatter={price => `${price.toFixed(2)}€`}
+                name="materiel"
+                tooltip="Le compte pour le matériel"
+              >
+                Matériel
+              </TableHeader>
+              <TableHeader
+                numeric
+                cellFormatter={price => `${price.toFixed(2)}€`}
+                name="cnoire"
+                tooltip="Le compte caisse noire"
+              >
+                Caisse noire
+              </TableHeader>
+              <TableHeader
+                numeric
+                cellFormatter={price => `${price.toFixed(2)}€`}
+                name="mixtes"
+                tooltip="Le compte charges mixtes"
+              >
+                Charges mixtes
+              </TableHeader>
+              <TableHeader
+                numeric
+                cellFormatter={price => `${price.toFixed(2)}€`}
+                name="benef"
+                tooltip="Le compte benef"
+              >
+                Benef
+              </TableHeader>
+              <TableHeader
+                numeric
+                cellFormatter={price => `${price.toFixed(2)}€`}
+                name="total"
+                tooltip="Le compte total de tous les comptes"
+              >
+                Total
+              </TableHeader>
+            </DataTable>
+          </CardText>
+          <CardActions border>
+            <Button colored ripple component={LinkToFacture}>
+              Ajouter une entrée au Virtucompte
+            </Button>
+          </CardActions>
+        </Cell>
+        <Cell col={4} component={Card} shadow={0}>
+          <CardTitle>Contacts</CardTitle>
+          <CardText>
+            Résumé des contacts: <br />
+            Nous avons en ce moment {this.props.users.allUsers.length} contacts
+            dont {this.props.users.blackfootUsers.length} administrateurs.
+          </CardText>
+          <CardActions border>
+            <Button colored ripple component={LinkToContact}>
+              Voir les contacts
+            </Button>
+          </CardActions>
+        </Cell>
         <Cell col={colSize} component={Card} shadow={0}>
           <CardTitle>Factures</CardTitle>
           <CardText>
@@ -314,19 +420,6 @@ class DefaultPage extends PureComponent {
           <CardActions border>
             <Button colored ripple component={LinkToPresta}>
               Voir les prestataires
-            </Button>
-          </CardActions>
-        </Cell>
-        <Cell col={colSize} component={Card} shadow={0}>
-          <CardTitle>Contacts</CardTitle>
-          <CardText>
-            Résumé des contacts: <br />
-            Nous avons en ce moment {this.props.users.allUsers.length} contacts
-            dont {this.props.users.blackfootUsers.length} administrateurs.
-          </CardText>
-          <CardActions border>
-            <Button colored ripple component={LinkToContact}>
-              Voir les contacts
             </Button>
           </CardActions>
         </Cell>
