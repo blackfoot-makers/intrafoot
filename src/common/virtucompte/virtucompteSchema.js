@@ -3,7 +3,6 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 const Virtucomptes = new Mongo.Collection('virtucompte');
 
 Virtucomptes.schema = new SimpleSchema({
-  id: { type: String },
   idFacture: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
   amount: { type: Number, decimal: true },
   date: { type: Date },

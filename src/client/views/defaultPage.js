@@ -151,9 +151,9 @@ class DefaultPage extends PureComponent {
     ];
     this.props.virtucompte.map(data => {
       if (data.account !== 'in') {
-        virtuRows[data.account] += data.amount;
+        virtuRows[0][data.account] += data.amount;
       }
-      virtuRows.total += data.amount;
+      virtuRows[0].total += data.amount;
       return data;
     });
     return virtuRows;
@@ -169,7 +169,7 @@ class DefaultPage extends PureComponent {
     return (
       <Grid>
         <CustomCell
-          colSize={8}
+          colSize={9}
           title="Virtucompte"
           actionComponent={LinkToVirtucompte}
           actionText="Ajouter une entrée au Virtucompte"
@@ -189,7 +189,7 @@ class DefaultPage extends PureComponent {
           />
         </CustomCell>
         <CustomCell
-          colSize={4}
+          colSize={3}
           title="Contact"
           actionComponent={LinkToContact}
           actionText="Voir les contacts"

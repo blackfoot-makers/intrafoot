@@ -6,7 +6,7 @@ import Users from '../src/common/users/usersSchema';
 import Companies from '../src/common/users/companySchema';
 import History from '../src/common/history/historySchema';
 import Prestas from '../src/common/presta/prestaSchema';
-import Virtucompte from '../src/common/virtucompte/virtucompteSchema';
+import Virtucomptes from '../src/common/virtucompte/virtucompteSchema';
 
 Meteor.publish('projects', () => Projects.find({}));
 Meteor.publish('devis', () => Devis.find({}));
@@ -15,4 +15,4 @@ Meteor.publish('users', () => Users.find({}));
 Meteor.publish('companies', () => Companies.find({}));
 Meteor.publish('history', () => History.find({}));
 Meteor.publish('presta', () => Prestas.find({}));
-Meteor.publish('virtucompte', () => Virtucompte.find({}));
+Meteor.publish('virtucompte', () => Virtucomptes.find({}));
