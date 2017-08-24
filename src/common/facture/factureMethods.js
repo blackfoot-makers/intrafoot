@@ -4,6 +4,7 @@ import { Roles } from 'meteor/alanning:roles';
 import Factures from './factureSchema';
 import Projects from '../project/projectSchema';
 import History from '../history/historySchema';
+import Virtucomptes from '../virtucompte/virtucompteSchema';
 
 const checkAllParams = ({
   id,
@@ -37,6 +38,44 @@ const checkAllParams = ({
   check(delayTillPayed, Number);
 };
 
+const addMoneyToVirtuCompte = (facture, id, userId) => {
+  const accountTypes = ['salaire', 'materiel', 'cnoire', 'mixtes', 'benef'];
+  let amount = facture.pricePayed;
+  if (facture.payed === 'true') {
+    const data = {
+      idFacture: id,
+      amount,
+      date: new Date(),
+      type: 'in',
+      account: 'in',
+      creator: userId
+    };
+    Virtucomptes.insert(data);
+    const tvaAmount = amount - amount / 1.2;
+    Virtucomptes.insert({
+      ...data,
+      amount: tvaAmount,
+      account: 'tva'
+    });
+    amount -= tvaAmount;
+    let benef = amount;
+    for (let i = 0; i < accountTypes.length; ++i) {
+      const account = accountTypes[i];
+      let coef = 0.1;
+      if (i === 0) {
+        coef = 1 - 0.1 * (accountTypes.length - 1);
+      }
+      const tmpAmount = i === accountTypes.length - 1 ? benef : amount * coef;
+      Virtucomptes.insert({
+        ...data,
+        amount: tmpAmount,
+        account
+      });
+      benef -= tmpAmount;
+    }
+  }
+};
+
 Meteor.methods({
   addFacture(params) {
     if (!this.userId || !Roles.userIsInRole(this.userId, 'admin')) {
@@ -65,6 +104,7 @@ Meteor.methods({
         action: 'create',
         date: new Date()
       });
+      addMoneyToVirtuCompte(params, factures, this.userId);
     }
     return factures;
   },
@@ -142,6 +182,7 @@ Meteor.methods({
         action: 'edit',
         date: new Date()
       });
+      addMoneyToVirtuCompte(params, _id, this.userId);
     }
     return facture;
   }

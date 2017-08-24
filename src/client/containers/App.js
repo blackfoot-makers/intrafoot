@@ -38,6 +38,7 @@ class App extends PureComponent {
     props.subscribe('users');
     props.subscribe('companies');
     props.subscribe('history');
+    props.subscribe('virtucompte');
   }
 
   render() {

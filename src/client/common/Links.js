@@ -65,6 +65,15 @@ LinkToPresta.propTypes = {
   children: node.isRequired
 };
 
+const LinkToVirtucompte = ({ children, ...otherProps }) =>
+  <Link to="/virtucompte" {...otherProps}>
+    {children}
+  </Link>;
+
+LinkToVirtucompte.propTypes = {
+  children: node.isRequired
+};
+
 const LinkToIndex = ({ children, ...otherProps }) =>
   <NavLink exact to="/" {...otherProps}>
     {children}
@@ -82,5 +91,6 @@ export {
   LinkToUser,
   LinkToDevis,
   LinkToFacture,
-  LinkToHistory
+  LinkToHistory,
+  LinkToVirtucompte
 };

@@ -9,6 +9,7 @@ import devisReducer from './devis/devisReducer';
 import factureReducer from './facture/factureReducer';
 import prestaReducer from './presta/prestaReducer';
 import historyReducer from './history/historyReducer';
+import virtucompteReducer from './virtucompte/virtucompteReducer';
 
 export default combineReducers({
   routing,
@@ -19,5 +20,6 @@ export default combineReducers({
   form: formReducer,
   currentUser: accountReducer,
   users: userReducer,
-  history: historyReducer
+  history: historyReducer,
+  virtucompte: virtucompteReducer
 });

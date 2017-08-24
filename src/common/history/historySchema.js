@@ -13,7 +13,8 @@ History.schema = new SimpleSchema({
       'facture',
       'project',
       'company',
-      'prestas'
+      'prestas',
+      'virtucompte'
     ]
   },
   action: { type: String, allowedValues: ['create', 'edit', 'delete'] },

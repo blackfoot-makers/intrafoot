@@ -14,6 +14,7 @@ import { loadFacture } from './facture/factureActions';
 import { loadUser } from './user/userActions';
 import { loadHistory } from './history/historyActions';
 import { loadPresta } from './presta/prestaActions';
+import { loadVirtucompte } from './virtucompte/virtucompteActions';
 
 export default history => {
   const logger = createLogger();
@@ -35,6 +36,7 @@ export default history => {
   store.dispatch(loadUser());
   store.dispatch(loadHistory());
   store.dispatch(loadPresta());
+  store.dispatch(loadVirtucompte());
   // if (Meteor.isClient) {
   // store.dispatch(loadTodo());
   // persistStore(store, {
